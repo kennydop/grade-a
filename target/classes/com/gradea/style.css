@@ -1,0 +1,58 @@
+.root {
+  -fx-background-color: #dbe2ef;
+}
+
+.root .form {
+  -fx-background-color: #ffffff;
+  -fx-effect: dropshadow(three-pass-box, rgba(14, 11, 44, 0.16), 25, 0, 5, 5);
+}
+
+.button {
+  -fx-background-color: #3f72af;
+  -fx-text-fill: #ffffff;
+  -fx-background-radius: 6px;
+  -fx-height: 50px;
+}
+
+.form .text-field {
+  -fx-prompt-text-fill: #112d4e;
+}
+
+.primary-color {
+  -fx-background-color: #3f72af;
+}
+
+.secondary-color {
+  -fx-background-color: #112d4e;
+}
+
+.text-color {
+  -fx-background-color: #112d4e;
+}
+
+.bg-color {
+  -fx-background-color: #dbe2ef;
+}
+
+.border-color {
+  -fx-border-color: #112d4e;
+}
+
+.border-radius {
+  -fx-background-radius: 10px;
+}
+.shadow {
+  -fx-effect: dropshadow(three-pass-box, rgba(14, 11, 44, 0.16), 25, 0, 5, 5);
+}
+
+.text-field {
+  -fx-background-color: #ffffff;
+  -fx-border-color: #cccccc;
+  -fx-border-radius: 6px;
+  -fx-padding: 5px;
+  -fx-font-size: 15px;
+  -fx-height: 40px;
+}
+.text-field:focused {
+  -fx-border-color: #3f72af;
+}
