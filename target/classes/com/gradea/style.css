@@ -8,7 +8,7 @@
 }
 
 .button {
-  -fx-background-color: #3f72af;
+  -fx-background-color: #4262ff;
   -fx-text-fill: #ffffff;
   -fx-background-radius: 6px;
   -fx-height: 50px;
@@ -19,7 +19,7 @@
 }
 
 .primary-color {
-  -fx-background-color: #3f72af;
+  -fx-background-color: #4262ff;
 }
 
 .secondary-color {
@@ -54,5 +54,40 @@
   -fx-height: 40px;
 }
 .text-field:focused {
-  -fx-border-color: #3f72af;
+  -fx-border-color: #4262ff;
+}
+
+.card {
+  -fx-background-color: #ffffff;
+  -fx-effect: dropshadow(three-pass-box, rgba(14, 11, 44, 0.16), 25, 0, 5, 5);
+  -fx-background-radius: 10px;
+}
+
+.option {
+  -fx-background-color: white;
+  -fx-border-color: #cccccc;
+  -fx-border-width: 1px;
+  -fx-text-fill: #434654;
+  -fx-background-radius: 6px;
+  -fx-border-radius: 6px;
+  -fx-max-width: Infinity;
+  -fx-max-height: Infinity;
+}
+
+.option:pressed {
+  -fx-border-color: #4262ff;
+  -fx-border-width: 3px;
+}
+
+.button.clicked {
+  -fx-border-color: #4262ff;
+  -fx-border-width: 2;
+}
+
+.fill-width {
+  -fx-max-width: Infinity;
+}
+
+.fill-height {
+  -fx-max-height: Infinity;
 }
