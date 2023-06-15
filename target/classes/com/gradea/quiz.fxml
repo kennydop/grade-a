@@ -13,13 +13,10 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<StackPane fx:id="rootPane" prefHeight="600.0" prefWidth="800.0" stylesheets="@style.css"
-  xmlns="http://javafx.com/javafx/19"
-  xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gradea.QuizController">
+<StackPane fx:id="rootPane" prefHeight="600.0" prefWidth="800.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gradea.QuizController">
   <BorderPane prefHeight="200.0" prefWidth="200.0">
     <center>
       <BorderPane maxWidth="850.0">
@@ -94,20 +91,7 @@
       </padding>
     </center>
     <top>
-      <VBox BorderPane.alignment="CENTER">
-        <children>
-          <HBox maxWidth="850.0">
-            <children>
-              <Text fx:id="questionNumber" style="-fx-font-size: 24; -fx-padding: 20px; -fx-background-color: #f5f5f5; -fx-min-width: 500px; -fx-min-height: 200px;">
-                <font>
-                  <Font name="Montserrat Regular" size="18.0" />
-                </font>
-              </Text>
-            </children>
-          </HBox>
-          <HBox fx:id="questionIndicatorsBox" layoutX="10.0" layoutY="10.0" maxWidth="850.0" />
-        </children>
-      </VBox>
+    <HBox fx:id="questionIndicatorsBox" alignment="CENTER" maxWidth="1.7976931348623157E308" spacing="10.0" BorderPane.alignment="TOP_CENTER" />
     </top>
     <bottom>
       <HBox fx:id="navigationBox" alignment="CENTER" maxWidth="850.0" prefHeight="50.0" BorderPane.alignment="CENTER">

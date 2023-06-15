@@ -8,15 +8,18 @@ import com.gradea.models.Question;
 import com.gradea.models.Question.QuestionType;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Cursor;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 
 public class QuizController {
-  @FXML
-  private Text questionNumber;
+
   @FXML
   private Text questionCard;
   @FXML
@@ -35,9 +38,14 @@ public class QuizController {
   private int currentQuestionIndex; // Index of the current question
 
   @FXML
+  private HBox questionIndicatorsBox;
+  private List<Circle> questionIndicators;
+
+  @FXML
   public void initialize() {
     // Initialize questions list
     questions = new ArrayList<>();
+    questionIndicators = new ArrayList<>();
 
     // Load questions into the questions list here
     questions.addAll(
@@ -52,11 +60,41 @@ public class QuizController {
             new Question("The capital of United Kingdom is London.", QuestionType.TRUE_FALSE, null, "True"),
             new Question("What is the capital of the United States?", QuestionType.SHORT_ANSWER, null,
                 "Washington D.C.")));
+
+    int totalQuestions = questions.size();
+    for (int i = 0; i < totalQuestions; i++) {
+      final int questionNumber = i;
+      Circle indicator = new Circle(totalQuestions > 50 ? 5 : totalQuestions > 30 ? 8 : 10); // 5 is the radius of the
+                                                                                             // circle
+      indicator.setFill(Color.WHITE); // Set initial color to white
+      indicator.setCursor(Cursor.HAND);
+      indicator.setOnMouseClicked(event -> setQuestion(questionNumber));
+      questionIndicatorsBox.getChildren().add(indicator);
+      questionIndicators.add(indicator);
+    }
+
+    shortAnswer.textProperty().addListener((observable, oldValue, newValue) -> {
+      // Set the userAnswer in the Question object whenever the text changes
+      if (questions.get(currentQuestionIndex).getType() == QuestionType.SHORT_ANSWER) {
+        questions.get(currentQuestionIndex).setUserAnswer(newValue);
+        System.out.println(questions.get(currentQuestionIndex).getQuestionText());
+        System.out.println(newValue);
+        System.out.println(questions.get(currentQuestionIndex).getUserAnswer());
+      }
+    });
+
     // Set initial question
     setQuestion(0);
   }
 
   private void setQuestion(int questionIndex) {
+    // Check if current question is answered and mark it as answered before swapping
+    // question
+    System.out.println(questions.get(currentQuestionIndex).getQuestionText());
+    if (questions.get(currentQuestionIndex).getUserAnswer() != "") {
+      markQuestionAsAnswered(currentQuestionIndex);
+    }
+
     // Remove clicked style from all buttons
     Stream.of(option1, option2, option3, option4).forEach(button -> button.getStyleClass().remove("clicked"));
 
@@ -66,6 +104,8 @@ public class QuizController {
     if (question.getType() == QuestionType.SHORT_ANSWER) {
       shortAnswer.setVisible(true);
       multipleChoice.setVisible(false);
+      shortAnswer.setText(question.getUserAnswer());
+      shortAnswer.requestFocus();
     } else if (question.getType() == QuestionType.MULTIPLE_CHOICE) {
       shortAnswer.setVisible(false);
       multipleChoice.setVisible(true);
@@ -74,9 +114,9 @@ public class QuizController {
       option1.setText(options.get(0));
       option2.setVisible(true);
       option2.setText(options.get(1));
-      option3.setVisible(false);
+      option3.setVisible(true);
       option3.setText(options.get(2));
-      option4.setVisible(false);
+      option4.setVisible(true);
       option4.setText(options.get(3));
     } else {
       List<String> options = question.getOptions();
@@ -115,7 +155,7 @@ public class QuizController {
       // nextButton.setText("Finish");
     }
     nextButton.setDisable(questionIndex == questions.size());
-    questionNumber.setText("Question " + (currentQuestionIndex + 1) + " of " + questions.size());
+    markCurrentQuestion(currentQuestionIndex);
   }
 
   @FXML
@@ -123,7 +163,6 @@ public class QuizController {
     Button clickedOption = (Button) event.getSource();
     String selectedOptionText = clickedOption.getText();
     clickedOption.getStyleClass().add("clicked"); // Add clicked style
-    System.out.println(selectedOptionText);
     // Remove clicked style from all other buttons
     Stream.of(option1, option2, option3, option4)
         .filter(button -> button != clickedOption)
@@ -149,5 +188,22 @@ public class QuizController {
     if (currentQuestionIndex < questions.size() - 1) {
       setQuestion(currentQuestionIndex + 1);
     }
+  }
+
+  public void markQuestionAsAnswered(int questionNumber) {
+    questionIndicators.get(questionNumber).setFill(Color.BLUE);
+  }
+
+  public void markCurrentQuestion(int questionNumber) {
+    // Reset color of all indicators
+    for (Circle indicator : questionIndicators) {
+      if (indicator.getFill() == Color.BLUE) {
+        continue;
+      } else {
+        indicator.setFill(Color.WHITE);
+      }
+    }
+    // Then set the color of the current question indicator
+    questionIndicators.get(questionNumber).setFill(Color.PURPLE);
   }
 }

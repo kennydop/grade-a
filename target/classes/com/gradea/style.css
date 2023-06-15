@@ -12,6 +12,7 @@
   -fx-text-fill: #ffffff;
   -fx-background-radius: 6px;
   -fx-height: 50px;
+  -fx-cursor: hand;
 }
 
 .form .text-field {
@@ -72,6 +73,7 @@
   -fx-border-radius: 6px;
   -fx-max-width: Infinity;
   -fx-max-height: Infinity;
+  -fx-cursor: hand;
 }
 
 .button.clicked {
