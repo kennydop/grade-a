@@ -74,14 +74,10 @@
   -fx-max-height: Infinity;
 }
 
-.option:pressed {
-  -fx-border-color: #4262ff;
-  -fx-border-width: 3px;
-}
-
 .button.clicked {
   -fx-border-color: #4262ff;
-  -fx-border-width: 2;
+  -fx-background-color: #4262ff6d;
+  -fx-border-width: 2px;
 }
 
 .fill-width {

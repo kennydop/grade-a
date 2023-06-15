@@ -9,6 +9,9 @@ import com.gradea.models.Question.QuestionType;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 
 public class QuizController {
@@ -21,6 +24,13 @@ public class QuizController {
   @FXML
   private Button prevButton, nextButton;
 
+  @FXML
+  private TextField shortAnswer;
+  @FXML
+  private GridPane multipleChoice;
+  @FXML
+  private ImageView forwardImage;
+
   private List<Question> questions; // List of questions
   private int currentQuestionIndex; // Index of the current question
 
@@ -31,37 +41,78 @@ public class QuizController {
 
     // Load questions into the questions list here
     questions.addAll(
-        List.of(new Question("What is the capital of France?", QuestionType.MULTIPLE_CHOICE,
-            List.of("Paris", "London", "Berlin", "Madrid"), "Paris"),
+        List.of(
+            new Question("What is your Name?", QuestionType.SHORT_ANSWER, null, "John Doe"),
+            new Question("What is the capital of France?", QuestionType.MULTIPLE_CHOICE,
+                List.of("Paris", "London", "Berlin", "Madrid"), "Paris"),
             new Question("What is the capital of Spain?", QuestionType.MULTIPLE_CHOICE,
                 List.of("Paris", "London", "Berlin", "Madrid"), "Madrid"),
             new Question("What is the capital of Germany?", QuestionType.MULTIPLE_CHOICE,
                 List.of("Paris", "London", "Berlin", "Madrid"), "Berlin"),
-            new Question("What is the capital of the United Kingdom?", QuestionType.MULTIPLE_CHOICE,
-                List.of("Paris", "London", "Berlin", "Madrid"), "London"),
-            new Question("What is the capital of the United States?", QuestionType.MULTIPLE_CHOICE,
-                List.of("Paris", "London", "Berlin", "Washington D.C."), "Washington D.C.")));
+            new Question("The capital of United Kingdom is London.", QuestionType.TRUE_FALSE, null, "True"),
+            new Question("What is the capital of the United States?", QuestionType.SHORT_ANSWER, null,
+                "Washington D.C.")));
     // Set initial question
     setQuestion(0);
-    questionNumber.setText("Question " + (currentQuestionIndex + 1) + " of " + questions.size());
   }
 
   private void setQuestion(int questionIndex) {
+    // Remove clicked style from all buttons
+    Stream.of(option1, option2, option3, option4).forEach(button -> button.getStyleClass().remove("clicked"));
+
     currentQuestionIndex = questionIndex;
     Question question = questions.get(questionIndex);
     questionCard.setText(question.getQuestionText());
-    List<String> options = question.getOptions();
-    option1.setText(options.get(0));
-    option2.setText(options.get(1));
-    option3.setText(options.get(2));
-    option4.setText(options.get(3));
+    if (question.getType() == QuestionType.SHORT_ANSWER) {
+      shortAnswer.setVisible(true);
+      multipleChoice.setVisible(false);
+    } else if (question.getType() == QuestionType.MULTIPLE_CHOICE) {
+      shortAnswer.setVisible(false);
+      multipleChoice.setVisible(true);
+      List<String> options = question.getOptions();
+      option1.setVisible(true);
+      option1.setText(options.get(0));
+      option2.setVisible(true);
+      option2.setText(options.get(1));
+      option3.setVisible(false);
+      option3.setText(options.get(2));
+      option4.setVisible(false);
+      option4.setText(options.get(3));
+    } else {
+      List<String> options = question.getOptions();
+      shortAnswer.setVisible(false);
+      multipleChoice.setVisible(true);
+      option1.setText("");
+      option1.setVisible(false);
+      option2.setText("");
+      option2.setVisible(false);
+      option3.setVisible(true);
+      option3.setText(options.get(0));
+      option4.setVisible(true);
+      option4.setText(options.get(1));
+    }
+
+    // Set the user's answer if they've already answered the question
+    String userAnswer = question.getUserAnswer();
+    if (!userAnswer.isEmpty()) {
+      if (question.getType() == QuestionType.SHORT_ANSWER) {
+        shortAnswer.setText(userAnswer);
+      } else if (question.getType() == QuestionType.TRUE_FALSE) {
+        Stream.of(option3, option4).filter(button -> button.getText().equals(userAnswer))
+            .findFirst().ifPresent(button -> button.getStyleClass().add("clicked"));
+      } else if (question.getType() == QuestionType.MULTIPLE_CHOICE) {
+        Stream.of(option1, option2, option3, option4).filter(button -> button.getText().equals(userAnswer))
+            .findFirst().ifPresent(button -> button.getStyleClass().add("clicked"));
+      }
+    }
 
     // Disable prev button if it's the first question
     prevButton.setDisable(questionIndex == 0);
 
     // Change Next to Finish if it's the last question
     if (questionIndex == questions.size() - 1) {
-      nextButton.setText("Finish");
+      // forwardImage.setVisible(false);
+      // nextButton.setText("Finish");
     }
     nextButton.setDisable(questionIndex == questions.size());
     questionNumber.setText("Question " + (currentQuestionIndex + 1) + " of " + questions.size());
@@ -77,6 +128,8 @@ public class QuizController {
     Stream.of(option1, option2, option3, option4)
         .filter(button -> button != clickedOption)
         .forEach(button -> button.getStyleClass().remove("clicked"));
+
+    questions.get(currentQuestionIndex).setUserAnswer(selectedOptionText);
 
     // Check if the selected option is correct
     // If it is, you could give some visual feedback like turning the button green
@@ -95,8 +148,6 @@ public class QuizController {
   public void handleNextClick() {
     if (currentQuestionIndex < questions.size() - 1) {
       setQuestion(currentQuestionIndex + 1);
-      // Remove clicked style from all buttons
-      Stream.of(option1, option2, option3, option4).forEach(button -> button.getStyleClass().remove("clicked"));
     }
   }
 }

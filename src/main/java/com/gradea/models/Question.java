@@ -7,12 +7,20 @@ public class Question {
   private List<String> options;
   private String correctAnswer;
   private QuestionType type;
+  private String userAnswer;
 
   public Question(String questionText, QuestionType type, List<String> options, String correctAnswer) {
     this.questionText = questionText;
     this.type = type;
-    this.options = options;
+    if (type == QuestionType.TRUE_FALSE) {
+      this.options = List.of("True", "False");
+    } else if (type == QuestionType.SHORT_ANSWER) {
+      this.options = List.of();
+    } else {
+      this.options = options;
+    }
     this.correctAnswer = correctAnswer;
+    this.userAnswer = "";
   }
 
   public String getQuestionText() {
@@ -31,6 +39,10 @@ public class Question {
     return type;
   }
 
+  public String getUserAnswer() {
+    return userAnswer;
+  }
+
   public void setQuestionText(String questionText) {
     this.questionText = questionText;
   }
@@ -45,6 +57,10 @@ public class Question {
 
   public void setType(QuestionType type) {
     this.type = type;
+  }
+
+  public void setUserAnswer(String userAnswer) {
+    this.userAnswer = userAnswer;
   }
 
   public boolean isCorrect(String answer) {
