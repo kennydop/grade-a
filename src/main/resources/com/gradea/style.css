@@ -76,6 +76,7 @@
   -fx-background-color: #ffffff;
   -fx-border-color: #cccccc;
   -fx-border-radius: 6px;
+  -fx-background-radius: 6px;
   -fx-padding: 5px;
   -fx-font-size: 15px;
   -fx-height: 40px;
@@ -114,4 +115,26 @@
 
 .fill-height {
   -fx-max-height: Infinity;
+}
+
+.nav-button {
+  -fx-background-color: transparent;
+  -fx-background-radius: 9999px;
+  -fx-border-radius: 9999px;
+}
+
+.nav-button:hover {
+  -fx-background-color: whitesmoke;
+}
+
+.nav-button.button.clicked {
+  -fx-background-color: #4262ff6d;
+}
+
+.nav-button:pressed {
+  -fx-background-color: #4262ff6d;
+}
+.side-nav {
+  -fx-background-color: white;
+  -fx-effect: dropshadow(three-pass-box, rgba(14, 11, 44, 0.16), 25, 0, 0, 5);
 }

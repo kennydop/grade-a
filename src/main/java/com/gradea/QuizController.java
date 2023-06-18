@@ -92,8 +92,8 @@ public class QuizController {
     int totalQuestions = questions.size();
     for (int i = 0; i < totalQuestions; i++) {
       final int questionNumber = i;
-      Circle indicator = new Circle(totalQuestions > 50 ? 5 : totalQuestions > 30 ? 8 : 10); // 5 is the radius of the
-                                                                                             // circle
+      // 5 is the radius of the circle
+      Circle indicator = new Circle(totalQuestions > 50 ? 5 : totalQuestions > 30 ? 8 : 10);
       indicator.setFill(Color.WHITE); // Set initial color to white
       indicator.setCursor(Cursor.HAND);
       indicator.setOnMouseClicked(event -> setQuestion(questionNumber));

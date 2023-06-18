@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.control.Label?>
+
+<VBox xmlns="http://javafx.com/javafx/8.0.112"
+  xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gradea.HomeController">
+  <Circle fx:id="avatar" />
+  <Label fx:id="userName" />
+  <Label fx:id="quizzesTaken" />
+  <Label fx:id="organizations" />
+  <Label fx:id="averageScore" />
+</VBox>
