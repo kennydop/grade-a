@@ -1,24 +1,38 @@
 package com.gradea;
 
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
 import com.gradea.models.Question;
 import com.gradea.models.Question.QuestionType;
+
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
 import javafx.scene.control.Button;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.util.Duration;
 
 public class QuizController {
+  @FXML
+  private StackPane rootPane;
 
   @FXML
   private Text questionCard;
@@ -40,6 +54,20 @@ public class QuizController {
   @FXML
   private HBox questionIndicatorsBox;
   private List<Circle> questionIndicators;
+
+  @FXML
+  private ProgressBar progressBar;
+  private Timeline countdown;
+  private Timeline timer;
+  @FXML
+  private Text timerText;
+
+  private long remainingTime;
+  private java.time.Duration duration;
+  private long hours;
+  private long minutes;
+  private long seconds;
+  String countdownText;
 
   @FXML
   public void initialize() {
@@ -77,14 +105,88 @@ public class QuizController {
       // Set the userAnswer in the Question object whenever the text changes
       if (questions.get(currentQuestionIndex).getType() == QuestionType.SHORT_ANSWER) {
         questions.get(currentQuestionIndex).setUserAnswer(newValue);
-        System.out.println(questions.get(currentQuestionIndex).getQuestionText());
-        System.out.println(newValue);
-        System.out.println(questions.get(currentQuestionIndex).getUserAnswer());
       }
     });
 
     // Set initial question
     setQuestion(0);
+
+    remainingTime = 30; // the remaining time in seconds
+
+    duration = java.time.Duration.ofSeconds(remainingTime);
+    hours = duration.toHours();
+    duration = duration.minusHours(hours);
+    minutes = duration.toMinutes();
+    duration = duration.minusMinutes(minutes);
+    seconds = duration.getSeconds();
+
+    countdownText = String.format("%02d:%02d:%02d", hours, minutes, seconds);
+
+    // Set initial progress bar
+    progressBar.setProgress(1); // Start at 100%
+
+    countdown = new Timeline(
+        new KeyFrame(
+            Duration.seconds(0),
+            new KeyValue(progressBar.progressProperty(), 1) // Start at 100%
+        ),
+        new KeyFrame(
+            Duration.seconds(remainingTime), // Countdown duration
+            new KeyValue(progressBar.progressProperty(), 0) // End at 0%
+        ));
+
+    timer = new Timeline(
+        new KeyFrame(javafx.util.Duration.seconds(1), event -> {
+          if (remainingTime <= 0) {
+            timer.stop();
+          } else {
+            remainingTime--;
+            duration = java.time.Duration.ofSeconds(remainingTime);
+            hours = duration.toHours();
+            duration = duration.minusHours(hours);
+            minutes = duration.toMinutes();
+            duration = duration.minusMinutes(minutes);
+            seconds = duration.getSeconds();
+
+            countdownText = String.format("%02d:%02d:%02d", hours, minutes, seconds);
+            timerText.setText(countdownText);
+          }
+        }));
+    timer.setCycleCount(Timeline.INDEFINITE);
+    timer.play();
+
+    progressBar.progressProperty().addListener((observable, oldValue, newValue) -> {
+      double progress = newValue.doubleValue();
+      if (progress <= 0.25) {
+        timerText.setFill(Color.RED);
+        timerText.fontProperty().set(Font.font("Montserrat", FontWeight.BOLD, 12));
+        if (!progressBar.getStyleClass().contains("timeRunningOut")) {
+          progressBar.getStyleClass().add("timeRunningOut");
+          rootPane.getStyleClass().remove("bg-color");
+          rootPane.getStyleClass().add("timeRunningOutBg");
+        }
+      }
+    });
+    // Move to finished screen when countdown is finished
+    countdown.setOnFinished(event -> {
+      // Check if current question is answered and mark it as answered before swapping
+      // question
+      // if (questions.get(currentQuestionIndex).getUserAnswer() != "") {
+      // markQuestionAsAnswered(currentQuestionIndex);
+      // }
+
+      // Remove clicked style from all buttons
+      // Stream.of(option1, option2, option3, option4).forEach(button ->
+      // button.getStyleClass().remove("clicked"));
+
+      // Move to finished screen
+      // load fxml
+      FXMLLoader loader = new FXMLLoader(getClass().getResource("finished.fxml"));
+      // Parent root = loader.load();
+
+    });
+
+    countdown.playFromStart();
   }
 
   private void setQuestion(int questionIndex) {
@@ -162,6 +264,11 @@ public class QuizController {
   public void handleOptionClick(ActionEvent event) {
     Button clickedOption = (Button) event.getSource();
     String selectedOptionText = clickedOption.getText();
+    if (clickedOption.getStyleClass().contains("clicked")) {
+      clickedOption.getStyleClass().remove("clicked");
+      questions.get(currentQuestionIndex).setUserAnswer("");
+      return;
+    }
     clickedOption.getStyleClass().add("clicked"); // Add clicked style
     // Remove clicked style from all other buttons
     Stream.of(option1, option2, option3, option4)
@@ -191,19 +298,19 @@ public class QuizController {
   }
 
   public void markQuestionAsAnswered(int questionNumber) {
-    questionIndicators.get(questionNumber).setFill(Color.BLUE);
+    questionIndicators.get(questionNumber).setFill(Color.web("#4262ff"));
   }
 
   public void markCurrentQuestion(int questionNumber) {
     // Reset color of all indicators
     for (Circle indicator : questionIndicators) {
-      if (indicator.getFill() == Color.BLUE) {
+      if (indicator.getFill().equals(Color.web("#4262ff"))) {
         continue;
       } else {
         indicator.setFill(Color.WHITE);
       }
     }
     // Then set the color of the current question indicator
-    questionIndicators.get(questionNumber).setFill(Color.PURPLE);
+    questionIndicators.get(questionNumber).setFill(Color.ORANGE);
   }
 }

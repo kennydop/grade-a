@@ -35,6 +35,10 @@
   -fx-background-color: #dbe2ef;
 }
 
+.timeRunningOutBg {
+  -fx-background-color: #ff42426d;
+}
+
 .border-color {
   -fx-border-color: #112d4e;
 }
@@ -42,6 +46,28 @@
 .border-radius {
   -fx-background-radius: 10px;
 }
+
+.progress-bar {
+  -fx-background-radius: 10 10 0 0;
+  -fx-border-radius: 10 10 0 0;
+}
+
+.progress-bar .bar {
+  -fx-background-color: #4262ff6d;
+  -fx-background-radius: 10 10 0 0;
+}
+
+.progress-bar.timeRunningOut .bar {
+  -fx-background-color: #ff42426d;
+  -fx-background-radius: 10 10 0 0;
+}
+
+.progress-bar .track {
+  -fx-background-radius: 10 10 0 0;
+  -fx-background-color: white;
+  -fx-padding: 0;
+}
+
 .shadow {
   -fx-effect: dropshadow(three-pass-box, rgba(14, 11, 44, 0.16), 25, 0, 5, 5);
 }
