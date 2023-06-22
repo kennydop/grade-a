@@ -111,7 +111,7 @@ public class QuizController {
     // Set initial question
     setQuestion(0);
 
-    remainingTime = 30; // the remaining time in seconds
+    remainingTime = 60; // the remaining time in seconds
 
     duration = java.time.Duration.ofSeconds(remainingTime);
     hours = duration.toHours();

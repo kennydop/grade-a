@@ -104,9 +104,7 @@
 }
 
 .button.clicked {
-  -fx-border-color: #4262ff;
   -fx-background-color: #4262ff6d;
-  -fx-border-width: 2px;
 }
 
 .fill-width {

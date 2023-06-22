@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
@@ -15,63 +16,54 @@
 
 <BorderPane stylesheets="@style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gradea.DashboardController">
   <center>
-      <BorderPane>
-         <center>
-      <Pane fx:id="contentPane" prefHeight="200.0" prefWidth="200.0" />
-         </center>
-         <top>
-      <HBox id="header" fx:id="header" alignment="TOP_CENTER" spacing="10.0" styleClass="fill-width" BorderPane.alignment="CENTER">
-        <TextField promptText="Search" />
-        <Region HBox.hgrow="ALWAYS" />
-        <HBox alignment="CENTER_RIGHT" spacing="24.0">
-          <children>
-            <Button onAction="#createOrganization" prefHeight="50.0" text="Create Organization">
-              <graphic>
-                <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                  <image>
-                    <Image url="@plus.png" />
-                  </image>
-                </ImageView>
-              </graphic>
-              <font>
-                <Font name="Montserrat Regular" size="12.0" />
-              </font>
-            </Button>
-            <Button onAction="#joinOrganization" prefHeight="50.0" text="Join Organization">
-              <graphic>
-                <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
-                  <image>
-                    <Image url="@link.png" />
-                  </image>
-                </ImageView>
-              </graphic>
-            </Button>
-            <Button onAction="#createQuiz" prefHeight="50.0" text="Create Quiz">
-              <graphic>
-                <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
-                  <image>
-                    <Image url="@create.png" />
-                  </image>
-                </ImageView>
-              </graphic>
-            </Button>
-                     <Button minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" styleClass="nav-button">
-                        <graphic>
-                  <ImageView fx:id="notificationIcon" fitHeight="24.0" fitWidth="24.0">
+    <BorderPane>
+      <center>
+        <Pane fx:id="contentPane" />
+      </center>
+      <top>
+        <HBox id="header" fx:id="header" alignment="TOP_CENTER" spacing="10.0" styleClass="fill-width" BorderPane.alignment="CENTER">
+          <TextField promptText="Search" />
+          <Region HBox.hgrow="ALWAYS" />
+          <HBox alignment="CENTER_RIGHT" spacing="24.0">
+            <children>
+              <Button onAction="#createOrganization" prefHeight="50.0" styleClass="shadow" text="Create Organization">
+                <graphic>
+                  <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                      <Image url="@bell-ring.png" />
+                      <Image url="@plus.png" />
                     </image>
                   </ImageView>
-                        </graphic>
-                     </Button>
-          </children>
+                </graphic>
+                <font>
+                  <Font name="Montserrat Regular" size="12.0" />
+                </font>
+              </Button>
+              <Button onAction="#joinOrganization" prefHeight="50.0" styleClass="shadow" text="Join Organization">
+                <graphic>
+                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                      <Image url="@link.png" />
+                    </image>
+                  </ImageView>
+                </graphic>
+              </Button>
+              <Button onAction="#createQuiz" prefHeight="50.0" styleClass="shadow" text="Create Quiz">
+                <graphic>
+                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                      <Image url="@create.png" />
+                    </image>
+                  </ImageView>
+                </graphic>
+              </Button>
+            </children>
+          </HBox>
+          <padding>
+            <Insets bottom="10.0" left="24.0" right="24.0" top="10.0" />
+          </padding>
         </HBox>
-        <padding>
-          <Insets bottom="10.0" left="24.0" right="24.0" top="10.0" />
-        </padding>
-      </HBox>
-         </top>
-      </BorderPane>
+      </top>
+    </BorderPane>
   </center>
   <left>
     <VBox id="sidePanel" fx:id="sidePanel" alignment="TOP_CENTER" fillWidth="false" maxWidth="80.0" prefWidth="80.0" spacing="10.0" styleClass="side-nav" BorderPane.alignment="CENTER">
@@ -90,39 +82,52 @@
           <Cursor fx:constant="HAND" />
         </cursor>
       </Button>
-         <Button layoutX="25.0" layoutY="20.0" maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" onAction="#showHome" prefHeight="50.0" prefWidth="50.0" styleClass="nav-button">
+      <Button fx:id="quizButton" layoutX="25.0" layoutY="20.0" maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" onAction="#showQuiz" prefHeight="50.0" prefWidth="50.0" styleClass="nav-button">
+        <graphic>
+          <ImageView fx:id="quizImage" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+              <Image url="@quiz.png" />
+            </image>
+            <cursor>
+              <Cursor fx:constant="HAND" />
+            </cursor>
+          </ImageView>
+        </graphic>
+        <cursor>
+          <Cursor fx:constant="HAND" />
+        </cursor>
+      </Button>
+         <Button fx:id="notificationButton" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0">
             <graphic>
-               <ImageView fx:id="homeImage1" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+               <ImageView fx:id="notificationImage" fitHeight="24.0" fitWidth="24.0">
                   <image>
-                     <Image url="@home.png" />
+                     <Image url="@bell-ring.png" />
                   </image>
-                  <cursor>
-                     <Cursor fx:constant="HAND" />
-                  </cursor>
                </ImageView>
             </graphic>
-            <cursor>
-               <Cursor fx:constant="HAND" />
-            </cursor>
+            <styleClass>
+               <String fx:value="nav-button" />
+               <String fx:value="shadow" />
+            </styleClass>
          </Button>
-         <Button layoutX="25.0" layoutY="70.0" maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" onAction="#showHome" prefHeight="50.0" prefWidth="50.0" styleClass="nav-button">
-            <graphic>
-               <ImageView fx:id="homeImage11" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
-                  <image>
-                     <Image url="@home.png" />
-                  </image>
-                  <cursor>
-                     <Cursor fx:constant="HAND" />
-                  </cursor>
-               </ImageView>
-            </graphic>
+      <Button fx:id="settingButton" layoutX="25.0" layoutY="70.0" maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" onAction="#showSetting" prefHeight="50.0" prefWidth="50.0" styleClass="nav-button">
+        <graphic>
+          <ImageView fx:id="settingImage" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+              <Image url="@setting.png" />
+            </image>
             <cursor>
-               <Cursor fx:constant="HAND" />
+              <Cursor fx:constant="HAND" />
             </cursor>
-         </Button>
-         <padding>
-            <Insets bottom="10.0" top="10.0" />
-         </padding>
+          </ImageView>
+        </graphic>
+        <cursor>
+          <Cursor fx:constant="HAND" />
+        </cursor>
+      </Button>
+      <padding>
+        <Insets bottom="10.0" top="10.0" />
+      </padding>
     </VBox>
   </left>
 </BorderPane>
