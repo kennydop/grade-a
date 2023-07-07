@@ -10,7 +10,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<StackPane prefWidth="250.0" styleClass="card" stylesheets="@style.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gradea.ReviewQuizCardController">
+<StackPane prefWidth="250.0" styleClass="card" stylesheets="@style.css"
+  xmlns="http://javafx.com/javafx/20.0.1"
+  xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gradea.ReviewQuizCardController">
   <children>
     <VBox alignment="CENTER" spacing="5.0" StackPane.alignment="CENTER">
       <children>
@@ -41,7 +43,7 @@
                 <Label fx:id="scoreLabel" text="40%" />
               </children>
             </HBox>
-            <Button mnemonicParsing="false" prefHeight="50.0" styleClass="fill-width" text="Review Quiz" VBox.vgrow="ALWAYS">
+            <Button fx:id="reviewButton" mnemonicParsing="false" prefHeight="50.0" styleClass="fill-width" text="Review Quiz" VBox.vgrow="ALWAYS">
               <font>
                 <Font name="Montserrat Bold" size="12.0" />
               </font>

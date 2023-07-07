@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
@@ -43,7 +44,7 @@
                 <Label fx:id="dueDateLabel" text="Due in 14 days" />
               </children>
             </HBox>
-            <Button mnemonicParsing="false" prefHeight="50.0" styleClass="fill-width" text="Take Quiz" VBox.vgrow="ALWAYS">
+            <Button fx:id="viewQuizButton" alignment="BASELINE_CENTER" mnemonicParsing="false" prefHeight="50.0" styleClass="fill-width" text="View Quiz" VBox.vgrow="ALWAYS">
               <font>
                 <Font name="Montserrat Bold" size="12.0" />
               </font>

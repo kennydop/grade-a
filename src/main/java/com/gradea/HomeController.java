@@ -13,8 +13,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 
 public class HomeController {
+  @FXML
+  private HBox header;
   @FXML
   private HBox upcomingQuizzesContainer;
   @FXML
@@ -23,7 +26,7 @@ public class HomeController {
   private Quiz[] upcomingQuizes = {
       new Quiz(
           "Quiz 1",
-          "This is the first quiz",
+          "This is the first quiz. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation",
           "GradeA",
           LocalDate.now(),
           LocalDate.now().plusDays(1),
@@ -156,7 +159,8 @@ public class HomeController {
 
   @FXML
   private void initialize() {
-
+    header.setMaxWidth(Double.MAX_VALUE);
+    HBox.setHgrow(header, Priority.ALWAYS);
     for (Quiz quiz : upcomingQuizes) {
       addQuizCard(quiz);
     }
@@ -166,6 +170,21 @@ public class HomeController {
     }
 
     // Load the user's data here
+  }
+
+  @FXML
+  private void createOrganization() {
+    // Your code here
+  }
+
+  @FXML
+  private void joinOrganization() {
+    // Your code here
+  }
+
+  @FXML
+  private void createQuiz() {
+    // Your code here
   }
 
   public void addQuizCard(Quiz quiz) {

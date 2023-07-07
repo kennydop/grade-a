@@ -25,7 +25,7 @@ public class App extends Application {
     scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
     stage.setScene(scene);
     stage.setTitle("Grade A");
-    stage.isMaximized();
+    // stage.setMaximized(true);
     stage.show();
   }
 

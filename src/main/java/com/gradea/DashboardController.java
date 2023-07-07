@@ -97,21 +97,6 @@ public class DashboardController {
     contentPane.setContent(view);
   }
 
-  @FXML
-  private void createOrganization() {
-    // Your code here
-  }
-
-  @FXML
-  private void joinOrganization() {
-    // Your code here
-  }
-
-  @FXML
-  private void createQuiz() {
-    // Your code here
-  }
-
   private void setUpNavButton(Button _navButton, ImageView _navImage, Image _navImageAsset,
       Image _navImageSelectedAsset) {
     _navButton.setOnMouseClicked(event -> {
