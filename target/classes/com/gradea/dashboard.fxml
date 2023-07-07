@@ -1,32 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.String?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane stylesheets="@style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gradea.DashboardController">
+<BorderPane stylesheets="@style.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gradea.DashboardController">
   <center>
     <BorderPane>
       <center>
-        <Pane fx:id="contentPane" />
+        <ScrollPane fx:id="contentPane" />
       </center>
       <top>
-        <HBox id="header" fx:id="header" alignment="TOP_CENTER" spacing="10.0" styleClass="fill-width" BorderPane.alignment="CENTER">
-          <TextField promptText="Search" />
+        <HBox id="header" fx:id="header" alignment="CENTER" spacing="10.0" style="-fx-background-color: transparent;" styleClass="fill-width" BorderPane.alignment="CENTER">
+          <TextField prefHeight="40.0" promptText="Search" />
           <Region HBox.hgrow="ALWAYS" />
           <HBox alignment="CENTER_RIGHT" spacing="24.0">
             <children>
-              <Button onAction="#createOrganization" prefHeight="50.0" styleClass="shadow" text="Create Organization">
+              <Button onAction="#createOrganization" prefHeight="50.0" styleClass="button-with-shadow" text="Create Organization">
                 <graphic>
                   <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                     <image>
@@ -38,7 +38,7 @@
                   <Font name="Montserrat Regular" size="12.0" />
                 </font>
               </Button>
-              <Button onAction="#joinOrganization" prefHeight="50.0" styleClass="shadow" text="Join Organization">
+              <Button onAction="#joinOrganization" prefHeight="50.0" styleClass="button-with-shadow" text="Join Organization">
                 <graphic>
                   <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
                     <image>
@@ -47,7 +47,7 @@
                   </ImageView>
                 </graphic>
               </Button>
-              <Button onAction="#createQuiz" prefHeight="50.0" styleClass="shadow" text="Create Quiz">
+              <Button onAction="#createQuiz" prefHeight="50.0" styleClass="button-with-shadow" text="Create Quiz">
                 <graphic>
                   <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
                     <image>
@@ -61,12 +61,32 @@
           <padding>
             <Insets bottom="10.0" left="24.0" right="24.0" top="10.0" />
           </padding>
+          <BorderPane.margin>
+            <Insets bottom="20.0" />
+          </BorderPane.margin>
+          <cursor>
+            <Cursor fx:constant="DEFAULT" />
+          </cursor>
         </HBox>
       </top>
     </BorderPane>
   </center>
   <left>
-    <VBox id="sidePanel" fx:id="sidePanel" alignment="TOP_CENTER" fillWidth="false" maxWidth="80.0" prefWidth="80.0" spacing="10.0" styleClass="side-nav" BorderPane.alignment="CENTER">
+    <VBox id="sidePanel" fx:id="sidePanel" alignment="TOP_CENTER" fillWidth="false" maxWidth="86.0" prefWidth="86.0" spacing="10.0" styleClass="side-nav" BorderPane.alignment="CENTER">
+      <HBox alignment="CENTER">
+        <children>
+          <Label styleClass="text-color-primary" text="Grade">
+            <font>
+              <Font name="Montserrat Black" size="16.0" />
+            </font>
+          </Label>
+          <Label layoutX="10.0" layoutY="10.0" styleClass="text-color-primary" text="A">
+            <font>
+              <Font name="Montserrat Black" size="20.0" />
+            </font>
+          </Label>
+        </children>
+      </HBox>
       <Button fx:id="homeButton" maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" onAction="#showHome" prefHeight="50.0" prefWidth="50.0" styleClass="nav-button">
         <graphic>
           <ImageView fx:id="homeImage" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
@@ -97,19 +117,15 @@
           <Cursor fx:constant="HAND" />
         </cursor>
       </Button>
-         <Button fx:id="notificationButton" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0">
-            <graphic>
-               <ImageView fx:id="notificationImage" fitHeight="24.0" fitWidth="24.0">
-                  <image>
-                     <Image url="@bell-ring.png" />
-                  </image>
-               </ImageView>
-            </graphic>
-            <styleClass>
-               <String fx:value="nav-button" />
-               <String fx:value="shadow" />
-            </styleClass>
-         </Button>
+      <Button fx:id="notificationButton" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" onAction="#showNotification" prefHeight="50.0" prefWidth="50.0" styleClass="nav-button">
+        <graphic>
+          <ImageView fx:id="notificationImage" fitHeight="24.0" fitWidth="24.0">
+            <image>
+              <Image url="@bell-ring.png" />
+            </image>
+          </ImageView>
+        </graphic>
+      </Button>
       <Button fx:id="settingButton" layoutX="25.0" layoutY="70.0" maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" onAction="#showSetting" prefHeight="50.0" prefWidth="50.0" styleClass="nav-button">
         <graphic>
           <ImageView fx:id="settingImage" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
@@ -130,4 +146,89 @@
       </padding>
     </VBox>
   </left>
+  <!-- <right>
+    <VBox alignment="CENTER" prefWidth="300.0" spacing="10.0" style="-fx-background-color: white;">
+      <Circle fx:id="avatar" accessibleRole="IMAGE_VIEW" radius="100.0">
+        <styleClass>
+          <String fx:value="shadow" />
+          <String fx:value="bg-color" />
+        </styleClass>
+      </Circle>
+      <Label fx:id="userName" styleClass="text-color" text="Hi, Kenny">
+        <font>
+          <Font name="Montserrat Bold" size="24.0" />
+        </font>
+      </Label>
+      <Label fx:id="organizations">
+        <font>
+          <Font name="Montserrat Regular" size="18.0" />
+        </font>
+      </Label>
+      <Label fx:id="averageScore">
+        <font>
+          <Font name="Montserrat Regular" size="18.0" />
+        </font>
+      </Label>
+      <HBox alignment="CENTER" spacing="10.0">
+        <children>
+          <VBox alignment="CENTER" prefHeight="120.0" prefWidth="100.0">
+            <children>
+              <Label fx:id="quizzesTaken" styleClass="text-color-alternate-1" text="0">
+                <font>
+                  <Font name="Montserrat Bold" size="24.0" />
+                </font>
+              </Label>
+              <Label layoutX="50.0" layoutY="49.0" styleClass="text-color-alternate-1" text="Quizzes">
+                <font>
+                  <Font name="Montserrat Regular" size="13.0" />
+                </font>
+              </Label>
+              <Label layoutX="20.0" layoutY="63.0" styleClass="text-color-alternate-1" text="Taken">
+                <font>
+                  <Font name="Montserrat Regular" size="13.0" />
+                </font>
+              </Label>
+            </children>
+            <styleClass>
+              <String fx:value="border-radius" />
+              <String fx:value="alternate-bg-color-1" />
+            </styleClass>
+            <padding>
+              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+            </padding>
+          </VBox>
+          <VBox alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="120.0" prefWidth="100.0">
+            <children>
+              <Label fx:id="quizzesToTake" styleClass="text-color-alternate-2" text="0">
+                <font>
+                  <Font name="Montserrat Bold" size="24.0" />
+                </font>
+              </Label>
+              <Label styleClass="text-color-alternate-2" text="Quizzes">
+                <font>
+                  <Font name="Montserrat Regular" size="13.0" />
+                </font>
+              </Label>
+              <Label layoutX="20.0" layoutY="63.0" styleClass="text-color-alternate-2" text="To Take">
+                <font>
+                  <Font name="Montserrat Regular" size="13.0" />
+                </font>
+              </Label>
+            </children>
+            <styleClass>
+              <String fx:value="border-radius" />
+              <String fx:value="alternate-bg-color-2" />
+            </styleClass>
+            <padding>
+              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+            </padding>
+          </VBox>
+        </children>
+      </HBox>
+      <padding>
+        <Insets left="20.0" right="20.0" />
+      </padding>
+    </VBox>
+
+  </right> -->
 </BorderPane>

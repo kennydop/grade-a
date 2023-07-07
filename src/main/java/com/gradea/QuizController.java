@@ -77,17 +77,7 @@ public class QuizController {
 
     // Load questions into the questions list here
     questions.addAll(
-        List.of(
-            new Question("What is your Name?", QuestionType.SHORT_ANSWER, null, "John Doe"),
-            new Question("What is the capital of France?", QuestionType.MULTIPLE_CHOICE,
-                List.of("Paris", "London", "Berlin", "Madrid"), "Paris"),
-            new Question("What is the capital of Spain?", QuestionType.MULTIPLE_CHOICE,
-                List.of("Paris", "London", "Berlin", "Madrid"), "Madrid"),
-            new Question("What is the capital of Germany?", QuestionType.MULTIPLE_CHOICE,
-                List.of("Paris", "London", "Berlin", "Madrid"), "Berlin"),
-            new Question("The capital of United Kingdom is London.", QuestionType.TRUE_FALSE, null, "True"),
-            new Question("What is the capital of the United States?", QuestionType.SHORT_ANSWER, null,
-                "Washington D.C.")));
+        List.of());
 
     int totalQuestions = questions.size();
     for (int i = 0; i < totalQuestions; i++) {
@@ -211,17 +201,17 @@ public class QuizController {
     } else if (question.getType() == QuestionType.MULTIPLE_CHOICE) {
       shortAnswer.setVisible(false);
       multipleChoice.setVisible(true);
-      List<String> options = question.getOptions();
+      String[] options = question.getOptions();
       option1.setVisible(true);
-      option1.setText(options.get(0));
+      option1.setText(options[0]);
       option2.setVisible(true);
-      option2.setText(options.get(1));
+      option2.setText(options[1]);
       option3.setVisible(true);
-      option3.setText(options.get(2));
+      option3.setText(options[2]);
       option4.setVisible(true);
-      option4.setText(options.get(3));
+      option4.setText(options[3]);
     } else {
-      List<String> options = question.getOptions();
+      String[] options = question.getOptions();
       shortAnswer.setVisible(false);
       multipleChoice.setVisible(true);
       option1.setText("");
@@ -229,9 +219,9 @@ public class QuizController {
       option2.setText("");
       option2.setVisible(false);
       option3.setVisible(true);
-      option3.setText(options.get(0));
+      option3.setText(options[0]);
       option4.setVisible(true);
-      option4.setText(options.get(1));
+      option4.setText(options[1]);
     }
 
     // Set the user's answer if they've already answered the question

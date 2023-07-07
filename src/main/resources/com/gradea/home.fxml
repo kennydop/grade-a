@@ -1,14 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.shape.Circle?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<VBox xmlns="http://javafx.com/javafx/8.0.112"
+<VBox style="-fx-background-color: transparent;" stylesheets="@style.css"
+  xmlns="http://javafx.com/javafx/20.0.1"
   xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gradea.HomeController">
-  <Circle fx:id="avatar" />
-  <Label fx:id="userName" />
-  <Label fx:id="quizzesTaken" />
-  <Label fx:id="organizations" />
-  <Label fx:id="averageScore" />
+  <children>
+    <Label styleClass="text-color" text="Upcoming Quizzes">
+      <font>
+        <Font name="Montserrat Bold" size="18.0" />
+      </font>
+      <VBox.margin>
+        <Insets left="30.0" />
+      </VBox.margin>
+    </Label>
+    <ScrollPane>
+      <content>
+        <HBox fx:id="upcomingQuizzesContainer" spacing="20.0">
+          <padding>
+            <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
+          </padding>
+        </HBox>
+      </content>
+      <VBox.margin>
+        <Insets />
+      </VBox.margin>
+    </ScrollPane>
+    <Label layoutX="30.0" layoutY="10.0" styleClass="text-color" text="Recently Taken Quizzes">
+      <font>
+        <Font name="Montserrat Bold" size="18.0" />
+      </font>
+      <VBox.margin>
+        <Insets left="30.0" top="20.0" />
+      </VBox.margin>
+    </Label>
+    <HBox fx:id="recentlyTakenQuizzesContainer">
+      <content>
+        <HBox spacing="20.0">
+          <padding>
+            <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
+          </padding>
+        </HBox>
+      </content>
+    </HBox>
+  </children>
 </VBox>

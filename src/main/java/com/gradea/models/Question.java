@@ -4,30 +4,50 @@ import java.util.List;
 
 public class Question {
   private String questionText;
-  private List<String> options;
+  private String[] options;
   private String correctAnswer;
   private QuestionType type;
   private String userAnswer;
+  private double points;
 
-  public Question(String questionText, QuestionType type, List<String> options, String correctAnswer) {
+  public Question(String questionText, QuestionType type, String[] options, String correctAnswer, double points) {
     this.questionText = questionText;
     this.type = type;
     if (type == QuestionType.TRUE_FALSE) {
-      this.options = List.of("True", "False");
+      this.options = new String[] { "True", "False" };
     } else if (type == QuestionType.SHORT_ANSWER) {
-      this.options = List.of();
+      this.options = new String[] {};
+      ;
     } else {
       this.options = options;
     }
     this.correctAnswer = correctAnswer;
     this.userAnswer = "";
+    this.points = points;
+  }
+
+  public Question(String questionText, QuestionType type, String[] options, String correctAnswer, double points,
+      String userAnswer) {
+    this.questionText = questionText;
+    this.type = type;
+    if (type == QuestionType.TRUE_FALSE) {
+      this.options = new String[] { "True", "False" };
+    } else if (type == QuestionType.SHORT_ANSWER) {
+      this.options = new String[] {};
+      ;
+    } else {
+      this.options = options;
+    }
+    this.correctAnswer = correctAnswer;
+    this.userAnswer = userAnswer;
+    this.points = points;
   }
 
   public String getQuestionText() {
     return questionText;
   }
 
-  public List<String> getOptions() {
+  public String[] getOptions() {
     return options;
   }
 
@@ -47,7 +67,7 @@ public class Question {
     this.questionText = questionText;
   }
 
-  public void setOptions(List<String> options) {
+  public void setOptions(String[] options) {
     this.options = options;
   }
 
@@ -63,8 +83,16 @@ public class Question {
     this.userAnswer = userAnswer;
   }
 
-  public boolean isCorrect(String answer) {
-    return answer.equals(correctAnswer);
+  public boolean isCorrect() {
+    return userAnswer.equals(correctAnswer);
+  }
+
+  public double getPoints() {
+    return points;
+  }
+
+  public void setPoints(double points) {
+    this.points = points;
   }
 
   public enum QuestionType {
