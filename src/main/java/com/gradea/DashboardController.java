@@ -7,6 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -15,7 +16,7 @@ import javafx.scene.shape.Circle;
 
 public class DashboardController {
   @FXML
-  private ScrollPane contentPane;
+  private BorderPane rootPane;
 
   @FXML
   private Button homeButton;
@@ -76,25 +77,25 @@ public class DashboardController {
   @FXML
   private void showHome() throws Exception {
     Pane view = FXMLLoader.load(getClass().getResource("home.fxml"));
-    contentPane.setContent(view);
+    rootPane.setCenter(view);
   }
 
   @FXML
   private void showQuiz() throws Exception {
     Pane view = FXMLLoader.load(getClass().getResource("quiz.fxml"));
-    contentPane.setContent(view);
+    rootPane.setCenter(view);
   }
 
   @FXML
   private void showSetting() throws Exception {
     Pane view = FXMLLoader.load(getClass().getResource("setting.fxml"));
-    contentPane.setContent(view);
+    rootPane.setCenter(view);
   }
 
   @FXML
   private void showNotification() throws Exception {
     Pane view = FXMLLoader.load(getClass().getResource("setting.fxml"));
-    contentPane.setContent(view);
+    rootPane.setCenter(view);
   }
 
   private void setUpNavButton(Button _navButton, ImageView _navImage, Image _navImageAsset,

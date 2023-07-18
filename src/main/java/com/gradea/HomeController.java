@@ -12,8 +12,12 @@ import com.gradea.models.Quiz;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 public class HomeController {
   @FXML
@@ -173,18 +177,37 @@ public class HomeController {
   }
 
   @FXML
-  private void createOrganization() {
-    // Your code here
+  void showJoinOrgDialog() {
+    try {
+      FXMLLoader loader = new FXMLLoader(getClass().getResource("join-org.fxml"));
+      Parent root = loader.load();
+
+      Stage dialogStage = new Stage();
+      dialogStage.initModality(Modality.APPLICATION_MODAL);
+      dialogStage.setResizable(false);
+      dialogStage.setScene(new Scene(root));
+      dialogStage.show();
+
+    } catch (Exception ex) {
+      ex.printStackTrace();
+    }
   }
 
   @FXML
-  private void joinOrganization() {
-    // Your code here
-  }
+  void showCreateOrgDialog() {
+    try {
+      FXMLLoader loader = new FXMLLoader(getClass().getResource("create-org.fxml"));
+      Parent root = loader.load();
 
-  @FXML
-  private void createQuiz() {
-    // Your code here
+      Stage dialogStage = new Stage();
+      dialogStage.initModality(Modality.APPLICATION_MODAL);
+      dialogStage.setResizable(false);
+      dialogStage.setScene(new Scene(root));
+      dialogStage.show();
+
+    } catch (Exception ex) {
+      ex.printStackTrace();
+    }
   }
 
   public void addQuizCard(Quiz quiz) {

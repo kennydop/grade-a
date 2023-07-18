@@ -211,6 +211,11 @@
   -fx-cursor: hand;
 }
 
+.option.clicked {
+  -fx-border-color: #4262ff;
+  -fx-border-width: 2px;
+}
+
 .fill-width {
   -fx-max-width: Infinity;
 }

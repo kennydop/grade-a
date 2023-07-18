@@ -90,7 +90,7 @@
                 <Label fx:id="organizationLabel" layoutX="29.0" layoutY="10.0" text="GradeA" />
               </children>
             </HBox>
-            <Button fx:id="startQuizButton" alignment="BASELINE_CENTER" mnemonicParsing="false" prefHeight="50.0" styleClass="fill-width" text="Take Quiz">
+            <Button fx:id="startQuizButton" alignment="BASELINE_CENTER" mnemonicParsing="false" onAction="#startQuiz" prefHeight="50.0" styleClass="fill-width" text="Take Quiz">
               <font>
                 <Font name="Montserrat Bold" size="12.0" />
               </font>

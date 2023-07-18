@@ -21,7 +21,7 @@ public class App extends Application {
 
   @Override
   public void start(Stage stage) throws IOException {
-    scene = new Scene(loadFXML("dashboard"), 800, 600);
+    scene = new Scene(loadFXML("dashboard"), 1000, 600);
     scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
     stage.setScene(scene);
     stage.setTitle("Grade A");

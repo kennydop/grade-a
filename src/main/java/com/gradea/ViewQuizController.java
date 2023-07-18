@@ -1,18 +1,23 @@
 package com.gradea;
 
+import java.io.IOException;
 import java.util.Optional;
 
 import com.gradea.models.Quiz;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 public class ViewQuizController {
   @FXML
@@ -42,10 +47,6 @@ public class ViewQuizController {
 
   private Quiz quiz;
 
-  public void initialize() {
-    startQuizButton.setOnAction(event -> startQuiz());
-  }
-
   public void setQuiz(Quiz quiz) {
     _setQuiz(quiz, "upcoming");
   }
@@ -56,6 +57,9 @@ public class ViewQuizController {
 
   private void _setQuiz(Quiz quiz, String type) {
     this.quiz = quiz;
+    System.out.println("=============== SETTING QUIZ ===============");
+    System.out.println(quiz.getName());
+    System.out.println("===============================================");
     if (type == "upcoming") {
       reviewQuizInfo.setVisible(false);
       reviewQuizInfo.setManaged(false);
@@ -79,7 +83,28 @@ public class ViewQuizController {
     }
   }
 
-  private void startQuiz() {
-    // Code to start the quiz
+  public void startQuiz() {
+    try {
+      System.out.println("=============== VIEW CONTROLLER ===============");
+      System.out.println(quiz.getName());
+      System.out.println("===============================================");
+      FXMLLoader loader = new FXMLLoader(getClass().getResource("quiz.fxml"));
+      Parent root = loader.load();
+
+      QuizController quizController = loader.getController();
+      quizController.setQuiz(quiz);
+
+      Stage stage = new Stage();
+      stage.initStyle(StageStyle.UNDECORATED);
+      stage.setAlwaysOnTop(true);
+      stage.setMaximized(true);
+
+      Scene scene = new Scene(root);
+      stage.setScene(scene);
+      stage.show();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
   }
+
 }
