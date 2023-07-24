@@ -57,9 +57,6 @@ public class ViewQuizController {
 
   private void _setQuiz(Quiz quiz, String type) {
     this.quiz = quiz;
-    System.out.println("=============== SETTING QUIZ ===============");
-    System.out.println(quiz.getName());
-    System.out.println("===============================================");
     if (type == "upcoming") {
       reviewQuizInfo.setVisible(false);
       reviewQuizInfo.setManaged(false);
@@ -73,6 +70,9 @@ public class ViewQuizController {
       Image image = new Image(getClass().getResourceAsStream("quiz_art.png"));
       quizImage.setImage(image);
       startQuizButton.setText("Take Quiz");
+      startQuizButton.setOnAction((ActionEvent event) -> {
+        startQuiz();
+      });
     } else {
       upcomingQuizInfo.setVisible(false);
       upcomingQuizInfo.setManaged(false);
@@ -80,14 +80,14 @@ public class ViewQuizController {
       quizImage.setImage(image);
       scoreLabel.setText(quiz.getPercentage() + "%" + " (" + quiz.getScore() + "/" + quiz.getTotalScore() + ")");
       startQuizButton.setText("Review Quiz");
+      startQuizButton.setOnAction((ActionEvent event) -> {
+        reviewQuiz();
+      });
     }
   }
 
   public void startQuiz() {
     try {
-      System.out.println("=============== VIEW CONTROLLER ===============");
-      System.out.println(quiz.getName());
-      System.out.println("===============================================");
       FXMLLoader loader = new FXMLLoader(getClass().getResource("quiz.fxml"));
       Parent root = loader.load();
 
@@ -98,10 +98,41 @@ public class ViewQuizController {
       stage.initStyle(StageStyle.UNDECORATED);
       stage.setAlwaysOnTop(true);
       stage.setMaximized(true);
+      quizController.setStage(stage);
 
       Scene scene = new Scene(root);
       stage.setScene(scene);
       stage.show();
+
+      // close this window
+      Stage currentStage = (Stage) startQuizButton.getScene().getWindow();
+      currentStage.close();
+
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
+
+  public void reviewQuiz() {
+    try {
+      FXMLLoader loader = new FXMLLoader(getClass().getResource("finished.fxml"));
+      Parent root = loader.load();
+
+      FinishedController finishedController = loader.getController();
+      finishedController.setQuiz(quiz);
+
+      Stage stage = new Stage();
+      stage.setTitle(quiz.getName() + " - Results");
+      stage.setMaximized(true);
+
+      Scene scene = new Scene(root);
+      stage.setScene(scene);
+      stage.show();
+
+      // close this window
+      Stage currentStage = (Stage) startQuizButton.getScene().getWindow();
+      currentStage.close();
+
     } catch (IOException e) {
       e.printStackTrace();
     }

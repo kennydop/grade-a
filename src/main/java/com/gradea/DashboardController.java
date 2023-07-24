@@ -82,8 +82,8 @@ public class DashboardController {
 
   @FXML
   private void showQuiz() throws Exception {
-    Pane view = FXMLLoader.load(getClass().getResource("quiz.fxml"));
-    rootPane.setCenter(view);
+    // Pane view = FXMLLoader.load(getClass().getResource("quiz.fxml"));
+    // rootPane.setCenter(view);
   }
 
   @FXML

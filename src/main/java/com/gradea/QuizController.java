@@ -1,7 +1,6 @@
 package com.gradea;
 
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
@@ -18,6 +17,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextField;
@@ -30,9 +32,13 @@ import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
 public class QuizController {
+  private Stage stage;
+
   @FXML
   private StackPane rootPane;
 
@@ -41,8 +47,7 @@ public class QuizController {
   @FXML
   private Button option1, option2, option3, option4;
   @FXML
-  private Button prevButton, nextButton;
-
+  private Button prevButton, nextButton, submitButton;
   @FXML
   private TextField shortAnswer;
   @FXML
@@ -70,9 +75,15 @@ public class QuizController {
   private long minutes;
   private long seconds;
   String countdownText;
+  private boolean timeUp = false;
 
   @FXML
   public void initialize() {
+
+    submitButton.setDisable(true);
+    submitButton.setVisible(false);
+    nextButton.setDisable(false);
+    nextButton.setVisible(true);
 
     Platform.runLater(() -> {
       int totalQuestions = quiz.getQuestions().length;
@@ -82,7 +93,11 @@ public class QuizController {
         Circle indicator = new Circle(totalQuestions > 50 ? 5 : totalQuestions > 30 ? 8 : 10);
         indicator.setFill(Color.WHITE); // Set initial color to white
         indicator.setCursor(Cursor.HAND);
-        indicator.setOnMouseClicked(event -> setQuestion(questionNumber));
+        indicator.setOnMouseClicked(event -> {
+          if (timeUp)
+            return;
+          setQuestion(questionNumber);
+        });
         questionIndicatorsBox.getChildren().add(indicator);
         questionIndicators.add(indicator);
       }
@@ -155,35 +170,47 @@ public class QuizController {
       });
       // Move to finished screen when countdown is finished
       countdown.setOnFinished(event -> {
+        timeUp = true;
+
         // Check if current question is answered and mark it as answered before swapping
-        // question
-        // if (questions.get(currentQuestionIndex).getUserAnswer() != "") {
-        // markQuestionAsAnswered(currentQuestionIndex);
-        // }
+        // screen
+        if (quiz.getQuestions()[currentQuestionIndex].getUserAnswer() != "") {
+          markQuestionAsAnswered(currentQuestionIndex);
+        }
 
         // Remove clicked style from all buttons
-        // Stream.of(option1, option2, option3, option4).forEach(button ->
-        // button.getStyleClass().remove("clicked"));
+        Stream.of(option1, option2, option3, option4).forEach(button -> button.getStyleClass().remove("clicked"));
 
-        // Move to finished screen
-        // load fxml
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("finished.fxml"));
-        // Parent root = loader.load();
+        System.out.println("Time's up!");
 
+        // finish quiz
+        submitButton.setDisable(false);
+        submitButton.setVisible(true);
+        nextButton.setDisable(true);
+        nextButton.setVisible(false);
+        submitButton.fire();
       });
 
       countdown.playFromStart();
     });
   }
 
+  public void setStage(Stage stage) {
+    this.stage = stage;
+    stage.setOnCloseRequest(e -> {
+      timer.stop();
+      countdown.stop();
+    });
+  }
+
   public void setQuiz(Quiz quiz) {
-    System.out.println("=============== QUIZ CONTROLLER ===============");
-    System.out.println(quiz.getName());
-    System.out.println("===============================================");
     this.quiz = quiz;
   }
 
   private void setQuestion(int questionIndex) {
+    if (timeUp) {
+      return;
+    }
     // Check if current question is answered and mark it as answered before swapping
     // question
     System.out.println(quiz.getQuestions()[currentQuestionIndex].getQuestionText());
@@ -245,17 +272,28 @@ public class QuizController {
     // Disable prev button if it's the first question
     prevButton.setDisable(questionIndex == 0);
 
-    // Change Next to Finish if it's the last question
-    if (questionIndex == quiz.getQuestions().length - 1) {
-      // forwardImage.setVisible(false);
-      // nextButton.setText("Finish");
+    // if last question switch next and submit buttons
+    if (currentQuestionIndex == quiz.getQuestions().length - 1) {
+      submitButton.setDisable(false);
+      submitButton.setVisible(true);
+      nextButton.setDisable(true);
+      nextButton.setVisible(false);
+    } else {
+      if (submitButton.isVisible()) {
+        submitButton.setDisable(true);
+        submitButton.setVisible(false);
+        nextButton.setDisable(false);
+        nextButton.setVisible(true);
+      }
     }
-    nextButton.setDisable(questionIndex == quiz.getQuestions().length);
     markCurrentQuestion(currentQuestionIndex);
   }
 
   @FXML
   public void handleOptionClick(ActionEvent event) {
+    if (timeUp) {
+      return;
+    }
     Button clickedOption = (Button) event.getSource();
     String selectedOptionText = clickedOption.getText();
     if (clickedOption.getStyleClass().contains("clicked")) {
@@ -279,6 +317,9 @@ public class QuizController {
 
   @FXML
   public void handlePrevClick() {
+    if (timeUp) {
+      return;
+    }
     if (currentQuestionIndex > 0) {
       setQuestion(currentQuestionIndex - 1);
     }
@@ -286,9 +327,45 @@ public class QuizController {
 
   @FXML
   public void handleNextClick() {
+    if (timeUp) {
+      return;
+    }
     if (currentQuestionIndex < quiz.getQuestions().length - 1) {
       setQuestion(currentQuestionIndex + 1);
     }
+
+  }
+
+  @FXML
+  public void handleSubmit(ActionEvent event) {
+    submitButton.setVisible(false);
+    submitButton.setDisable(true);
+    timer.stop();
+    countdown.stop();
+    try {
+      // load the finished screen
+      FXMLLoader loader = new FXMLLoader(getClass().getResource("finished.fxml"));
+      Parent finishedRoot = loader.load();
+      FinishedController finishedController = loader.getController();
+      finishedController.setQuiz(quiz);
+
+      // get current stage
+      Node source = (Node) event.getSource();
+      Stage stage = (Stage) source.getScene().getWindow();
+
+      // show the finished screen and close the current screen
+      Scene finishedScene = new Scene(finishedRoot, 1000, 600);
+      Stage finishedStage = new Stage();
+      finishedStage.initStyle(StageStyle.DECORATED);
+      finishedStage.setScene(finishedScene);
+      stage.close();
+      finishedStage.setTitle(quiz.getName() + " - Results");
+      finishedStage.setMaximized(true);
+      finishedStage.show();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+
   }
 
   public void markQuestionAsAnswered(int questionNumber) {

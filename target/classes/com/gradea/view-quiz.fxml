@@ -10,7 +10,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<StackPane prefWidth="400.0" styleClass="card" stylesheets="@style.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gradea.ViewQuizController">
+<StackPane prefWidth="400.0" styleClass="card" stylesheets="@style.css"
+  xmlns="http://javafx.com/javafx/20.0.1"
+  xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gradea.ViewQuizController">
   <children>
     <VBox alignment="CENTER">
       <children>
@@ -31,55 +33,55 @@
                 <Font size="13.0" />
               </font>
             </Label>
-                  <VBox fx:id="upcomingQuizInfo" spacing="10.0">
-                     <children>
-                  <HBox alignment="CENTER_LEFT" spacing="5.0">
-                    <children>
-                      <ImageView fitHeight="14.0" fitWidth="14.0" pickOnBounds="true" preserveRatio="true">
-                        <image>
-                          <Image url="@clock.png" />
-                        </image>
-                      </ImageView>
-                      <Label fx:id="durationLabel" layoutX="29.0" layoutY="10.0" text="25 mins - " />
-                      <Label fx:id="dueDateLabel" text="Due in 14 days" />
-                    </children>
-                  </HBox>
-                  <HBox alignment="CENTER_LEFT" spacing="5.0">
-                    <children>
-                      <ImageView fitHeight="14.0" fitWidth="14.0" pickOnBounds="true" preserveRatio="true">
-                        <image>
-                          <Image url="@sum.png" />
-                        </image>
-                      </ImageView>
-                      <Label fx:id="numberOfQuestionsLabel" layoutX="29.0" layoutY="10.0" text="10 Questions" />
-                    </children>
-                  </HBox>
-                  <HBox alignment="CENTER_LEFT" spacing="5.0">
-                    <children>
-                      <ImageView fitHeight="14.0" fitWidth="14.0" pickOnBounds="true" preserveRatio="true">
-                        <image>
-                          <Image url="@target.png" />
-                        </image>
-                      </ImageView>
-                      <Label fx:id="attemptsAllowedLabel" layoutX="29.0" layoutY="10.0" text="3 Attemts allowed" />
-                    </children>
-                  </HBox>
-                     </children>
-                  </VBox>
-                  <VBox fx:id="reviewQuizInfo">
-                     <children>
-                        <HBox alignment="CENTER_LEFT" spacing="5.0">
-                           <children>
-                              <ImageView fitHeight="14.0" fitWidth="14.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@percentage.png" />
-                                 </image>
-                              </ImageView>
-                              <Label fx:id="scoreLabel" layoutX="29.0" layoutY="10.0" text="80% (8/10)" />
-                           </children>
-                        </HBox>
-                     </children>
-                  </VBox>
+            <VBox fx:id="upcomingQuizInfo" spacing="10.0">
+              <children>
+                <HBox alignment="CENTER_LEFT" spacing="5.0">
+                  <children>
+                    <ImageView fitHeight="14.0" fitWidth="14.0" pickOnBounds="true" preserveRatio="true">
+                      <image>
+                        <Image url="@clock.png" />
+                      </image>
+                    </ImageView>
+                    <Label fx:id="durationLabel" layoutX="29.0" layoutY="10.0" text="25 mins - " />
+                    <Label fx:id="dueDateLabel" text="Due in 14 days" />
+                  </children>
+                </HBox>
+                <HBox alignment="CENTER_LEFT" spacing="5.0">
+                  <children>
+                    <ImageView fitHeight="14.0" fitWidth="14.0" pickOnBounds="true" preserveRatio="true">
+                      <image>
+                        <Image url="@sum.png" />
+                      </image>
+                    </ImageView>
+                    <Label fx:id="numberOfQuestionsLabel" layoutX="29.0" layoutY="10.0" text="10 Questions" />
+                  </children>
+                </HBox>
+                <HBox alignment="CENTER_LEFT" spacing="5.0">
+                  <children>
+                    <ImageView fitHeight="14.0" fitWidth="14.0" pickOnBounds="true" preserveRatio="true">
+                      <image>
+                        <Image url="@target.png" />
+                      </image>
+                    </ImageView>
+                    <Label fx:id="attemptsAllowedLabel" layoutX="29.0" layoutY="10.0" text="3 Attemts allowed" />
+                  </children>
+                </HBox>
+              </children>
+            </VBox>
+            <VBox fx:id="reviewQuizInfo">
+              <children>
+                <HBox alignment="CENTER_LEFT" spacing="5.0">
+                  <children>
+                    <ImageView fitHeight="14.0" fitWidth="14.0" pickOnBounds="true" preserveRatio="true">
+                      <image>
+                        <Image url="@percentage.png" />
+                      </image>
+                    </ImageView>
+                    <Label fx:id="scoreLabel" layoutX="29.0" layoutY="10.0" text="80% (8/10)" />
+                  </children>
+                </HBox>
+              </children>
+            </VBox>
             <HBox alignment="CENTER_LEFT" spacing="5.0">
               <children>
                 <ImageView fitHeight="14.0" fitWidth="14.0" pickOnBounds="true" preserveRatio="true">
@@ -90,7 +92,7 @@
                 <Label fx:id="organizationLabel" layoutX="29.0" layoutY="10.0" text="GradeA" />
               </children>
             </HBox>
-            <Button fx:id="startQuizButton" alignment="BASELINE_CENTER" mnemonicParsing="false" onAction="#startQuiz" prefHeight="50.0" styleClass="fill-width" text="Take Quiz">
+            <Button fx:id="startQuizButton" alignment="BASELINE_CENTER" mnemonicParsing="false" prefHeight="50.0" styleClass="fill-width" text="Take Quiz">
               <font>
                 <Font name="Montserrat Bold" size="12.0" />
               </font>
