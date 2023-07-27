@@ -95,9 +95,9 @@ public class ViewQuizController {
       quizController.setQuiz(quiz);
 
       Stage stage = new Stage();
-      stage.initStyle(StageStyle.UNDECORATED);
-      stage.setAlwaysOnTop(true);
-      stage.setMaximized(true);
+      // stage.initStyle(StageStyle.UNDECORATED);
+      // stage.setAlwaysOnTop(true);
+      // stage.setMaximized(true);
       quizController.setStage(stage);
 
       Scene scene = new Scene(root);
