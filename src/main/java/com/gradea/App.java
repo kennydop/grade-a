@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 import com.gradea.controllers.DB;
-import com.gradea.controllers.UserSession;
+import com.gradea.controllers.Session;
 
 /**
  * JavaFX App
@@ -24,10 +24,11 @@ public class App extends Application {
 
   @Override
   public void start(Stage stage) throws IOException {
-    UserSession userSession = UserSession.getInstance();
+    Session.getInstance().loadUserFromPrefs();
+    Session userSession = Session.getInstance();
 
     String fxml;
-    if (userSession.isLoggedIn()) {
+    if (userSession.getCurrentUser() != null) {
       fxml = "dashboard";
     } else {
       fxml = "auth";

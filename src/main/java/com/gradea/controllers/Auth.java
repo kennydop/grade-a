@@ -1,14 +1,14 @@
 package com.gradea.controllers;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-// import org.mindrot.jbcrypt.BCrypt;
+import org.mindrot.jbcrypt.BCrypt;
 
 import com.gradea.models.AuthResults;
+import com.gradea.models.User;
 
 public class Auth {
   private static final Auth instance = new Auth();
@@ -17,9 +17,7 @@ public class Auth {
   private Auth() {
     try {
 
-      this.dbConnection = DriverManager.getConnection("jdbc:mysql://localhost:3306/" + DB.dbName,
-          DB.user,
-          DB.password);
+      this.dbConnection = DB.getInstance().getConnection();
     } catch (Exception e) {
       System.out.println("Error connecting to database: " + e.getMessage());
     }
@@ -30,17 +28,15 @@ public class Auth {
   }
 
   // Register a new user
-  public AuthResults register(String email, String firstName, String lastName, String password) {
+  public AuthResults register(String email, String password, String firstName, String lastName) {
 
     String sql = "INSERT INTO users (email, password, first_name, last_name) VALUES (?, ?, ?, ?)";
-    String checkUserSql = "SELECT * FROM users WHERE email = ?";
 
     try {
       // Check if user already exists
-      PreparedStatement userExistsStmt = dbConnection.prepareStatement(checkUserSql);
-      userExistsStmt.setString(1, email);
-      ResultSet resultSet = userExistsStmt.executeQuery();
-      if (resultSet.next()) {
+      User existingUser = getUserByEmail(email);
+      if (existingUser != null) {
+        System.out.println("User already exists");
         return new AuthResults(false, "User already exists");
       }
 
@@ -53,6 +49,8 @@ public class Auth {
       registerStmt.setString(4, lastName);
 
       registerStmt.executeUpdate();
+      User user = getUserByEmail(email);
+      Session.getInstance().setCurrentUser(user);
       return new AuthResults(true, "User registered successfully");
     } catch (SQLException e) {
       System.err.println("Error registering user: " + e.getMessage());
@@ -68,28 +66,58 @@ public class Auth {
       PreparedStatement stmt = dbConnection.prepareStatement(sql);
       stmt.setString(1, email);
       ResultSet resultSet = stmt.executeQuery();
+      if (!resultSet.next()) {
+        return new AuthResults(false, "User not found");
+      }
+
       String hashedPassword = resultSet.getString("password");
       boolean isPasswordCorrect = verifyPassword(password, hashedPassword);
       if (isPasswordCorrect) {
+        User user = getUserByEmail(email);
+        Session.getInstance().setCurrentUser(user);
         return new AuthResults(true, "User logged in successfully");
       } else {
         return new AuthResults(false, "Incorrect password");
       }
     } catch (SQLException e) {
       System.err.println("Error logging in: " + e.getMessage());
-      return new AuthResults(false, "Error logging in");
+      return new AuthResults(false,
+          e.getMessage().equals("Illegal operation on empty result set.") ? "User not found" : "Error logging in");
+    }
+  }
+
+  // Fetch a user from the database by their email
+  public User getUserByEmail(String email) {
+    String sql = "SELECT * FROM users WHERE email = ?";
+
+    try {
+      PreparedStatement stmt = dbConnection.prepareStatement(sql);
+      stmt.setString(1, email);
+      ResultSet resultSet = stmt.executeQuery();
+
+      if (resultSet.next()) {
+        System.out.println("User found");
+        int id = resultSet.getInt("id");
+        String firstName = resultSet.getString("first_name");
+        String lastName = resultSet.getString("last_name");
+
+        return new User(id, email, firstName, lastName);
+      }
+      System.out.println("User not found");
+      return null; // User not found
+    } catch (SQLException e) {
+      System.err.println("Error getting user: " + e.getMessage());
+      return null;
     }
   }
 
   // Hash a password using BCrypt
   private String hashPassword(String plainTextPassword) {
-    // return BCrypt.hashpw(plainTextPassword, BCrypt.gensalt());
-    return plainTextPassword;
+    return BCrypt.hashpw(plainTextPassword, BCrypt.gensalt());
   }
 
   // Verify a password against a hashed password
   private boolean verifyPassword(String plainTextPassword, String hashedPassword) {
-    // return BCrypt.checkpw(plainTextPassword, hashedPassword);
-    return plainTextPassword.equals(hashedPassword);
+    return BCrypt.checkpw(plainTextPassword, hashedPassword);
   }
 }

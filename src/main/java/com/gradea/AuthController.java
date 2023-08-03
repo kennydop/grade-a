@@ -74,11 +74,19 @@ public class AuthController {
     }
     loginError.setText("");
     isLoading = true;
-    String email = loginEmailField.getText();
+    String email = loginEmailField.getText().strip();
     String password = loginPasswordField.getText();
 
     if (!EMAIL_REGEX.matcher(email).matches()) {
       loginError.setText("Invalid email address");
+      System.out.println("Invalid email address");
+      isLoading = false;
+      return;
+    }
+
+    if (!PASSWORD_REGEX.matcher(password).matches()) {
+      loginError.setText("Enter a valid password");
+      isLoading = false;
       return;
     }
 
@@ -93,6 +101,7 @@ public class AuthController {
     } else {
       // Login failed
       loginError.setText(authResults.getMessage());
+      System.out.println(authResults.getMessage());
     }
     isLoading = false;
   }
@@ -104,25 +113,28 @@ public class AuthController {
     }
     registerError.setText("");
     isLoading = true;
-    String fName = fNameField.getText();
-    String lName = lNameField.getText();
-    String email = registerEmailField.getText();
+    String fName = fNameField.getText().strip();
+    String lName = lNameField.getText().strip();
+    String email = registerEmailField.getText().strip();
     String password = registerPasswordField.getText();
     String confirmPassword = confirmPasswordField.getText();
 
     if (!EMAIL_REGEX.matcher(email).matches()) {
       registerError.setText("Invalid email address");
+      System.out.println("Invalid email address");
+      isLoading = false;
       return;
     }
 
     if (!PASSWORD_REGEX.matcher(password).matches()) {
-      loginError.setText("Invalid password. Password must contain at least one digit, " +
-          "one lowercase letter, one uppercase letter, and be between 8 to 20 characters.");
+      registerError.setText(
+          "Password must contain at least one digit,\none lowercase letter, one uppercase letter,\nand be between 8 to 20 characters.");
+      isLoading = false;
       return;
     }
 
     if (password.equals(confirmPassword)) {
-      AuthResults authResults = Auth.getInstance().register(fName, lName, email, password);
+      AuthResults authResults = Auth.getInstance().register(email, password, fName, lName);
       if (authResults.getSuccess()) {
         // User is registered, redirect to dashboard
         try {
@@ -133,10 +145,12 @@ public class AuthController {
       } else {
         // Registration failed
         registerError.setText(authResults.getMessage());
+        System.out.println(authResults.getMessage());
       }
     } else {
       // Passwords do not match
       registerError.setText("Passwords do not match");
+      System.out.println("Passwords do not match");
     }
     isLoading = false;
   }

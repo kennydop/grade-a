@@ -14,8 +14,9 @@ public class DB {
   protected static final String password = "$Root55";
   protected static final String dbName = "gradea";
   protected static final String mysqlServerUrl = "jdbc:mysql://" + host + ":" + port;
+  private static boolean connectWithPassword = false;
 
-  private Connection connection;
+  private static Connection connection;
 
   private DB() {
   }
@@ -27,11 +28,20 @@ public class DB {
   public Connection setupDatabaseConnection() {
 
     try {
-      // Connect to MySQL server with password
-      // connection = DriverManager.getConnection(mysqlServerUrl, user, password);
+      if (connection != null) {
+        return connection;
+      }
 
-      // Connect to MySQL server without password
-      connection = DriverManager.getConnection(mysqlServerUrl, user, "");
+      if (connectWithPassword) {
+        // Connect to MySQL server with password
+        System.out.println("Connecting to MySQL server with password");
+        connection = DriverManager.getConnection(mysqlServerUrl, user, password);
+      } else {
+        // Connect to MySQL server without password
+        System.out.println("Connecting to MySQL server without password");
+        connection = DriverManager.getConnection(mysqlServerUrl, user, "");
+      }
+
       System.out.println("Connected to MySQL server");
 
       // Create the database if it doesn't exist
@@ -52,6 +62,16 @@ public class DB {
     return connection;
   }
 
+  public static Connection getConnection() {
+    try {
+      return connection == null ? DriverManager.getConnection("jdbc:mysql://localhost:3306/" + DB.dbName,
+          DB.user, connectWithPassword ? DB.password : "") : connection;
+    } catch (Exception e) {
+      System.out.println("Error connecting to database: " + e.getMessage());
+    }
+    return connection;
+  }
+
   private void createTables() {
     createUserTable();
     createOrganizationsTable();
@@ -66,7 +86,7 @@ public class DB {
   private void createUserTable() {
     String sql = "CREATE TABLE IF NOT EXISTS users (" +
         "id INT AUTO_INCREMENT PRIMARY KEY," +
-        "email VARCHAR(255) NOT NULL," +
+        "email VARCHAR(255) NOT NULL UNIQUE," +
         "first_name VARCHAR(255) NOT NULL," +
         "last_name VARCHAR(255) NOT NULL," +
         "password VARCHAR(255) NOT NULL," +

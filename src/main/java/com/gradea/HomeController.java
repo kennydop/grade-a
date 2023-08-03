@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
+import com.gradea.controllers.Session;
 import com.gradea.models.Question;
 import com.gradea.models.Question.QuestionType;
 import com.gradea.models.Quiz;
@@ -233,6 +234,16 @@ public class HomeController {
       controller.setQuiz(quiz);
 
       recentlyTakenQuizzesContainer.getChildren().add(quizNode);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
+
+  @FXML
+  private void handleLogoutButtonAction() {
+    try {
+      App.setRoot("auth");
+      Session.getInstance().clearUser();
     } catch (IOException e) {
       e.printStackTrace();
     }
