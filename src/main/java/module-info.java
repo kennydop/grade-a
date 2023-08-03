@@ -1,8 +1,8 @@
 module com.gradea {
   requires javafx.controls;
   requires javafx.fxml;
-  // requires com.google.firebase;
-  // requires com.google.auth;
+  requires java.sql;
+  // requires org.mindrot.jbcrypt;
 
   opens com.gradea to javafx.fxml;
 

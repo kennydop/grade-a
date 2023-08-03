@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane style="-fx-background-color: transparent;" stylesheets="@style.css"
+  xmlns="http://javafx.com/javafx/20.0.1"
+  xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gradea.HomeController">
+  <center>
+    <ScrollPane>
+      <content>
+        <VBox alignment="CENTER_LEFT">
+          <children>
+            <Label styleClass="text-color" text="Upcoming Quizzes">
+              <font>
+                <Font name="Montserrat Bold" size="18.0" />
+              </font>
+              <VBox.margin>
+                <Insets left="30.0" />
+              </VBox.margin>
+            </Label>
+            <HBox fx:id="upcomingQuizzesContainer" spacing="20.0" VBox.vgrow="ALWAYS">
+              <padding>
+                <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
+              </padding>
+            </HBox>
+            <Label layoutX="30.0" layoutY="10.0" styleClass="text-color" text="Recently Taken Quizzes">
+              <font>
+                <Font name="Montserrat Bold" size="18.0" />
+              </font>
+              <VBox.margin>
+                <Insets left="30.0" top="20.0" />
+              </VBox.margin>
+            </Label>
+            <HBox fx:id="recentlyTakenQuizzesContainer" spacing="20.0">
+              <padding>
+                <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
+              </padding>
+            </HBox>
+          </children>
+        </VBox>
+      </content>
+    </ScrollPane>
+  </center>
+  <top>
+    <HBox id="header" fx:id="header" alignment="CENTER" spacing="10.0" styleClass="fill-width" stylesheets="@style.css" BorderPane.alignment="CENTER">
+      <padding>
+        <Insets bottom="10.0" left="24.0" right="24.0" top="10.0" />
+      </padding>
+      <cursor>
+        <Cursor fx:constant="DEFAULT" />
+      </cursor>
+      <children>
+        <TextField prefHeight="40.0" promptText="Search" />
+        <Region HBox.hgrow="ALWAYS" />
+        <HBox alignment="CENTER_RIGHT" spacing="24.0">
+          <children>
+            <Button onAction="#showCreateOrgDialog" prefHeight="50.0" styleClass="button-with-shadow" text="Create Organization">
+              <graphic>
+                <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                    <Image url="@plus.png" />
+                  </image>
+                </ImageView>
+              </graphic>
+              <font>
+                <Font name="Montserrat Regular" size="12.0" />
+              </font>
+            </Button>
+            <Button onAction="#showJoinOrgDialog" prefHeight="50.0" styleClass="button-with-shadow" text="Join Organization">
+              <graphic>
+                <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                    <Image url="@link.png" />
+                  </image>
+                </ImageView>
+              </graphic>
+            </Button>
+            <Button prefHeight="50.0" styleClass="button-with-shadow" text="Create Quiz">
+              <graphic>
+                <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                    <Image url="@create.png" />
+                  </image>
+                </ImageView>
+              </graphic>
+            </Button>
+          </children>
+        </HBox>
+      </children>
+    </HBox>
+  </top>
+</BorderPane>

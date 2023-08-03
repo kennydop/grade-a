@@ -1,5 +1,11 @@
 package com.gradea;
 
+import java.io.IOException;
+import java.util.regex.Pattern;
+
+import com.gradea.controllers.Auth;
+import com.gradea.models.AuthResults;
+
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.PasswordField;
@@ -41,6 +47,12 @@ public class AuthController {
 
   private boolean isLoading = false;
 
+  // Regular expression for email validation
+  private static final Pattern EMAIL_REGEX = Pattern.compile("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$");
+
+  // Regular expression for password validation
+  private static final Pattern PASSWORD_REGEX = Pattern.compile("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,20}$");
+
   @FXML
   public void goToRegister() {
     if (rootPane.getChildren().get(1) == loginNode) {
@@ -64,9 +76,24 @@ public class AuthController {
     isLoading = true;
     String email = loginEmailField.getText();
     String password = loginPasswordField.getText();
-    System.out.println("Login button clicked");
-    System.out.println("Email: " + email);
-    System.out.println("Password: " + password);
+
+    if (!EMAIL_REGEX.matcher(email).matches()) {
+      loginError.setText("Invalid email address");
+      return;
+    }
+
+    AuthResults authResults = Auth.getInstance().login(email, password);
+    if (authResults.getSuccess()) {
+      // User is logged in, redirect to dashboard
+      try {
+        App.setRoot("dashboard");
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+    } else {
+      // Login failed
+      loginError.setText(authResults.getMessage());
+    }
     isLoading = false;
   }
 
@@ -83,13 +110,30 @@ public class AuthController {
     String password = registerPasswordField.getText();
     String confirmPassword = confirmPasswordField.getText();
 
-    if (password.equals(confirmPassword)) {
-      System.out.println("Create account button clicked");
-      System.out.println("First Name: " + fName);
-      System.out.println("Last Name: " + lName);
-      System.out.println("Email: " + email);
-      System.out.println("Password: " + password);
+    if (!EMAIL_REGEX.matcher(email).matches()) {
+      registerError.setText("Invalid email address");
+      return;
+    }
 
+    if (!PASSWORD_REGEX.matcher(password).matches()) {
+      loginError.setText("Invalid password. Password must contain at least one digit, " +
+          "one lowercase letter, one uppercase letter, and be between 8 to 20 characters.");
+      return;
+    }
+
+    if (password.equals(confirmPassword)) {
+      AuthResults authResults = Auth.getInstance().register(fName, lName, email, password);
+      if (authResults.getSuccess()) {
+        // User is registered, redirect to dashboard
+        try {
+          App.setRoot("dashboard");
+        } catch (IOException e) {
+          e.printStackTrace();
+        }
+      } else {
+        // Registration failed
+        registerError.setText(authResults.getMessage());
+      }
     } else {
       // Passwords do not match
       registerError.setText("Passwords do not match");
@@ -99,16 +143,8 @@ public class AuthController {
 
   @FXML
   public void swap() {
-    // RotateTransition rt = new RotateTransition(Duration.seconds(1), rootPane);
-    // rt.setAxis(Rotate.Y_AXIS);
-    // rt.setFromAngle(0);
-    // rt.setToAngle(180);
-    // rt.setOnFinished(event -> {
-    // Swap the nodes in the stack
     Node topNode = rootPane.getChildren().get(1);
     rootPane.getChildren().remove(1);
     rootPane.getChildren().add(0, topNode);
-    // });
-    // rt.play();
   }
 }

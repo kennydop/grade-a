@@ -8,20 +8,32 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+import com.gradea.controllers.DB;
+import com.gradea.controllers.UserSession;
+
 /**
  * JavaFX App
  */
 public class App extends Application {
   @Override
   public void init() {
-
+    DB.getInstance().setupDatabaseConnection();
   }
 
   private static Scene scene;
 
   @Override
   public void start(Stage stage) throws IOException {
-    scene = new Scene(loadFXML("dashboard"), 1000, 600);
+    UserSession userSession = UserSession.getInstance();
+
+    String fxml;
+    if (userSession.isLoggedIn()) {
+      fxml = "dashboard";
+    } else {
+      fxml = "auth";
+    }
+
+    scene = new Scene(loadFXML(fxml), 1000, 600);
     scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
     stage.setScene(scene);
     stage.setTitle("Grade A");
