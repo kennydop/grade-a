@@ -1,33 +1,42 @@
 package com.gradea.models;
 
 import java.time.Duration;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.Date;
 
 public class Quiz {
+  private int id;
   private String name;
   private String description;
-  private String organization;
-  private LocalDate startDate;
-  private LocalDate endDate;
+  private int organizationID;
+  private String organizationName;
+  private LocalDateTime startDate;
+  private LocalDateTime endDate;
   private int duration;
   private int passingScore;
   private int attemptsAllowed;
   private Question[] questions;
 
-  public Quiz(String name, String description, String organization, LocalDate startDate, LocalDate endDate,
+  public Quiz(int id, String name, String description, int organizationID, String organizationName,
+      LocalDateTime startDate,
+      LocalDateTime endDate,
       int duration,
       int passingScore, int attemptsAllowed, Question[] questions) {
+    this.id = id;
     this.name = name;
     this.description = description;
-    this.organization = organization;
+    this.organizationID = organizationID;
+    this.organizationName = organizationName;
     this.startDate = startDate;
     this.endDate = endDate;
     this.duration = duration;
     this.passingScore = passingScore;
     this.attemptsAllowed = attemptsAllowed;
     this.questions = questions;
+  }
+
+  public int getId() {
+    return id;
   }
 
   public String getName() {
@@ -46,27 +55,35 @@ public class Quiz {
     this.description = description;
   }
 
-  public String getOrganization() {
-    return organization;
+  public int getOrganizationID() {
+    return organizationID;
   }
 
-  public void setOrganization(String organization) {
-    this.organization = organization;
+  public void setOrganizationID(int organizationID) {
+    this.organizationID = organizationID;
   }
 
-  public LocalDate getStartDate() {
+  public String getOrganizationName() {
+    return organizationName;
+  }
+
+  public void setOrganizationName(String organizationName) {
+    this.organizationName = organizationName;
+  }
+
+  public LocalDateTime getStartDate() {
     return startDate;
   }
 
-  public void setStartDate(LocalDate startDate) {
+  public void setStartDate(LocalDateTime startDate) {
     this.startDate = startDate;
   }
 
-  public LocalDate getEndDate() {
+  public LocalDateTime getEndDate() {
     return endDate;
   }
 
-  public void setEndDate(LocalDate endDate) {
+  public void setEndDate(LocalDateTime endDate) {
     this.endDate = endDate;
   }
 

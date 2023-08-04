@@ -1,28 +1,55 @@
 package com.gradea;
 
+import com.gradea.controllers.Organizations;
+import com.gradea.models.Response;
+import com.gradea.utils.InfoDialog;
+
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class JoinOrgController {
+  @FXML
+  private TextField orgCode;
 
   @FXML
-  void showJoinQuizDialog() {
-    try {
-      FXMLLoader loader = new FXMLLoader(getClass().getResource("join-org.fxml"));
-      Parent root = loader.load();
+  private Button joinButton;
 
-      Stage dialogStage = new Stage();
-      dialogStage.initModality(Modality.APPLICATION_MODAL);
-      dialogStage.setResizable(false);
-      dialogStage.setScene(new Scene(root));
-      dialogStage.show();
+  @FXML
+  private Label joinError;
 
-    } catch (Exception ex) {
-      ex.printStackTrace();
+  @FXML
+  public void initialize() {
+    joinError.requestFocus();
+  }
+
+  @FXML
+  void joinOrganization() {
+    if (orgCode.getText().isEmpty()) {
+      joinError.setText("Please enter an organization unique code");
+      return;
+    }
+    if (!orgCode.getText().matches("^[a-zA-Z0-9]*$")) {
+      joinError.setText("Organization unique code can only contain\nletters and numbers");
+      return;
+    }
+    if (orgCode.getText().length() != 5) {
+      joinError.setText("Organization unique code must be\n5 characters long");
+      return;
+    }
+    Response joinedRes = Organizations.getInstance().joinOrganization(orgCode.getText());
+    if (joinedRes.getSuccess()) {
+      Stage stage = (Stage) joinButton.getScene().getWindow();
+      stage.close();
+      InfoDialog.showInfoDialog("Joined Organization", "You have successfully joined the organization", "");
+    } else {
+      joinError.setText(joinedRes.getMessage());
     }
   }
 }

@@ -3,6 +3,7 @@ package com.gradea.models;
 import java.util.List;
 
 public class Question {
+  private int id;
   private String questionText;
   private String[] options;
   private String correctAnswer;
@@ -10,7 +11,9 @@ public class Question {
   private String userAnswer;
   private double points;
 
-  public Question(String questionText, QuestionType type, String[] options, String correctAnswer, double points) {
+  public Question(int id, String questionText, QuestionType type, String[] options, String correctAnswer,
+      double points) {
+    this.id = id;
     this.questionText = questionText;
     this.type = type;
     if (type == QuestionType.TRUE_FALSE) {
@@ -26,8 +29,9 @@ public class Question {
     this.points = points;
   }
 
-  public Question(String questionText, QuestionType type, String[] options, String correctAnswer, double points,
+  public Question(int id, String questionText, QuestionType type, String[] options, String correctAnswer, double points,
       String userAnswer) {
+    this.id = id;
     this.questionText = questionText;
     this.type = type;
     if (type == QuestionType.TRUE_FALSE) {
@@ -41,6 +45,10 @@ public class Question {
     this.correctAnswer = correctAnswer;
     this.userAnswer = userAnswer;
     this.points = points;
+  }
+
+  public int getId() {
+    return id;
   }
 
   public String getQuestionText() {

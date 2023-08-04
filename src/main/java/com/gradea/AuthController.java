@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.regex.Pattern;
 
 import com.gradea.controllers.Auth;
-import com.gradea.models.AuthResults;
+import com.gradea.models.Response;
 
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -90,7 +90,7 @@ public class AuthController {
       return;
     }
 
-    AuthResults authResults = Auth.getInstance().login(email, password);
+    Response authResults = Auth.getInstance().login(email, password);
     if (authResults.getSuccess()) {
       // User is logged in, redirect to dashboard
       try {
@@ -134,7 +134,7 @@ public class AuthController {
     }
 
     if (password.equals(confirmPassword)) {
-      AuthResults authResults = Auth.getInstance().register(email, password, fName, lName);
+      Response authResults = Auth.getInstance().register(email, password, fName, lName);
       if (authResults.getSuccess()) {
         // User is registered, redirect to dashboard
         try {

@@ -6,6 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import com.gradea.utils.ErrorDialog;
+
 public class DB {
   private static final DB instance = new DB();
   protected static final String host = "localhost";
@@ -57,7 +59,11 @@ public class DB {
       createTables();
 
     } catch (SQLException e) {
-      System.err.println("Error connecting to MySQL server: " + e.getMessage());
+      System.out.println("Error connecting to MySQL server: " + e.getMessage());
+      ErrorDialog.showErrorDialog("MySQL Error",
+          "Error Connecting to MySQL Server " + (connectWithPassword ? "with password"
+              : "without password"),
+          e.getMessage());
     }
     return connection;
   }
@@ -68,6 +74,8 @@ public class DB {
           DB.user, connectWithPassword ? DB.password : "") : connection;
     } catch (Exception e) {
       System.out.println("Error connecting to database: " + e.getMessage());
+      ErrorDialog.showErrorDialog("MySQL Error", "Error Connecting to Database",
+          e.getMessage());
     }
     return connection;
   }
@@ -103,6 +111,7 @@ public class DB {
         "unique_code VARCHAR(255) NOT NULL," +
         "name VARCHAR(255) NOT NULL," +
         "created_by INT," +
+        "support_email VARCHAR(255)," +
         "created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP," +
         "modified_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP," +
         "FOREIGN KEY (created_by) REFERENCES users(id)" +
@@ -114,8 +123,14 @@ public class DB {
   private void createQuizzesTable() {
     String sql = "CREATE TABLE IF NOT EXISTS quizzes (" +
         "id INT AUTO_INCREMENT PRIMARY KEY," +
-        "name VARCHAR(255) NOT NULL," +
         "org_id INT," +
+        "name VARCHAR(255) NOT NULL," +
+        "description TEXT," +
+        "start_date DATETIME," +
+        "end_date DATETIME," +
+        "duration INT," +
+        "passing_score INT," +
+        "attempts_allowed INT," +
         "created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP," +
         "modified_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP," +
         "FOREIGN KEY (org_id) REFERENCES organizations(id)" +
@@ -155,11 +170,11 @@ public class DB {
   private void createOrganizationUsersTable() {
     String sql = "CREATE TABLE IF NOT EXISTS organization_users (" +
         "user_id INT NOT NULL," +
-        "organization_id INT NOT NULL," +
+        "org_id INT NOT NULL," +
         "created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP," +
         "modified_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP," +
         "FOREIGN KEY (user_id) REFERENCES users(id)," +
-        "FOREIGN KEY (organization_id) REFERENCES organizations(id)" +
+        "FOREIGN KEY (org_id) REFERENCES organizations(id)" +
         ")";
     execSQL(sql);
     System.out.println("Created organization_users table");

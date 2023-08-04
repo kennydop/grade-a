@@ -7,16 +7,15 @@ import java.sql.SQLException;
 
 import org.mindrot.jbcrypt.BCrypt;
 
-import com.gradea.models.AuthResults;
+import com.gradea.models.Response;
 import com.gradea.models.User;
 
 public class Auth {
   private static final Auth instance = new Auth();
-  private Connection dbConnection;
+  private static Connection dbConnection;
 
   private Auth() {
     try {
-
       this.dbConnection = DB.getInstance().getConnection();
     } catch (Exception e) {
       System.out.println("Error connecting to database: " + e.getMessage());
@@ -28,7 +27,7 @@ public class Auth {
   }
 
   // Register a new user
-  public AuthResults register(String email, String password, String firstName, String lastName) {
+  public Response register(String email, String password, String firstName, String lastName) {
 
     String sql = "INSERT INTO users (email, password, first_name, last_name) VALUES (?, ?, ?, ?)";
 
@@ -37,7 +36,7 @@ public class Auth {
       User existingUser = getUserByEmail(email);
       if (existingUser != null) {
         System.out.println("User already exists");
-        return new AuthResults(false, "User already exists");
+        return new Response(false, "User already exists");
       }
 
       // Register user
@@ -51,15 +50,15 @@ public class Auth {
       registerStmt.executeUpdate();
       User user = getUserByEmail(email);
       Session.getInstance().setCurrentUser(user);
-      return new AuthResults(true, "User registered successfully");
+      return new Response(true, "User registered successfully");
     } catch (SQLException e) {
       System.err.println("Error registering user: " + e.getMessage());
-      return new AuthResults(false, "Error registering user");
+      return new Response(false, "Error registering user");
     }
   }
 
   // Authenticate an existing user
-  public AuthResults login(String email, String password) {
+  public Response login(String email, String password) {
     String sql = "SELECT * FROM users WHERE email = ?";
 
     try {
@@ -67,7 +66,7 @@ public class Auth {
       stmt.setString(1, email);
       ResultSet resultSet = stmt.executeQuery();
       if (!resultSet.next()) {
-        return new AuthResults(false, "User not found");
+        return new Response(false, "User not found");
       }
 
       String hashedPassword = resultSet.getString("password");
@@ -75,13 +74,13 @@ public class Auth {
       if (isPasswordCorrect) {
         User user = getUserByEmail(email);
         Session.getInstance().setCurrentUser(user);
-        return new AuthResults(true, "User logged in successfully");
+        return new Response(true, "User logged in successfully");
       } else {
-        return new AuthResults(false, "Incorrect password");
+        return new Response(false, "Incorrect password");
       }
     } catch (SQLException e) {
       System.err.println("Error logging in: " + e.getMessage());
-      return new AuthResults(false,
+      return new Response(false,
           e.getMessage().equals("Illegal operation on empty result set.") ? "User not found" : "Error logging in");
     }
   }

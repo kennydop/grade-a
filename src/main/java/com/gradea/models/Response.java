@@ -1,13 +1,21 @@
 package com.gradea.models;
 
-public class AuthResults {
+public class Response {
 
   private boolean success;
   private String message;
+  private Object data;
 
-  public AuthResults(boolean success, String message) {
+  public Response(boolean success, String message) {
     this.success = success;
     this.message = message;
+    this.data = null;
+  }
+
+  public Response(boolean success, String message, Object data) {
+    this.success = success;
+    this.message = message;
+    this.data = data;
   }
 
   public boolean getSuccess() {
@@ -24,5 +32,13 @@ public class AuthResults {
 
   public void setMessage(String message) {
     this.message = message;
+  }
+
+  public Object getData() {
+    return data;
+  }
+
+  public void setData(Object data) {
+    this.data = data;
   }
 }

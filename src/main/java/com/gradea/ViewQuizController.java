@@ -66,7 +66,7 @@ public class ViewQuizController {
       numberOfQuestionsLabel.setText(String.valueOf(quiz.getQuestions().length) + " questions");
       durationLabel.setText(String.valueOf(quiz.getFormattedDuration()) + " - ");
       dueDateLabel.setText(quiz.getDueDate());
-      organizationLabel.setText(quiz.getOrganization());
+      organizationLabel.setText(quiz.getOrganizationName());
       Image image = new Image(getClass().getResourceAsStream("quiz_art.png"));
       quizImage.setImage(image);
       startQuizButton.setText("Take Quiz");

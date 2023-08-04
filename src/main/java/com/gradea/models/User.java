@@ -13,11 +13,11 @@ public class User {
     this.lastName = lastName;
   }
 
-  public int getUserID() {
+  public int getID() {
     return userID;
   }
 
-  public void setUserID(int userID) {
+  public void seID(int userID) {
     this.userID = userID;
   }
 
