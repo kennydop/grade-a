@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<StackPane fx:id="rootPane" prefHeight="600.0" prefWidth="800.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gradea.AuthController">
+  <VBox fx:id="registerNode" alignment="CENTER" maxHeight="500.0" maxWidth="420.0" prefHeight="500.0" prefWidth="420.0" spacing="15.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+    <padding>
+      <Insets bottom="40.0" left="40.0" right="40.0" top="40.0" />
+    </padding>
+    <Text text="Create Account">
+      <font>
+        <Font name="Montserrat Regular" size="24.0" />
+      </font>
+    </Text>
+    <Text fx:id="registerError" fill="#ff0a0a" text="">
+      <font>
+        <Font name="Montserrat Regular" size="13.0" />
+      </font>
+    </Text>
+    <TextField fx:id="fNameField" prefHeight="40.0" promptText="First Name">
+      <font>
+        <Font name="Montserrat Regular" size="13.0" />
+      </font>
+    </TextField>
+    <TextField fx:id="lNameField" prefHeight="40.0" promptText="Last Name">
+      <font>
+        <Font name="Montserrat Regular" size="13.0" />
+      </font>
+    </TextField>
+    <TextField fx:id="registerEmailField" prefHeight="40.0" promptText="Email">
+      <font>
+        <Font name="Montserrat Regular" size="13.0" />
+      </font>
+    </TextField>
+    <PasswordField fx:id="registerPasswordField" prefHeight="40.0" promptText="Password">
+      <font>
+        <Font name="Montserrat Regular" size="13.0" />
+      </font>
+    </PasswordField>
+    <PasswordField fx:id="confirmPasswordField" prefHeight="40.0" promptText="Confirm Password">
+      <font>
+        <Font name="Montserrat Regular" size="13.0" />
+      </font>
+    </PasswordField>
+    <Button alignment="CENTER" contentDisplay="CENTER" defaultButton="true" maxWidth="1.7976931348623157E308" onAction="#handleCreateAccountButtonAction" prefHeight="50.0" text="Create Account">
+      <font>
+        <Font name="Montserrat Regular" size="13.0" />
+      </font>
+      <VBox.margin>
+        <Insets />
+      </VBox.margin>
+    </Button>
+    <HBox alignment="CENTER" spacing="5.0">
+      <children>
+        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Already have an account?">
+          <font>
+            <Font name="Montserrat Regular" size="13.0" />
+          </font>
+        </Text>
+        <Text accessibleRole="BUTTON" fill="#4262ff" onMouseClicked="#goToLogin" text="Log In" underline="true">
+          <font>
+            <Font name="Montserrat Bold" size="13.0" />
+          </font>
+        </Text>
+      </children>
+    </HBox>
+    <styleClass>
+      <String fx:value="form" />
+      <String fx:value="border-radius" />
+    </styleClass>
+  </VBox>
+  <VBox fx:id="loginNode" alignment="CENTER" maxHeight="500.0" maxWidth="420.0" prefHeight="500.0" prefWidth="420.0" spacing="15.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+    <padding>
+      <Insets bottom="40.0" left="40.0" right="40.0" top="40.0" />
+    </padding>
+    <Text text="Login">
+      <font>
+        <Font name="Montserrat Regular" size="24.0" />
+      </font>
+      <VBox.margin>
+        <Insets />
+      </VBox.margin>
+    </Text>
+    <Text fx:id="loginError" fill="#ff0a0a" layoutX="181.0" layoutY="73.0" text="">
+      <VBox.margin>
+        <Insets />
+      </VBox.margin>
+      <font>
+        <Font name="Montserrat Regular" size="13.0" />
+      </font>
+    </Text>
+    <TextField fx:id="loginEmailField" prefHeight="40.0" promptText="Email">
+      <font>
+        <Font name="Montserrat Regular" size="13.0" />
+      </font>
+    </TextField>
+    <PasswordField fx:id="loginPasswordField" prefHeight="40.0" promptText="Password">
+      <font>
+        <Font name="Montserrat Regular" size="13.0" />
+      </font>
+    </PasswordField>
+    <Button alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" onAction="#handleLoginButtonAction" prefHeight="50.0" text="Login">
+      <font>
+        <Font name="Montserrat Regular" size="13.0" />
+      </font>
+      <VBox.margin>
+        <Insets />
+      </VBox.margin>
+    </Button>
+    <HBox alignment="CENTER" spacing="5.0">
+      <children>
+        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Don't have an account? ">
+          <font>
+            <Font name="Montserrat Regular" size="13.0" />
+          </font>
+        </Text>
+        <Text accessibleRole="BUTTON" fill="#4262ff" onMouseClicked="#goToRegister" styleClass="primary-color" text="Create One" underline="true">
+          <font>
+            <Font name="Montserrat Bold" size="13.0" />
+          </font>
+        </Text>
+      </children>
+    </HBox>
+    <styleClass>
+      <String fx:value="form" />
+      <String fx:value="border-radius" />
+    </styleClass>
+  </VBox>
+
+</StackPane>

@@ -30,22 +30,31 @@ public class HomeController {
   private Label recentlyTakenQuizzesLabel;
 
   List<Quiz> upcomingQuizes;
+  List<Quiz> quizzesToReview;
 
   @FXML
   private void initialize() {
     upcomingQuizes = Quizzes.getInstance().fetchUserQuizzes();
-    // List<Quiz> quizzesToReview = Quizzes.fetchUserQuizzesToReview();
+    quizzesToReview = Quizzes.getInstance().fetchUserQuizzesToReview();
+
     if (upcomingQuizes.size() == 0) {
       upcomingQuizesLabel.setText("No Upcoming Quizzes");
     } else {
       for (Quiz quiz : upcomingQuizes) {
+        System.out.println("Adding " + quiz.getName() + " to upcoming quizzes");
         addQuizCard(quiz);
       }
     }
 
-    // for (Quiz quiz : quizzesToReview) {
-    // addReviewQuizCard(quiz);
-    // }
+    if (quizzesToReview.size() == 0) {
+      recentlyTakenQuizzesLabel.setText("No Recent Quizzes");
+    } else {
+      for (Quiz quiz : quizzesToReview) {
+        System.out.println("Adding " + quiz.getName() + " to Quizzes to Review");
+        addReviewQuizCard(quiz);
+
+      }
+    }
 
     // Load the user's data here
   }

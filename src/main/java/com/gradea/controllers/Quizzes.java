@@ -67,9 +67,11 @@ public class Quizzes {
       String sql = "SELECT q.*, o.name AS organization_name FROM quizzes q " +
           "LEFT JOIN organization_users ou ON q.org_id = ou.org_id " +
           "LEFT JOIN organizations o ON q.org_id = o.id OR q.org_id = 1 " +
-          "WHERE ou.user_id = ? OR q.org_id = 1";
+          "LEFT JOIN user_quiz_attempt uqa ON q.id = uqa.quiz_id AND uqa.user_id = ? " +
+          "WHERE (ou.user_id = ? OR q.org_id = 1) AND uqa.quiz_id IS NULL";
       PreparedStatement statement = dbConnection.prepareStatement(sql);
       statement.setInt(1, userId);
+      statement.setInt(2, userId);
       ResultSet rs = statement.executeQuery();
       while (rs.next()) {
         // Create quiz object from result set
@@ -98,26 +100,71 @@ public class Quizzes {
     return quizzes;
   }
 
-  public void submitQuiz(String userId, Quiz quiz) {
-    // This method should store user's answers to the questions
+  public List<Quiz> fetchUserQuizzesToReview() {
+    int userId = Session.getInstance().getCurrentUser().getID();
+    List<Quiz> quizzes = new ArrayList<>();
+    // Fetch the quiz details
+    try {
+      String sql = "SELECT q.*, o.name AS organization_name FROM quizzes q " +
+          "INNER JOIN organization_users ou ON q.org_id = ou.org_id " +
+          "INNER JOIN organizations o ON q.org_id = o.id OR q.org_id = 1 " +
+          "INNER JOIN user_quiz_attempt uqa ON q.id = uqa.quiz_id " +
+          "WHERE uqa.user_id = ?";
+      PreparedStatement statement = dbConnection.prepareStatement(sql);
+      statement.setInt(1, userId);
+      ResultSet rs = statement.executeQuery();
+      while (rs.next()) {
+        // Create quiz object from result set
+        int id = rs.getInt("id");
+        String name = rs.getString("name");
+        String description = rs.getString("description");
+        int orgId = rs.getInt("org_id");
+        String orgName = rs.getString("organization_name");
+        LocalDateTime startDate = rs.getTimestamp("start_date").toLocalDateTime();
+        LocalDateTime endDate = rs.getTimestamp("end_date").toLocalDateTime();
+        int duration = rs.getInt("duration");
+        int passingScore = rs.getInt("passing_score");
+        int attemptsAllowed = rs.getInt("attempts_allowed");
+
+        // Fetch questions
+        Question[] questions = fetchQuestionsForQuiz(rs.getString("id"));
+
+        for (int i = 0; i < questions.length; i++) {
+          String submittedAnswer = fetchSubmittedAnswerForQuestion(questions[i].getID());
+          questions[i].setUserAnswer(submittedAnswer);
+        }
+
+        Quiz quiz = new Quiz(id, name, description, orgId, orgName, startDate, endDate, duration, passingScore,
+            attemptsAllowed,
+            questions);
+        quizzes.add(quiz);
+      }
+    } catch (SQLException e) {
+      System.out.println("Error occurred while fetching recent quizzes: " + e.getMessage());
+    }
+    return quizzes;
+  }
+
+  public void submitQuiz(Quiz quiz) {
+    int userId = Session.getInstance().getCurrentUser().getID();
+
     try {
       for (Question question : quiz.getQuestions()) {
         String sql = "INSERT INTO submitted_answers (question_id, user_id, quiz_id, answer) VALUES (?, ?, ?, ?)";
         PreparedStatement statement = dbConnection.prepareStatement(sql);
-        statement.setString(1, String.valueOf(question.getId())); // Assume that the ID field is present in the Question
-                                                                  // class
-        statement.setString(2, userId);
-        statement.setString(3, String.valueOf(quiz.getId())); // Assume that the ID field is present in the Quiz class
+        statement.setString(1, String.valueOf(question.getID()));
+        statement.setInt(2, userId);
+        statement.setInt(3, quiz.getID());
         statement.setString(4, question.getUserAnswer());
         statement.executeUpdate();
       }
 
       // Update the score in user_quiz_attempt
-      String sql = "UPDATE user_quiz_attempt SET score = ? WHERE user_id = ? AND quiz_id = ?";
+      String sql = "INSERT INTO user_quiz_attempt (user_id, quiz_id, score) VALUES (?, ?, ?)";
       PreparedStatement statement = dbConnection.prepareStatement(sql);
-      statement.setString(1, String.valueOf(quiz.getScore()));
-      statement.setString(2, userId);
-      statement.setString(3, String.valueOf(quiz.getId())); // Assume that the ID field is present in the Quiz class
+      statement.setInt(1, userId);
+      statement.setString(2, String.valueOf(quiz.getID()));
+      statement.setString(3, String.valueOf(quiz.getScore()));
       statement.executeUpdate();
 
     } catch (SQLException e) {
@@ -126,13 +173,14 @@ public class Quizzes {
   }
 
   private void createQuestion(Question question, int quizId) throws SQLException {
-    String sql = "INSERT INTO questions (quiz_id, correct_answer, question_text, question_type, option1, option2, option3, option4) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    String sql = "INSERT INTO questions (quiz_id, correct_answer, question_text, question_type, option1, option2, option3, option4, points) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
     String[] options = question.getOptions();
     PreparedStatement statement = dbConnection.prepareStatement(sql);
     statement.setInt(1, quizId);
     statement.setString(2, question.getCorrectAnswer());
     statement.setString(3, question.getQuestionText());
     statement.setString(4, question.getType().toString());
+    statement.setDouble(9, question.getPoints());
     if (options.length == 0) {
       statement.setString(5, "");
       statement.setString(6, "");
@@ -176,11 +224,33 @@ public class Quizzes {
       QuestionType type = QuestionType.valueOf(rs.getString("question_type"));
       String[] options = new String[] { rs.getString("option1"), rs.getString("option2"), rs.getString("option3"),
           rs.getString("option4") };
+      double points = rs.getDouble("points");
       // Create a question object from the result set
-      Question question = new Question(qid, questionText, type, options, correctAnswer, 0);
+      Question question = new Question(qid, questionText, type, options, correctAnswer, points);
       questions.add(question);
     }
     return questions.toArray(new Question[0]);
+  }
+
+  public String fetchSubmittedAnswerForQuestion(int questionId) {
+    int userId = Session.getInstance().getCurrentUser().getID();
+    String sql = "SELECT answer FROM submitted_answers WHERE question_id = ? AND user_id = ?";
+    String submittedAnswer = "";
+
+    try (PreparedStatement pstmt = dbConnection.prepareStatement(sql)) {
+      pstmt.setInt(1, questionId);
+      pstmt.setInt(2, userId);
+      ResultSet rs = pstmt.executeQuery();
+
+      while (rs.next()) {
+        submittedAnswer = rs.getString("answer");
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+      ;
+    }
+
+    return submittedAnswer;
   }
 
 }

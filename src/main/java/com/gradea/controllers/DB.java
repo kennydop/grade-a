@@ -149,6 +149,7 @@ public class DB {
         "option2 TEXT," +
         "option3 TEXT," +
         "option4 TEXT," +
+        "points DOUBLE," +
         "created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP," +
         "modified_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP," +
         "FOREIGN KEY (quiz_id) REFERENCES quizzes(id)" +

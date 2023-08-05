@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
+import com.gradea.controllers.Quizzes;
 import com.gradea.models.Question;
 import com.gradea.models.Question.QuestionType;
 import com.gradea.models.Quiz;
@@ -348,6 +349,7 @@ public class QuizController {
       Parent finishedRoot = loader.load();
       FinishedController finishedController = loader.getController();
       finishedController.setQuiz(quiz);
+      Quizzes.getInstance().submitQuiz(quiz);
 
       // get current stage
       Node source = (Node) event.getSource();

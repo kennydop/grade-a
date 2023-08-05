@@ -66,7 +66,7 @@ public class Question {
     this.points = points;
   }
 
-  public int getId() {
+  public int getID() {
     return id;
   }
 

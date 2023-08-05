@@ -1,0 +1,294 @@
+.root {
+  -fx-background-color: #dbe2ef;
+}
+
+.root .form {
+  -fx-background-color: #ffffff;
+  -fx-effect: dropshadow(three-pass-box, rgba(14, 11, 44, 0.16), 25, 0, 5, 5);
+}
+
+.button {
+  -fx-background-color: #4262ff;
+  -fx-text-fill: #ffffff;
+  -fx-background-radius: 6px;
+  -fx-pref-height: 50px;
+  -fx-cursor: hand;
+}
+
+.button:pressed {
+  -fx-background-color: #4262ff6d;
+}
+
+.button-with-shadow {
+  -fx-background-color: #4262ff;
+  -fx-text-fill: #ffffff;
+  -fx-background-radius: 6px;
+  -fx-pref-height: 50px;
+  -fx-cursor: hand;
+  -fx-effect: dropshadow(three-pass-box, rgba(14, 11, 44, 0.16), 25, 0, 5, 5);
+}
+
+.button-with-shadow:pressed {
+  -fx-background-color: #4262ff6d;
+}
+
+.button-with-shadow:hover {
+  -fx-effect: dropshadow(
+    three-pass-box,
+    rgba(14, 11, 44, 0.2),
+    40,
+    0.2,
+    10,
+    10
+  );
+}
+
+.nav-button {
+  -fx-background-color: transparent;
+  -fx-background-radius: 9999px;
+  -fx-border-radius: 9999px;
+}
+
+.nav-button:hover {
+  -fx-background-color: whitesmoke;
+}
+
+.nav-button.button.clicked {
+  -fx-background-color: #4262ff6d;
+}
+
+.nav-button:pressed {
+  -fx-background-color: #4262ff6d;
+}
+
+.close-button {
+  -fx-background-color: white;
+  -fx-background-radius: 9999px;
+  -fx-border-radius: 9999px;
+  -fx-pref-height: 40px;
+  -fx-pref-width: 40px;
+  -fx-effect: dropshadow(three-pass-box, rgba(14, 11, 44, 0.16), 25, 0, 5, 5);
+}
+
+.close-button:hover {
+  -fx-background-color: #fa3956;
+  -fx-effect: dropshadow(
+    three-pass-box,
+    rgba(14, 11, 44, 0.2),
+    40,
+    0.2,
+    10,
+    10
+  );
+}
+
+.form .text-field {
+  -fx-prompt-text-fill: #112d4e;
+}
+
+.primary-color {
+  -fx-background-color: #4262ff;
+}
+
+.secondary-color {
+  -fx-background-color: #112d4e;
+}
+
+.text-color {
+  -fx-text-fill: #606060;
+}
+
+.text-color-primary {
+  -fx-text-fill: #4262ff;
+}
+
+.bg-color {
+  -fx-background-color: #dbe2ef;
+}
+
+.alternate-color-1 {
+  -fx-background-color: #1a9835;
+}
+
+.text-color-alternate-1 {
+  -fx-text-fill: #1a9835;
+}
+
+.alternate-bg-color-1 {
+  -fx-background-color: #1a98354a;
+}
+
+.alternate-color-2 {
+  -fx-background-color: #fa3956;
+}
+
+.text-color-alternate-2 {
+  -fx-text-fill: #fa3956;
+}
+
+.alternate-bg-color-2 {
+  -fx-background-color: #fa39564a;
+}
+
+.timeRunningOutBg {
+  -fx-background-color: #ff42426d;
+}
+
+.border-color {
+  -fx-border-color: #112d4e;
+}
+
+.border-radius {
+  -fx-background-radius: 10px;
+  -fx-border-radius: 10px;
+}
+
+.progress-bar {
+  -fx-background-radius: 10 10 0 0;
+  -fx-border-radius: 10 10 0 0;
+}
+
+.progress-bar .bar {
+  -fx-background-color: #4262ff6d;
+  -fx-background-radius: 10 10 0 0;
+}
+
+.progress-bar.timeRunningOut .bar {
+  -fx-background-color: #ff42426d;
+  -fx-background-radius: 10 10 0 0;
+}
+
+.progress-bar .track {
+  -fx-background-radius: 10 10 0 0;
+  -fx-background-color: white;
+  -fx-padding: 0;
+}
+
+.shadow {
+  -fx-effect: dropshadow(three-pass-box, rgba(14, 11, 44, 0.16), 25, 0, 5, 5);
+}
+
+.text-field {
+  -fx-background-color: #ffffff;
+  -fx-border-color: #cccccc;
+  -fx-border-radius: 6px;
+  -fx-background-radius: 6px;
+  -fx-padding: 5px;
+  -fx-font-size: 15px;
+  -fx-pref-height: 40px;
+}
+
+.text-field:focused {
+  -fx-border-color: #4262ff;
+}
+
+.card {
+  -fx-background-color: #ffffff;
+  -fx-effect: dropshadow(three-pass-box, rgba(14, 11, 44, 0.16), 25, 0, 5, 5);
+  -fx-background-radius: 10px;
+}
+
+.card:hover {
+  -fx-effect: dropshadow(
+    three-pass-box,
+    rgba(14, 11, 44, 0.2),
+    40,
+    0.2,
+    10,
+    10
+  );
+}
+
+.option {
+  -fx-background-color: white;
+  -fx-border-color: #cccccc;
+  -fx-border-width: 1px;
+  -fx-text-fill: #434654;
+  -fx-background-radius: 6px;
+  -fx-border-radius: 6px;
+  -fx-max-width: Infinity;
+  -fx-max-height: Infinity;
+  -fx-cursor: hand;
+}
+
+.option.clicked {
+  -fx-border-color: #4262ff;
+  -fx-border-width: 2px;
+}
+
+.fill-width {
+  -fx-max-width: Infinity;
+}
+
+.fill-height {
+  -fx-max-height: Infinity;
+}
+
+.side-nav {
+  -fx-background-color: white;
+  -fx-effect: dropshadow(three-pass-box, rgba(14, 11, 44, 0.16), 25, 0, 0, 5);
+}
+
+.scroll-pane {
+  -fx-background-color: transparent;
+  -fx-padding: 0;
+}
+
+.scroll-pane .viewport {
+  -fx-background-color: transparent;
+}
+
+.scroll-pane .corner {
+  -fx-background-color: transparent;
+}
+
+.scroll-bar {
+  -fx-background-color: transparent;
+  -fx-border-color: transparent;
+}
+
+.scroll-bar .thumb {
+  -fx-background-color: transparent;
+}
+
+.scroll-bar .increment-button,
+.scroll-bar .decrement-button {
+  -fx-background-color: transparent;
+  -fx-padding: 0;
+}
+
+.scroll-pane > .scroll-bar:vertical {
+  visibility: hidden;
+}
+
+.scroll-pane > .scroll-bar:horizontal {
+  visibility: hidden;
+}
+
+.combo-box {
+  -fx-font: 13px "Montserrat";
+  -fx-base: white;
+}
+
+.combo-box .list-cell {
+  -fx-padding: 10px;
+}
+.combo-box-popup .list-cell:hover {
+  -fx-background-color: #4262ff6d;
+}
+
+.combo-box-popup .list-cell:selected {
+  -fx-background-color: #4262ff;
+}
+
+.date-picker .day-cell {
+  -fx-padding: 2px;
+}
+
+.date-picker .day-cell:hover {
+  -fx-background-color: #4262ff6d;
+}
+
+.date-picker .day-cell:selected {
+  -fx-background-color: #4262ff;
+}

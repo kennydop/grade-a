@@ -53,7 +53,7 @@ public class Quiz {
     this.questions = questions;
   }
 
-  public int getId() {
+  public int getID() {
     return id;
   }
 
