@@ -1,7 +1,6 @@
 package com.gradea;
 
 import java.io.IOException;
-import java.util.List;
 
 import com.gradea.models.Question;
 import com.gradea.models.Quiz;

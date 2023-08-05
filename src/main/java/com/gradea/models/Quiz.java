@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
 public class Quiz {
-  private int id;
+  private Integer id;
   private String name;
   private String description;
   private int organizationID;
@@ -17,12 +17,30 @@ public class Quiz {
   private int attemptsAllowed;
   private Question[] questions;
 
-  public Quiz(int id, String name, String description, int organizationID, String organizationName,
+  public Quiz(Integer id, String name, String description, int organizationID, String organizationName,
       LocalDateTime startDate,
       LocalDateTime endDate,
       int duration,
       int passingScore, int attemptsAllowed, Question[] questions) {
     this.id = id;
+    this.name = name;
+    this.description = description;
+    this.organizationID = organizationID;
+    this.organizationName = organizationName;
+    this.startDate = startDate;
+    this.endDate = endDate;
+    this.duration = duration;
+    this.passingScore = passingScore;
+    this.attemptsAllowed = attemptsAllowed;
+    this.questions = questions;
+  }
+
+  public Quiz(String name, String description, int organizationID, String organizationName,
+      LocalDateTime startDate,
+      LocalDateTime endDate,
+      int duration,
+      int passingScore, int attemptsAllowed, Question[] questions) {
+    this.id = null;
     this.name = name;
     this.description = description;
     this.organizationID = organizationID;

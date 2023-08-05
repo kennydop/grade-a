@@ -1,8 +1,5 @@
 package com.gradea;
 
-import java.io.IOException;
-import java.time.temporal.ChronoUnit;
-
 import com.gradea.models.Quiz;
 
 import javafx.fxml.FXML;
@@ -13,7 +10,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
 public class QuizCardController {
   @FXML

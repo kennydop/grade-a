@@ -264,3 +264,31 @@
 .scroll-pane > .scroll-bar:horizontal {
   visibility: hidden;
 }
+
+.combo-box {
+  -fx-font: 13px "Montserrat";
+  -fx-base: white;
+}
+
+.combo-box .list-cell {
+  -fx-padding: 10px;
+}
+.combo-box-popup .list-cell:hover {
+  -fx-background-color: #4262ff6d;
+}
+
+.combo-box-popup .list-cell:selected {
+  -fx-background-color: #4262ff;
+}
+
+.date-picker .day-cell {
+  -fx-padding: 2px;
+}
+
+.date-picker .day-cell:hover {
+  -fx-background-color: #4262ff6d;
+}
+
+.date-picker .day-cell:selected {
+  -fx-background-color: #4262ff;
+}

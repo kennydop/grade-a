@@ -2,9 +2,13 @@ package com.gradea.controllers;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
+import com.gradea.models.Organization;
 import com.gradea.models.Response;
 
 public class Organizations {
@@ -66,6 +70,54 @@ public class Organizations {
           e.getErrorCode() == 1048 ? "No such organization"
               : "Error joining organization.",
           e);
+    }
+  }
+
+  public Response getUserOrganizations() {
+    String sql = "SELECT o.* FROM organizations o " +
+        "INNER JOIN organization_users ou ON o.id = ou.org_id " +
+        "WHERE ou.user_id = ?";
+
+    int userId = Session.getInstance().getCurrentUser().getID();
+    try (PreparedStatement pstmt = dbConnection.prepareStatement(sql)) {
+      pstmt.setInt(1, userId);
+      ResultSet rs = pstmt.executeQuery();
+
+      List<Organization> organizations = new ArrayList<>();
+
+      while (rs.next()) {
+        Organization org = new Organization(rs.getInt("id"), rs.getString("name"), rs.getString("unique_code"),
+            rs.getInt("created_by"), rs.getString("support_email"));
+        organizations.add(org);
+      }
+
+      return new Response(true, "Fetched organizations successfully.", organizations);
+    } catch (SQLException e) {
+      System.out.println(e.getMessage());
+      return new Response(false, "Error fetching organizations.");
+    }
+  }
+
+  public Response getUserCreatedOrganizations() {
+    String sql = "SELECT * FROM organizations WHERE created_by = ?";
+
+    int userId = Session.getInstance().getCurrentUser().getID();
+    try (PreparedStatement pstmt = dbConnection.prepareStatement(sql)) {
+      pstmt.setInt(1, userId);
+      ResultSet rs = pstmt.executeQuery();
+
+      List<Organization> organizations = new ArrayList<>();
+
+      while (rs.next()) {
+        Organization org = new Organization(rs.getInt("id"), rs.getString("name"), rs.getString("unique_code"),
+            rs.getInt("created_by"), rs.getString("support_email"));
+        organizations.add(org);
+      }
+
+      return new Response(true, "Fetched organizations successfully.", organizations);
+    } catch (SQLException e) {
+      System.out.println(e.getMessage());
+      return new Response(false, "Error fetching organizations.");
     }
   }
 

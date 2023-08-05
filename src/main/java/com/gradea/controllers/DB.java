@@ -85,7 +85,6 @@ public class DB {
     createOrganizationsTable();
     createQuizzesTable();
     createQuestionsTable();
-    createOptionsTable();
     createOrganizationUsersTable();
     createSubmittedAnswersTable();
     createUserQuizAttemptTable();
@@ -143,28 +142,19 @@ public class DB {
     String sql = "CREATE TABLE IF NOT EXISTS questions (" +
         "id INT AUTO_INCREMENT PRIMARY KEY," +
         "quiz_id INT," +
-        "correct_answer INT," +
         "question_text TEXT," +
+        "correct_answer VARCHAR(255)," +
         "question_type VARCHAR(255)," +
+        "option1 TEXT," +
+        "option2 TEXT," +
+        "option3 TEXT," +
+        "option4 TEXT," +
         "created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP," +
         "modified_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP," +
         "FOREIGN KEY (quiz_id) REFERENCES quizzes(id)" +
         ")";
     execSQL(sql);
     System.out.println("Created questions table");
-  }
-
-  private void createOptionsTable() {
-    String sql = "CREATE TABLE IF NOT EXISTS options (" +
-        "id INT AUTO_INCREMENT PRIMARY KEY," +
-        "question_id INT," +
-        "option_text TEXT," +
-        "created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP," +
-        "modified_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP," +
-        "FOREIGN KEY (question_id) REFERENCES questions(id)" +
-        ")";
-    execSQL(sql);
-    System.out.println("Created options table");
   }
 
   private void createOrganizationUsersTable() {

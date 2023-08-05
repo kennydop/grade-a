@@ -1,14 +1,10 @@
 package com.gradea;
 
 import java.io.IOException;
-import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 import com.gradea.controllers.Quizzes;
 import com.gradea.controllers.Session;
-import com.gradea.models.Question;
-import com.gradea.models.Question.QuestionType;
 import com.gradea.models.Quiz;
 
 import javafx.fxml.FXML;
@@ -18,7 +14,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -34,17 +29,19 @@ public class HomeController {
   @FXML
   private Label recentlyTakenQuizzesLabel;
 
+  List<Quiz> upcomingQuizes;
+
   @FXML
   private void initialize() {
-    // List<Quiz> upcomingQuizes = Quizzes.fetchUserQuizzes();
+    upcomingQuizes = Quizzes.getInstance().fetchUserQuizzes();
     // List<Quiz> quizzesToReview = Quizzes.fetchUserQuizzesToReview();
-    // if (upcomingQuizes.size() == 0) {
-    // upcomingQuizesLabel.setText("No Upcoming Quizzes");
-    // } else {
-    // for (Quiz quiz : upcomingQuizes) {
-    // addQuizCard(quiz);
-    // }
-    // }
+    if (upcomingQuizes.size() == 0) {
+      upcomingQuizesLabel.setText("No Upcoming Quizzes");
+    } else {
+      for (Quiz quiz : upcomingQuizes) {
+        addQuizCard(quiz);
+      }
+    }
 
     // for (Quiz quiz : quizzesToReview) {
     // addReviewQuizCard(quiz);
@@ -87,6 +84,33 @@ public class HomeController {
     } catch (Exception ex) {
       ex.printStackTrace();
     }
+  }
+
+  @FXML
+  void handleCreateQuizButton() {
+    try {
+      FXMLLoader loader = new FXMLLoader(getClass().getResource("create-quiz.fxml"));
+      Parent root = loader.load();
+
+      // Get the CreateQuizController and set HomeController
+      CreateQuizController createQuizController = loader.getController();
+      createQuizController.setHomeController(this);
+
+      Stage dialogStage = new Stage();
+      dialogStage.setTitle("Create Quiz");
+      dialogStage.setMaximized(true);
+      dialogStage.setScene(new Scene(root));
+      dialogStage.show();
+
+    } catch (Exception ex) {
+      ex.printStackTrace();
+    }
+  }
+
+  public void refreshQuizzes() {
+    upcomingQuizzesContainer.getChildren().clear();
+    recentlyTakenQuizzesContainer.getChildren().clear();
+    initialize();
   }
 
   public void addQuizCard(Quiz quiz) {

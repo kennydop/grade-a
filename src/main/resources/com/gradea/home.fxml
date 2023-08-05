@@ -85,7 +85,7 @@
                 </ImageView>
               </graphic>
             </Button>
-            <Button prefHeight="50.0" styleClass="button-with-shadow" text="Create Quiz">
+            <Button onAction="#handleCreateQuizButton" prefHeight="50.0" styleClass="button-with-shadow" text="Create Quiz">
               <graphic>
                 <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
                   <image>

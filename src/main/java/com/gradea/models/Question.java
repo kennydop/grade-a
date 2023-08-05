@@ -3,7 +3,7 @@ package com.gradea.models;
 import java.util.List;
 
 public class Question {
-  private int id;
+  private Integer id;
   private String questionText;
   private String[] options;
   private String correctAnswer;
@@ -11,7 +11,25 @@ public class Question {
   private String userAnswer;
   private double points;
 
-  public Question(int id, String questionText, QuestionType type, String[] options, String correctAnswer,
+  public Question(String questionText, QuestionType type, String[] options, String correctAnswer,
+      double points) {
+    this.id = null;
+    this.questionText = questionText;
+    this.type = type;
+    if (type == QuestionType.TRUE_FALSE) {
+      this.options = new String[] { "True", "False" };
+    } else if (type == QuestionType.SHORT_ANSWER) {
+      this.options = new String[] {};
+      ;
+    } else {
+      this.options = options;
+    }
+    this.correctAnswer = correctAnswer;
+    this.userAnswer = "";
+    this.points = points;
+  }
+
+  public Question(Integer id, String questionText, QuestionType type, String[] options, String correctAnswer,
       double points) {
     this.id = id;
     this.questionText = questionText;
@@ -29,7 +47,8 @@ public class Question {
     this.points = points;
   }
 
-  public Question(int id, String questionText, QuestionType type, String[] options, String correctAnswer, double points,
+  public Question(Integer id, String questionText, QuestionType type, String[] options, String correctAnswer,
+      double points,
       String userAnswer) {
     this.id = id;
     this.questionText = questionText;
@@ -92,7 +111,7 @@ public class Question {
   }
 
   public boolean isCorrect() {
-    return userAnswer.equals(correctAnswer);
+    return userAnswer.toLowerCase().equals(correctAnswer.toLowerCase());
   }
 
   public double getPoints() {
