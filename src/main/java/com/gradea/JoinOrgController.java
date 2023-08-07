@@ -41,6 +41,7 @@ public class JoinOrgController {
     }
     Response joinedRes = Organizations.getInstance().joinOrganization(orgCode.getText());
     if (joinedRes.getSuccess()) {
+
       Stage stage = (Stage) joinButton.getScene().getWindow();
       stage.close();
       InfoDialog.showInfoDialog("Joined Organization", "You have successfully joined the organization", "");

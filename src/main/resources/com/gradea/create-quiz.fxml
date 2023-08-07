@@ -15,7 +15,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" stylesheets="@style.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gradea.CreateQuizController">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" stylesheets="@style.css"
+  xmlns="http://javafx.com/javafx/20.0.1"
+  xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gradea.CreateQuizController">
   <children>
     <ScrollPane fitToHeight="true" fitToWidth="true" StackPane.alignment="TOP_CENTER">
       <content>
@@ -23,14 +25,14 @@
           <children>
             <Label text="Fill Quiz Details">
               <font>
-                <Font name="Montserrat Bold" size="16.0" />
+                <Font name="System Bold" size="16.0" />
               </font>
             </Label>
             <VBox alignment="TOP_CENTER" maxWidth="600.0" prefWidth="600.0" spacing="10.0" StackPane.alignment="CENTER">
               <children>
                 <Label fx:id="createQuizError" alignment="CENTER" textAlignment="CENTER" textFill="RED">
                   <font>
-                    <Font name="Montserrat Regular" size="13.0" />
+                    <Font name="System Regular" size="13.0" />
                   </font>
                 </Label>
                 <HBox spacing="10.0">
@@ -43,17 +45,17 @@
                 <HBox spacing="10.0">
                   <children>
                     <DatePicker fx:id="quizStartDate" minHeight="40.0" promptText="Quiz Start Date" HBox.hgrow="ALWAYS" />
-                              <TextField fx:id="quizStartHour" promptText="Start Hour (24Hr Format)" />
-                              <TextField fx:id="quizStartMinute" layoutX="226.0" layoutY="10.0" promptText="Start Min" />
+                    <TextField fx:id="quizStartHour" promptText="Start Hour (24Hr Format)" />
+                    <TextField fx:id="quizStartMinute" layoutX="226.0" layoutY="10.0" promptText="Start Min" />
                   </children>
                 </HBox>
-                        <HBox layoutX="30.0" layoutY="159.0" spacing="10.0">
-                           <children>
-                              <DatePicker fx:id="quizDueDate" minHeight="40.0" promptText="Quiz End Date" HBox.hgrow="ALWAYS" />
-                              <TextField fx:id="quizDueHour" promptText="End Hour (24Hr Format)" />
-                              <TextField fx:id="quizDueMinute" promptText="End Min" />
-                           </children>
-                        </HBox>
+                <HBox layoutX="30.0" layoutY="159.0" spacing="10.0">
+                  <children>
+                    <DatePicker fx:id="quizDueDate" minHeight="40.0" promptText="Quiz End Date" HBox.hgrow="ALWAYS" />
+                    <TextField fx:id="quizDueHour" promptText="End Hour (24Hr Format)" />
+                    <TextField fx:id="quizDueMinute" promptText="End Min" />
+                  </children>
+                </HBox>
                 <HBox spacing="10.0">
                   <children>
                     <TextField fx:id="quizDuration" minHeight="40.0" prefWidth="196.67" promptText="Duration in seconds" />
@@ -66,7 +68,7 @@
                     <Insets top="10.0" />
                   </VBox.margin>
                   <font>
-                    <Font name="Montserrat Bold" size="14.0" />
+                    <Font name="System Bold" size="14.0" />
                   </font>
                 </Label>
                 <VBox fx:id="questionsContainer" spacing="15.0">
@@ -84,17 +86,17 @@
                         </ImageView>
                       </graphic>
                       <font>
-                        <Font name="Montserrat Regular" size="12.0" />
+                        <Font name="System Regular" size="12.0" />
                       </font>
                     </Button>
                   </children>
-                           <VBox.margin>
-                              <Insets top="10.0" />
-                           </VBox.margin>
+                  <VBox.margin>
+                    <Insets top="10.0" />
+                  </VBox.margin>
                 </HBox>
                 <Button fx:id="createQuizButton" minHeight="50.0" mnemonicParsing="false" text="Create Quiz">
                   <font>
-                    <Font name="Montserrat Regular" size="13.0" />
+                    <Font name="System Regular" size="13.0" />
                   </font>
                   <styleClass>
                     <String fx:value="fill-width" />

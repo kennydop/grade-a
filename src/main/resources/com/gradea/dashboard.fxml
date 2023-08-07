@@ -8,22 +8,25 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="rootPane" stylesheets="@style.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gradea.DashboardController">
+<BorderPane fx:id="rootPane" stylesheets="@style.css"
+  xmlns="http://javafx.com/javafx/20.0.1"
+  xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gradea.DashboardController">
   <left>
     <VBox id="sidePanel" fx:id="sidePanel" alignment="TOP_CENTER" fillWidth="false" maxWidth="86.0" prefWidth="86.0" spacing="10.0" styleClass="side-nav" BorderPane.alignment="CENTER">
       <HBox alignment="CENTER">
         <children>
           <Label styleClass="text-color-primary" text="Grade">
             <font>
-              <Font name="Montserrat Black" size="16.0" />
+              <Font name="System Black" size="16.0" />
             </font>
           </Label>
           <Label layoutX="10.0" layoutY="10.0" styleClass="text-color-primary" text="A">
             <font>
-              <Font name="Montserrat Black" size="20.0" />
+              <Font name="System Black" size="20.0" />
             </font>
           </Label>
         </children>
@@ -43,9 +46,9 @@
           <Cursor fx:constant="HAND" />
         </cursor>
       </Button>
-      <Button fx:id="quizButton" layoutX="25.0" layoutY="20.0" maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" onAction="#showQuiz" prefHeight="50.0" prefWidth="50.0" styleClass="nav-button">
+      <Button fx:id="quizzesButton" layoutX="25.0" layoutY="20.0" maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" onAction="#showQuizzes" prefHeight="50.0" prefWidth="50.0" styleClass="nav-button">
         <graphic>
-          <ImageView fx:id="quizImage" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+          <ImageView fx:id="quizzesImage" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
             <image>
               <Image url="@quiz.png" />
             </image>
@@ -72,6 +75,22 @@
           <ImageView fx:id="settingImage" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
             <image>
               <Image url="@setting.png" />
+            </image>
+            <cursor>
+              <Cursor fx:constant="HAND" />
+            </cursor>
+          </ImageView>
+        </graphic>
+        <cursor>
+          <Cursor fx:constant="HAND" />
+        </cursor>
+      </Button>
+      <Region prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
+      <Button fx:id="logoutBtn" layoutX="28.0" layoutY="236.0" maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" onAction="#handleLogoutButtonAction" prefHeight="50.0" prefWidth="50.0" styleClass="nav-button">
+        <graphic>
+          <ImageView fx:id="settingImage1" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+              <Image url="@logout.png" />
             </image>
             <cursor>
               <Cursor fx:constant="HAND" />

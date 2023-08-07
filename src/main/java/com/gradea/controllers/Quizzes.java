@@ -15,6 +15,8 @@ public class Quizzes {
 
   private static final Quizzes instance = new Quizzes();
   private static Connection dbConnection;
+  private static List<Quiz> quizzes;
+  private static List<Quiz> quizzesToReview;
 
   private Quizzes() {
     try {
@@ -26,6 +28,14 @@ public class Quizzes {
 
   public static Quizzes getInstance() {
     return instance;
+  }
+
+  public List<Quiz> getQuizzes() {
+    return quizzes;
+  }
+
+  public List<Quiz> getQuizzesToReview() {
+    return quizzesToReview;
   }
 
   public void createQuiz(Quiz quiz) {
@@ -54,21 +64,23 @@ public class Quizzes {
       }
       InfoDialog.showInfoDialog("Quiz created successfully",
           quiz.getName() + " has been created for organization " + quiz.getOrganizationName(), "");
+      fetchUserQuizzes();
     } catch (SQLException e) {
       System.out.println("Error occurred while creating a quiz: " + e.getMessage());
     }
   }
 
-  public List<Quiz> fetchUserQuizzes() {
+  public void fetchUserQuizzes() {
     int userId = Session.getInstance().getCurrentUser().getID();
-    List<Quiz> quizzes = new ArrayList<>();
+    List<Quiz> _quizzes = new ArrayList<>();
     // Fetch the quiz details
     try {
       String sql = "SELECT q.*, o.name AS organization_name FROM quizzes q " +
           "LEFT JOIN organization_users ou ON q.org_id = ou.org_id " +
-          "LEFT JOIN organizations o ON q.org_id = o.id OR q.org_id = 1 " +
+          "LEFT JOIN organizations o ON q.org_id = o.id OR q.org_id = 0 " +
           "LEFT JOIN user_quiz_attempt uqa ON q.id = uqa.quiz_id AND uqa.user_id = ? " +
-          "WHERE (ou.user_id = ? OR q.org_id = 1) AND uqa.quiz_id IS NULL";
+          "WHERE (ou.user_id = ? OR q.org_id = 1) AND uqa.quiz_id IS NULL AND q.end_date > NOW() " +
+          "ORDER BY q.end_date ASC";
       PreparedStatement statement = dbConnection.prepareStatement(sql);
       statement.setInt(1, userId);
       statement.setInt(2, userId);
@@ -87,29 +99,30 @@ public class Quizzes {
         int attemptsAllowed = rs.getInt("attempts_allowed");
 
         // Fetch questions
-        Question[] questions = fetchQuestionsForQuiz(rs.getString("id"));
+        Question[] questions = fetchQuestionsForQuiz(id);
 
         Quiz quiz = new Quiz(id, name, description, orgId, orgName, startDate, endDate, duration, passingScore,
             attemptsAllowed,
             questions);
-        quizzes.add(quiz);
+        _quizzes.add(quiz);
       }
     } catch (SQLException e) {
       System.out.println("Error occurred while fetching quizzes: " + e.getMessage());
     }
-    return quizzes;
+    this.quizzes = _quizzes;
   }
 
-  public List<Quiz> fetchUserQuizzesToReview() {
+  public void fetchUserQuizzesToReview() {
     int userId = Session.getInstance().getCurrentUser().getID();
-    List<Quiz> quizzes = new ArrayList<>();
+    List<Quiz> _quizzes = new ArrayList<>();
     // Fetch the quiz details
     try {
       String sql = "SELECT q.*, o.name AS organization_name FROM quizzes q " +
           "INNER JOIN organization_users ou ON q.org_id = ou.org_id " +
           "INNER JOIN organizations o ON q.org_id = o.id OR q.org_id = 1 " +
           "INNER JOIN user_quiz_attempt uqa ON q.id = uqa.quiz_id " +
-          "WHERE uqa.user_id = ?";
+          "WHERE uqa.user_id = ? " +
+          "ORDER BY uqa.created_at ASC";
       PreparedStatement statement = dbConnection.prepareStatement(sql);
       statement.setInt(1, userId);
       ResultSet rs = statement.executeQuery();
@@ -127,7 +140,7 @@ public class Quizzes {
         int attemptsAllowed = rs.getInt("attempts_allowed");
 
         // Fetch questions
-        Question[] questions = fetchQuestionsForQuiz(rs.getString("id"));
+        Question[] questions = fetchQuestionsForQuiz(id);
 
         for (int i = 0; i < questions.length; i++) {
           String submittedAnswer = fetchSubmittedAnswerForQuestion(questions[i].getID());
@@ -137,12 +150,17 @@ public class Quizzes {
         Quiz quiz = new Quiz(id, name, description, orgId, orgName, startDate, endDate, duration, passingScore,
             attemptsAllowed,
             questions);
-        quizzes.add(quiz);
+        System.out.println("======================= " + id + " =========================");
+        System.out.println(name);
+        System.out.println(description);
+        System.out.println(quiz.getScore());
+        System.out.println("===========================================================");
+        _quizzes.add(quiz);
       }
     } catch (SQLException e) {
       System.out.println("Error occurred while fetching recent quizzes: " + e.getMessage());
     }
-    return quizzes;
+    this.quizzesToReview = _quizzes;
   }
 
   public void submitQuiz(Quiz quiz) {
@@ -166,7 +184,8 @@ public class Quizzes {
       statement.setString(2, String.valueOf(quiz.getID()));
       statement.setString(3, String.valueOf(quiz.getScore()));
       statement.executeUpdate();
-
+      fetchUserQuizzes();
+      fetchUserQuizzesToReview();
     } catch (SQLException e) {
       System.out.println("Error occurred while submitting a quiz: " + e.getMessage());
     }
@@ -211,11 +230,11 @@ public class Quizzes {
 
   }
 
-  private Question[] fetchQuestionsForQuiz(String quizId) throws SQLException {
+  private Question[] fetchQuestionsForQuiz(int quizId) throws SQLException {
     List<Question> questions = new ArrayList<>();
     String sql = "SELECT * FROM questions WHERE quiz_id = ?";
     PreparedStatement statement = dbConnection.prepareStatement(sql);
-    statement.setString(1, quizId);
+    statement.setInt(1, quizId);
     ResultSet rs = statement.executeQuery();
     while (rs.next()) {
       int qid = rs.getInt("id");

@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.List;
 
 import com.gradea.controllers.Quizzes;
-import com.gradea.controllers.Session;
 import com.gradea.models.Quiz;
 
 import javafx.fxml.FXML;
@@ -34,24 +33,24 @@ public class HomeController {
 
   @FXML
   private void initialize() {
-    upcomingQuizes = Quizzes.getInstance().fetchUserQuizzes();
-    quizzesToReview = Quizzes.getInstance().fetchUserQuizzesToReview();
+    upcomingQuizes = Quizzes.getInstance().getQuizzes();
+    quizzesToReview = Quizzes.getInstance().getQuizzesToReview();
 
     if (upcomingQuizes.size() == 0) {
       upcomingQuizesLabel.setText("No Upcoming Quizzes");
     } else {
-      for (Quiz quiz : upcomingQuizes) {
-        System.out.println("Adding " + quiz.getName() + " to upcoming quizzes");
-        addQuizCard(quiz);
+      for (int i = 0; i < 3; i++) {
+        System.out.println("Adding " + upcomingQuizes.get(i).getName() + " to upcoming quizzes");
+        addQuizCard(upcomingQuizes.get(i));
       }
     }
 
     if (quizzesToReview.size() == 0) {
       recentlyTakenQuizzesLabel.setText("No Recent Quizzes");
     } else {
-      for (Quiz quiz : quizzesToReview) {
-        System.out.println("Adding " + quiz.getName() + " to Quizzes to Review");
-        addReviewQuizCard(quiz);
+      for (int i = 0; i < 3; i++) {
+        System.out.println("Adding " + quizzesToReview.get(i).getName() + " to Quizzes to Review");
+        addReviewQuizCard(quizzesToReview.get(i));
 
       }
     }
@@ -101,10 +100,6 @@ public class HomeController {
       FXMLLoader loader = new FXMLLoader(getClass().getResource("create-quiz.fxml"));
       Parent root = loader.load();
 
-      // Get the CreateQuizController and set HomeController
-      CreateQuizController createQuizController = loader.getController();
-      createQuizController.setHomeController(this);
-
       Stage dialogStage = new Stage();
       dialogStage.setTitle("Create Quiz");
       dialogStage.setMaximized(true);
@@ -145,16 +140,6 @@ public class HomeController {
       controller.setQuiz(quiz);
 
       recentlyTakenQuizzesContainer.getChildren().add(quizNode);
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-  }
-
-  @FXML
-  private void handleLogoutButtonAction() {
-    try {
-      App.setRoot("auth");
-      Session.getInstance().clearUser();
     } catch (IOException e) {
       e.printStackTrace();
     }

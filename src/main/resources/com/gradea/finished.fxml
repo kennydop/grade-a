@@ -22,7 +22,7 @@
           <children>
             <Label fx:id="score" text="100/100">
               <font>
-                <Font name="Montserrat Bold" size="48.0" />
+                <Font name="System Bold" size="48.0" />
               </font>
             </Label>
           </children>

@@ -42,7 +42,7 @@ public class Organizations {
       final String uc = generateUniqueCode();
       pstmt.setString(1, uc);
       pstmt.setString(2, name.strip());
-      pstmt.setInt(3, 1);
+      pstmt.setInt(3, created_by);
       pstmt.setString(4, support_email.strip());
       pstmt.executeUpdate();
       System.out.println("Inserted " + name + " organization.");
@@ -62,6 +62,8 @@ public class Organizations {
       pstmt.setInt(2, userId);
       pstmt.executeUpdate();
       System.out.println("User with id " + userId + " joined the organization with unique code " + uniqueCode);
+      Quizzes.getInstance().fetchUserQuizzes();
+      Quizzes.getInstance().fetchUserQuizzesToReview();
       return new Response(true, "Joined organization successfully.");
     } catch (SQLException e) {
       System.out.println(e.getErrorCode());

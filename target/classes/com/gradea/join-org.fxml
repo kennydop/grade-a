@@ -10,13 +10,15 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<StackPane style="-fx-background-color: white;" stylesheets="@style.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gradea.JoinOrgController">
+<StackPane style="-fx-background-color: white;" stylesheets="@style.css"
+  xmlns="http://javafx.com/javafx/20.0.1"
+  xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gradea.JoinOrgController">
   <children>
-      <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="300.0" spacing="5.0">
+    <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="300.0" spacing="5.0">
       <children>
         <Label fx:id="joinError" alignment="CENTER" minHeight="42.0" textAlignment="CENTER" textFill="RED">
           <font>
-            <Font name="Montserrat Regular" size="13.0" />
+            <Font name="System Regular" size="13.0" />
           </font>
         </Label>
         <TextField fx:id="orgCode" promptText="Enter Organization Unique ID" styleClass="bg-color" />
@@ -30,7 +32,7 @@
           </graphic>
         </Button>
       </children>
-      </VBox>
+    </VBox>
   </children>
   <padding>
     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />

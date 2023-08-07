@@ -8,25 +8,27 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox spacing="10.0" styleClass="card" stylesheets="@style.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gradea.QuestionCardController">
+<VBox spacing="10.0" styleClass="card" stylesheets="@style.css"
+  xmlns="http://javafx.com/javafx/20.0.1"
+  xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gradea.QuestionCardController">
   <children>
     <HBox alignment="CENTER_LEFT" spacing="10.0">
       <children>
         <Label fx:id="questionNumberField" text="Question Number">
           <font>
-            <Font name="Montserrat Bold" size="13.0" />
+            <Font name="System Bold" size="13.0" />
           </font>
         </Label>
         <TextField fx:id="questionField" minHeight="40.0" promptText="Enter Question" HBox.hgrow="ALWAYS" />
       </children>
     </HBox>
     <TextField fx:id="correctAnswerField" minHeight="40.0" promptText="Enter Correct Answer" />
-      <HBox spacing="10.0">
-         <children>
-          <ComboBox fx:id="questionTypeField" minHeight="40.0" onAction="#selectQuestionType" prefHeight="40.0" prefWidth="150.0" promptText="Question Type" />
-            <TextField fx:id="pointsField" promptText="Scoring Points" />
-         </children>
-      </HBox>
+    <HBox spacing="10.0">
+      <children>
+        <ComboBox fx:id="questionTypeField" minHeight="40.0" onAction="#selectQuestionType" prefHeight="40.0" prefWidth="150.0" promptText="Question Type" />
+        <TextField fx:id="pointsField" promptText="Scoring Points" />
+      </children>
+    </HBox>
     <HBox fx:id="optionsContainer" spacing="10.0">
       <children>
         <TextField fx:id="option1Field" minHeight="40.0" promptText="Option 1" />

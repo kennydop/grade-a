@@ -17,7 +17,6 @@ import com.gradea.utils.ErrorDialog;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -66,8 +65,6 @@ public class CreateQuizController {
   private VBox questionsContainer;
 
   private List<QuestionCardController> questionCardControllers = new ArrayList<>();
-
-  private HomeController homeController;
 
   @FXML
   public void initialize() {
@@ -120,10 +117,6 @@ public class CreateQuizController {
     createQuizButton.setOnAction(event -> createQuiz());
   }
 
-  public void setHomeController(HomeController homeController) {
-    this.homeController = homeController;
-  }
-
   private void addQuestionCard() {
     try {
       FXMLLoader loader = new FXMLLoader(getClass().getResource("question-card.fxml"));
@@ -170,14 +163,8 @@ public class CreateQuizController {
 
     Quizzes.getInstance().createQuiz(quiz);
 
-    // refresh the quizzes in the Home window
-    if (homeController != null) {
-      homeController.refreshQuizzes();
-    }
-
     // close the Create Quiz window
     quizName.getScene().getWindow().hide();
-    ;
   }
 
   private LocalDateTime convertToLocalDateTime(LocalDate date, int hour, int minute) {

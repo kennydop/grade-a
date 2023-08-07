@@ -17,14 +17,16 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<StackPane fx:id="rootPane" prefHeight="600.0" prefWidth="800.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gradea.QuizController">
+<StackPane fx:id="rootPane" prefHeight="600.0" prefWidth="800.0" stylesheets="@style.css"
+  xmlns="http://javafx.com/javafx/20.0.1"
+  xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gradea.QuizController">
   <BorderPane prefHeight="200.0" prefWidth="200.0">
     <center>
       <BorderPane maxWidth="850.0">
         <center>
           <Text fx:id="questionCard" text="Question" BorderPane.alignment="CENTER">
             <font>
-              <Font name="Montserrat Regular" size="20.0" />
+              <Font name="System Regular" size="20.0" />
             </font>
             <BorderPane.margin>
               <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
@@ -46,7 +48,7 @@
                 <children>
                   <Button fx:id="option1" onAction="#handleOptionClick" styleClass="option" text="Option 1">
                     <font>
-                      <Font name="Montserrat Regular" size="13.0" />
+                      <Font name="System Regular" size="13.0" />
                     </font>
                     <GridPane.margin>
                       <Insets bottom="5.0" right="5.0" />
@@ -54,7 +56,7 @@
                   </Button>
                   <Button fx:id="option2" onAction="#handleOptionClick" styleClass="option" text="Option 2" GridPane.columnIndex="1">
                     <font>
-                      <Font name="Montserrat Regular" size="13.0" />
+                      <Font name="System Regular" size="13.0" />
                     </font>
                     <GridPane.margin>
                       <Insets bottom="5.0" left="5.0" />
@@ -62,7 +64,7 @@
                   </Button>
                   <Button fx:id="option3" onAction="#handleOptionClick" styleClass="option" text="Option 3" GridPane.rowIndex="1">
                     <font>
-                      <Font name="Montserrat Regular" size="13.0" />
+                      <Font name="System Regular" size="13.0" />
                     </font>
                     <GridPane.margin>
                       <Insets right="5.0" top="5.0" />
@@ -70,7 +72,7 @@
                   </Button>
                   <Button fx:id="option4" onAction="#handleOptionClick" styleClass="option" text="Option 4" GridPane.columnIndex="1" GridPane.rowIndex="1">
                     <font>
-                      <Font name="Montserrat Regular" size="13.0" />
+                      <Font name="System Regular" size="13.0" />
                     </font>
                     <GridPane.margin>
                       <Insets left="5.0" top="5.0" />
@@ -95,7 +97,7 @@
               <ProgressBar fx:id="progressBar" maxWidth="850.0" progress="1.0" styleClass="fill-height" />
               <Text fx:id="timerText" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER">
                 <font>
-                  <Font name="Montserrat Regular" size="12.0" />
+                  <Font name="System Regular" size="12.0" />
                 </font>
               </Text>
             </children>
@@ -114,7 +116,7 @@
         <children>
           <Button fx:id="prevButton" onAction="#handlePrevClick" prefHeight="50.0" prefWidth="100.0" styleClass="shadow">
             <font>
-              <Font name="Montserrat Regular" size="13.0" />
+              <Font name="System Regular" size="13.0" />
             </font>
             <graphic>
               <ImageView fitHeight="150.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" rotate="-90.0">
@@ -129,12 +131,12 @@
             <children>
               <Button fx:id="submitButton" disable="true" onAction="#handleSubmit" prefHeight="50.0" prefWidth="100.0" styleClass="shadow" text="Submit" textFill="WHITE">
                 <font>
-                  <Font name="Montserrat Regular" size="13.0" />
+                  <Font name="System Regular" size="13.0" />
                 </font>
               </Button>
               <Button fx:id="nextButton" onAction="#handleNextClick" prefHeight="50.0" prefWidth="100.0" styleClass="shadow" textFill="WHITE">
                 <font>
-                  <Font name="Montserrat Regular" size="13.0" />
+                  <Font name="System Regular" size="13.0" />
                 </font>
                 <graphic>
                   <ImageView fx:id="forwardImage1" fitHeight="150.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" rotate="90.0">

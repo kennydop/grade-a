@@ -161,7 +161,7 @@ public class QuizController {
         double progress = newValue.doubleValue();
         if (progress <= 0.25) {
           timerText.setFill(Color.RED);
-          timerText.fontProperty().set(Font.font("Montserrat", FontWeight.BOLD, 12));
+          timerText.fontProperty().set(Font.font("System", FontWeight.BOLD, 12));
           if (!progressBar.getStyleClass().contains("timeRunningOut")) {
             progressBar.getStyleClass().add("timeRunningOut");
             rootPane.getStyleClass().remove("bg-color");
