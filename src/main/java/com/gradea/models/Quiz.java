@@ -1,5 +1,6 @@
 package com.gradea.models;
 
+import java.text.DecimalFormat;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
@@ -190,12 +191,15 @@ public class Quiz {
     return score;
   }
 
-  public int getPercentage() {
-    return (int) Math.round((double) getScore() / (double) getTotalScore() * 100);
+  public String getPercentage() {
+    double _scorePercent = ((double) getScore() / (double) getTotalScore()) * 100;
+    DecimalFormat df = new DecimalFormat("#.##");
+    return df.format(_scorePercent) + "%";
   }
 
   public boolean isPassed() {
-    return getPercentage() >= getPassingScore();
+    double _scorePercent = ((double) getScore() / (double) getTotalScore()) * 100;
+    return _scorePercent >= getPassingScore();
   }
 
   public double getTotalScore() {

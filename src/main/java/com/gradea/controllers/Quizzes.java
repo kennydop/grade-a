@@ -79,7 +79,7 @@ public class Quizzes {
           "LEFT JOIN organization_users ou ON q.org_id = ou.org_id " +
           "LEFT JOIN organizations o ON q.org_id = o.id OR q.org_id = 0 " +
           "LEFT JOIN user_quiz_attempt uqa ON q.id = uqa.quiz_id AND uqa.user_id = ? " +
-          "WHERE (ou.user_id = ? OR q.org_id = 1) AND uqa.quiz_id IS NULL AND q.end_date > NOW() " +
+          "WHERE (ou.user_id = ? OR q.org_id = 0) AND uqa.quiz_id IS NULL AND q.end_date > NOW() " +
           "ORDER BY q.end_date ASC";
       PreparedStatement statement = dbConnection.prepareStatement(sql);
       statement.setInt(1, userId);

@@ -9,18 +9,40 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane stylesheets="@style.css"
-  xmlns="http://javafx.com/javafx/20.0.1"
-  xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gradea.FinishedController">
+<BorderPane stylesheets="@style.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gradea.FinishedController">
   <left>
-    <VBox spacing="10.0">
+    <VBox spacing="20.0">
       <children>
+        <StackPane layoutX="20.0" layoutY="20.0" styleClass="card">
+          <padding>
+            <Insets bottom="40.0" left="20.0" right="20.0" top="40.0" />
+          </padding>
+          <children>
+            <Label fx:id="scorePercent" text="100%">
+              <font>
+                <Font name="System Bold" size="48.0" />
+              </font>
+            </Label>
+          </children>
+        </StackPane>
         <StackPane styleClass="card">
           <padding>
             <Insets bottom="40.0" left="20.0" right="20.0" top="40.0" />
           </padding>
           <children>
             <Label fx:id="score" text="100/100">
+              <font>
+                <Font name="System Bold" size="48.0" />
+              </font>
+            </Label>
+          </children>
+        </StackPane>
+        <StackPane fx:id="verdictContainer" layoutX="20.0" layoutY="190.0" styleClass="card">
+          <padding>
+            <Insets bottom="40.0" left="20.0" right="20.0" top="40.0" />
+          </padding>
+          <children>
+            <Label fx:id="verdict" text="PASSED">
               <font>
                 <Font name="System Bold" size="48.0" />
               </font>

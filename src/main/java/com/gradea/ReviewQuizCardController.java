@@ -50,8 +50,8 @@ public class ReviewQuizCardController {
   public void setQuiz(Quiz quiz) {
     this.quiz = quiz;
     nameLabel.setText(quiz.getName());
-    if (quiz.getDescription().length() > 60)
-      descriptionLabel.setText(quiz.getDescription().substring(0, 60) + "...");
+    if (quiz.getDescription().length() > 40)
+      descriptionLabel.setText(quiz.getDescription().substring(0, 40) + "...");
     else
       descriptionLabel.setText(quiz.getDescription());
     scoreLabel.setText(quiz.getPercentage() + "%" + " (" + quiz.getScore() + "/" + quiz.getTotalScore() + ")");

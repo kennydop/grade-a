@@ -1,6 +1,7 @@
 package com.gradea;
 
 import java.io.IOException;
+import java.text.DecimalFormat;
 
 import com.gradea.models.Question;
 import com.gradea.models.Quiz;
@@ -9,6 +10,7 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
 public class FinishedController {
@@ -17,12 +19,27 @@ public class FinishedController {
   @FXML
   private Label score;
   @FXML
+  private Label scorePercent;
+  @FXML
+  private Label verdict;
+  @FXML
   private VBox reviewQnsCardContainer;
+  @FXML
+  private StackPane verdictContainer;
 
   @FXML
   public void initialize() {
     Platform.runLater(() -> {
+      scorePercent.setText(quiz.getPercentage());
       score.setText(quiz.getScore() + " / " + quiz.getTotalScore());
+      verdict.setText(quiz.isPassed() ? "PASSED" : "FAILED");
+      if (quiz.isPassed()) {
+        verdictContainer.setStyle("-fx-background-color: #1a98354a");
+        verdict.setStyle("-fx-text-fill: #1a9835");
+      } else {
+        verdictContainer.setStyle("-fx-background-color: #fa39564a");
+        verdict.setStyle("-fx-text-fill: #fa3956");
+      }
       loadCards();
     });
   }

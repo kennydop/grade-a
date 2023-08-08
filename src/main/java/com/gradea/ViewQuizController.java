@@ -86,6 +86,10 @@ public class ViewQuizController {
       upcomingQuizInfo.setVisible(false);
       upcomingQuizInfo.setManaged(false);
       Image image = new Image(getClass().getResourceAsStream("review_quiz_art.png"));
+      nameLabel.setText(quiz.getName());
+      descriptionLabel.setText(quiz.getDescription());
+      numberOfQuestionsLabel.setText(String.valueOf(quiz.getQuestions().length) + " questions");
+      organizationLabel.setText(quiz.getOrganizationName());
       quizImage.setImage(image);
       scoreLabel.setText(quiz.getPercentage() + "%" + " (" + quiz.getScore() + "/" + quiz.getTotalScore() + ")");
       startQuizButton.setText("Review Quiz");
