@@ -20,6 +20,12 @@ public class JoinOrgController {
   @FXML
   private Label joinError;
 
+  private HomeController homeController;
+
+  public void setHomeController(HomeController homeController) {
+    this.homeController = homeController;
+  }
+
   @FXML
   public void initialize() {
     joinError.requestFocus();
@@ -41,7 +47,7 @@ public class JoinOrgController {
     }
     Response joinedRes = Organizations.getInstance().joinOrganization(orgCode.getText());
     if (joinedRes.getSuccess()) {
-
+      homeController.refreshQuizzes();
       Stage stage = (Stage) joinButton.getScene().getWindow();
       stage.close();
       InfoDialog.showInfoDialog("Joined Organization", "You have successfully joined the organization", "");

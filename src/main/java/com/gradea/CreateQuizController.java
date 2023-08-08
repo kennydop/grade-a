@@ -66,6 +66,12 @@ public class CreateQuizController {
 
   private List<QuestionCardController> questionCardControllers = new ArrayList<>();
 
+  private HomeController homeController;
+
+  public void setHomeController(HomeController homeController) {
+    this.homeController = homeController;
+  }
+
   @FXML
   public void initialize() {
     createQuizButton.requestFocus();
@@ -163,6 +169,7 @@ public class CreateQuizController {
 
     Quizzes.getInstance().createQuiz(quiz);
 
+    homeController.refreshQuizzes();
     // close the Create Quiz window
     quizName.getScene().getWindow().hide();
   }

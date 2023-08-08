@@ -119,7 +119,7 @@ public class Quizzes {
     try {
       String sql = "SELECT q.*, o.name AS organization_name FROM quizzes q " +
           "INNER JOIN organization_users ou ON q.org_id = ou.org_id " +
-          "INNER JOIN organizations o ON q.org_id = o.id OR q.org_id = 1 " +
+          "INNER JOIN organizations o ON q.org_id = o.id OR q.org_id = 0 " +
           "INNER JOIN user_quiz_attempt uqa ON q.id = uqa.quiz_id " +
           "WHERE uqa.user_id = ? " +
           "ORDER BY uqa.created_at ASC";
@@ -150,11 +150,6 @@ public class Quizzes {
         Quiz quiz = new Quiz(id, name, description, orgId, orgName, startDate, endDate, duration, passingScore,
             attemptsAllowed,
             questions);
-        System.out.println("======================= " + id + " =========================");
-        System.out.println(name);
-        System.out.println(description);
-        System.out.println(quiz.getScore());
-        System.out.println("===========================================================");
         _quizzes.add(quiz);
       }
     } catch (SQLException e) {

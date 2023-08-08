@@ -111,6 +111,36 @@ public class QuestionCardController {
           "Points for question " + questionNumberField.getText() + " cannot be empty", "");
       return false;
     }
+    if (!pointsField.getText().matches("[0-9]+(\\.[0-9]+)?")) {
+      ErrorDialog.showErrorDialog("Points Error",
+          "Points for question " + questionNumberField.getText() + " must be a number", "");
+      return false;
+    }
+    if (Double.parseDouble(pointsField.getText()) <= 0) {
+      ErrorDialog.showErrorDialog("Points Error",
+          "Points for question " + questionNumberField.getText() + " must be greater than 0", "");
+      return false;
+    }
+    if (getQuestionType() == QuestionType.MULTIPLE_CHOICE && getOptions().length == 4) {
+      boolean answerPresent = false;
+      for (String option : getOptions()) {
+        if (option.toLowerCase().equals(getCorrectAnswer().toLowerCase())) {
+          answerPresent = true;
+          break;
+        }
+      }
+      if (!answerPresent) {
+        ErrorDialog.showErrorDialog("Correct Answer Error",
+            "Correct answer for question " + questionNumberField.getText() + " must be one of the options", "");
+        return false;
+      }
+    }
+    if (getQuestionType() == QuestionType.TRUE_FALSE
+        && !(getCorrectAnswer().toLowerCase().equals("true") || getCorrectAnswer().toLowerCase().equals("false"))) {
+      ErrorDialog.showErrorDialog("Correct Answer Error",
+          "Correct answer for question " + questionNumberField.getText() + " must be True or False", "");
+      return false;
+    }
     if (getQuestionType() == QuestionType.MULTIPLE_CHOICE) {
       if (option1Field.getText().isEmpty() || option2Field.getText().isEmpty() || option3Field.getText().isEmpty()
           || option4Field.getText().isEmpty()) {

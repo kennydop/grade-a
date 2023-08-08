@@ -45,6 +45,17 @@ public class ViewQuizController {
 
   private Quiz quiz;
 
+  private HomeController homeController;
+  private QuizzesController quizzesController;
+
+  public void setHomeController(HomeController homeController) {
+    this.homeController = homeController;
+  }
+
+  public void setQuizzesController(QuizzesController quizzesController) {
+    this.quizzesController = quizzesController;
+  }
+
   public void setQuiz(Quiz quiz) {
     _setQuiz(quiz, "upcoming");
   }
@@ -91,6 +102,8 @@ public class ViewQuizController {
 
       QuizController quizController = loader.getController();
       quizController.setQuiz(quiz);
+      quizController.setHomeController(homeController);
+      quizController.setQuizzesController(quizzesController);
 
       Stage stage = new Stage();
       stage.initStyle(StageStyle.UNDECORATED);

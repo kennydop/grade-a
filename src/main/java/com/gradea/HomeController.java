@@ -28,34 +28,60 @@ public class HomeController {
   @FXML
   private Label recentlyTakenQuizzesLabel;
 
+  private DashboardController dashboardController;
+
+  public void setDashboardController(DashboardController dashboardController) {
+    this.dashboardController = dashboardController;
+  }
+
   List<Quiz> upcomingQuizes;
   List<Quiz> quizzesToReview;
 
   @FXML
   private void initialize() {
+    refreshQuizzes();
+    // Load the user's data here
+  }
+
+  public void refreshQuizzes() {
+    System.out.println("++++++++++++++++++++++++++ Refreshing quizzes ++++++++++++++++++++++++++");
+    upcomingQuizzesContainer.getChildren().clear();
+    recentlyTakenQuizzesContainer.getChildren().clear();
     upcomingQuizes = Quizzes.getInstance().getQuizzes();
     quizzesToReview = Quizzes.getInstance().getQuizzesToReview();
 
     if (upcomingQuizes.size() == 0) {
       upcomingQuizesLabel.setText("No Upcoming Quizzes");
     } else {
-      for (int i = 0; i < 3; i++) {
-        System.out.println("Adding " + upcomingQuizes.get(i).getName() + " to upcoming quizzes");
-        addQuizCard(upcomingQuizes.get(i));
+      if (upcomingQuizes.size() > 3) {
+
+        for (int i = 0; i < 3; i++) {
+          System.out.println("Adding " + upcomingQuizes.get(i).getName() + " to upcoming quizzes");
+          addQuizCard(upcomingQuizes.get(i));
+        }
+      } else {
+        for (Quiz quiz : upcomingQuizes) {
+          System.out.println("Adding " + quiz.getName() + " to upcoming quizzes");
+          addQuizCard(quiz);
+        }
       }
     }
 
     if (quizzesToReview.size() == 0) {
       recentlyTakenQuizzesLabel.setText("No Recent Quizzes");
     } else {
-      for (int i = 0; i < 3; i++) {
-        System.out.println("Adding " + quizzesToReview.get(i).getName() + " to Quizzes to Review");
-        addReviewQuizCard(quizzesToReview.get(i));
-
+      if (quizzesToReview.size() > 3) {
+        for (int i = 0; i < 3; i++) {
+          System.out.println("Adding " + quizzesToReview.get(i).getName() + " to Quizzes to Review");
+          addReviewQuizCard(quizzesToReview.get(i));
+        }
+      } else {
+        for (Quiz quiz : quizzesToReview) {
+          System.out.println("Adding " + quiz.getName() + " to Quizzes to Review");
+          addReviewQuizCard(quiz);
+        }
       }
     }
-
-    // Load the user's data here
   }
 
   @FXML
@@ -63,6 +89,9 @@ public class HomeController {
     try {
       FXMLLoader loader = new FXMLLoader(getClass().getResource("join-org.fxml"));
       Parent root = loader.load();
+
+      JoinOrgController controller = loader.getController();
+      controller.setHomeController(this);
 
       Stage dialogStage = new Stage();
       dialogStage.initModality(Modality.APPLICATION_MODAL);
@@ -99,7 +128,8 @@ public class HomeController {
     try {
       FXMLLoader loader = new FXMLLoader(getClass().getResource("create-quiz.fxml"));
       Parent root = loader.load();
-
+      CreateQuizController controller = loader.getController();
+      controller.setHomeController(this);
       Stage dialogStage = new Stage();
       dialogStage.setTitle("Create Quiz");
       dialogStage.setMaximized(true);
@@ -111,10 +141,13 @@ public class HomeController {
     }
   }
 
-  public void refreshQuizzes() {
-    upcomingQuizzesContainer.getChildren().clear();
-    recentlyTakenQuizzesContainer.getChildren().clear();
-    initialize();
+  @FXML
+  void goToProfile() {
+    try {
+      dashboardController.showProfile();
+    } catch (Exception e) {
+      // TODO: handle exception
+    }
   }
 
   public void addQuizCard(Quiz quiz) {
@@ -124,6 +157,7 @@ public class HomeController {
 
       QuizCardController controller = loader.getController();
       controller.setQuiz(quiz);
+      controller.setHomeController(this);
 
       upcomingQuizzesContainer.getChildren().add(quizNode);
     } catch (IOException e) {

@@ -22,6 +22,12 @@ public class QuizzesController {
     populateGridPane(upcomingQuizes);
   }
 
+  public void refreshQuizzes() {
+    allQuizzesGrid.getChildren().clear();
+    upcomingQuizes = Quizzes.getInstance().getQuizzes();
+    populateGridPane(upcomingQuizes);
+  }
+
   public void populateGridPane(List<Quiz> quizzes) {
     int rowIndex = 0;
     int colIndex = 0;
@@ -33,6 +39,7 @@ public class QuizzesController {
 
         QuizCardController controller = loader.getController();
         controller.setQuiz(quiz);
+        controller.setQuizzesController(this);
 
         allQuizzesGrid.add(quizNode, colIndex, rowIndex);
         colIndex++;

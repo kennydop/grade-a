@@ -13,6 +13,7 @@ import javafx.scene.layout.VBox;
 
 public class FinishedController {
   private Quiz quiz;
+
   @FXML
   private Label score;
   @FXML

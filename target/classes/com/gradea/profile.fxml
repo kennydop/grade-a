@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gradea.ProfileController">
+  <children>
+    <VBox alignment="TOP_CENTER" spacing="10.0">
+      <children>
+        <ImageView fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
+          <image>
+            <Image url="@user.png" />
+          </image>
+        </ImageView>
+        <Label fx:id="nameLabel" text="Label">
+          <font>
+            <Font name="System Bold" size="18.0" />
+          </font>
+        </Label>
+        <Label fx:id="emailLabel" text="Label">
+          <font>
+            <Font name="System Italic" size="12.0" />
+          </font>
+        </Label>
+        <TableView fx:id="organizationsTable" prefHeight="200.0" prefWidth="200.0">
+          <columns>
+            <TableColumn fx:id="orgNameColumn" prefWidth="431.33331298828125" text="Organization" />
+            <TableColumn fx:id="orgUniqueCodeColumn" prefWidth="128.00003051757812" text="Unique Code" />
+          </columns>
+        </TableView>
+      </children>
+      <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+      </padding>
+    </VBox>
+  </children>
+</StackPane>

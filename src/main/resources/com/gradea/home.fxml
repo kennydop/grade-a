@@ -14,9 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane style="-fx-background-color: transparent;" stylesheets="@style.css"
-  xmlns="http://javafx.com/javafx/20.0.1"
-  xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gradea.HomeController">
+<BorderPane style="-fx-background-color: transparent;" stylesheets="@style.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gradea.HomeController">
   <center>
     <ScrollPane>
       <content>
@@ -102,7 +100,7 @@
                 <Font name="System Regular" size="12.0" />
               </font>
             </Button>
-            <ImageView accessibleRole="BUTTON" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" styleClass="shadow">
+            <ImageView accessibleRole="BUTTON" fitHeight="40.0" fitWidth="40.0" onMouseClicked="#goToProfile" pickOnBounds="true" preserveRatio="true" styleClass="shadow">
               <image>
                 <Image url="@user.png" />
               </image>

@@ -21,12 +21,12 @@
         <children>
           <Label styleClass="text-color-primary" text="Grade">
             <font>
-              <Font name="System Black" size="16.0" />
+              <Font name="Montserrat Black" size="16.0" />
             </font>
           </Label>
           <Label layoutX="10.0" layoutY="10.0" styleClass="text-color-primary" text="A">
             <font>
-              <Font name="System Black" size="20.0" />
+              <Font name="Montserrat Black" size="20.0" />
             </font>
           </Label>
         </children>

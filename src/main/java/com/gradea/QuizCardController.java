@@ -26,6 +26,17 @@ public class QuizCardController {
 
   private Quiz quiz;
 
+  private HomeController homeController;
+  private QuizzesController quizzesController;
+
+  public void setHomeController(HomeController homeController) {
+    this.homeController = homeController;
+  }
+
+  public void setQuizzesController(QuizzesController quizzesController) {
+    this.quizzesController = quizzesController;
+  }
+
   @FXML
   private void initialize() {
     viewQuizButton.setOnMouseClicked(e -> {
@@ -34,6 +45,8 @@ public class QuizCardController {
         Parent root = loader.load();
         ViewQuizController controller = loader.getController();
         controller.setQuiz(quiz);
+        controller.setHomeController(homeController);
+        controller.setQuizzesController(quizzesController);
 
         Stage dialogStage = new Stage();
         dialogStage.initModality(Modality.APPLICATION_MODAL);

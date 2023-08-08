@@ -77,6 +77,16 @@ public class QuizController {
   private long seconds;
   String countdownText;
   private boolean timeUp = false;
+  private HomeController homeController;
+  private QuizzesController quizzesController;
+
+  public void setHomeController(HomeController homeController) {
+    this.homeController = homeController;
+  }
+
+  public void setQuizzesController(QuizzesController quizzesController) {
+    this.quizzesController = quizzesController;
+  }
 
   @FXML
   public void initialize() {
@@ -350,6 +360,12 @@ public class QuizController {
       FinishedController finishedController = loader.getController();
       finishedController.setQuiz(quiz);
       Quizzes.getInstance().submitQuiz(quiz);
+      if (homeController != null) {
+        homeController.refreshQuizzes();
+      }
+      if (quizzesController != null) {
+        quizzesController.refreshQuizzes();
+      }
 
       // get current stage
       Node source = (Node) event.getSource();

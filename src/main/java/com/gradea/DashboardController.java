@@ -70,7 +70,10 @@ public class DashboardController {
 
   @FXML
   private void showHome() throws Exception {
-    Pane view = FXMLLoader.load(getClass().getResource("home.fxml"));
+    FXMLLoader loader = new FXMLLoader(getClass().getResource("home.fxml"));
+    Pane view = loader.load();
+    HomeController homeController = loader.getController();
+    homeController.setDashboardController(this);
     rootPane.setCenter(view);
   }
 
@@ -89,6 +92,19 @@ public class DashboardController {
   @FXML
   private void showNotification() throws Exception {
     Pane view = FXMLLoader.load(getClass().getResource("setting.fxml"));
+    rootPane.setCenter(view);
+  }
+
+  public void showProfile() throws Exception {
+    homeImage.setImage(homeImageAsset);
+    homeButton.getStyleClass().remove("clicked");
+    quizzesImage.setImage(quizzesImageAsset);
+    quizzesButton.getStyleClass().remove("clicked");
+    settingImage.setImage(settingImageAsset);
+    settingButton.getStyleClass().remove("clicked");
+    notificationImage.setImage(notificationImageAsset);
+    notificationButton.getStyleClass().remove("clicked");
+    Pane view = FXMLLoader.load(getClass().getResource("profile.fxml"));
     rootPane.setCenter(view);
   }
 
