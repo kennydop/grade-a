@@ -128,12 +128,30 @@ public class CreateQuizController {
       FXMLLoader loader = new FXMLLoader(getClass().getResource("question-card.fxml"));
       Parent questionCard = loader.load();
       QuestionCardController controller = loader.getController();
+      controller.setRootNode(questionCard);
       controller.setQuestionNumber(questionCardControllers.size() + 1);
+      controller.setCreateQuizController(this);
       questionCardControllers.add(controller);
       questionsContainer.getChildren().add(questionCard);
     } catch (IOException e) {
       System.out.println("Error loading question card: " + e.getMessage());
       e.printStackTrace();
+    }
+  }
+
+  public void removeQuestion(int i) {
+    if (i == questionCardControllers.size() - 1) {
+      ErrorDialog.showErrorDialog("Remove Question Error", "You should include atleast one question to this quiz", "");
+      return;
+    } else if (i >= 0 && i < questionCardControllers.size()) {
+      QuestionCardController controllerToRemove = questionCardControllers.get(i);
+      questionsContainer.getChildren().remove(controllerToRemove.getRootNode());
+      questionCardControllers.remove(i);
+      for (int j = i; j < questionCardControllers.size(); j++) {
+        questionCardControllers.get(j).setQuestionNumber(j + 1);
+      }
+    } else {
+      System.out.println("Invalid index: " + i);
     }
   }
 

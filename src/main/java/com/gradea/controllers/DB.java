@@ -10,13 +10,25 @@ import com.gradea.utils.ErrorDialog;
 
 public class DB {
   private static final DB instance = new DB();
-  protected static final String host = "localhost";
+  // // LOCAL MYSQL SERVER
+  // protected static final String host = "localhost";
+  // protected static final int port = 3306;
+  // protected static final String user = "root";
+  // protected static final String password = "$Root55";
+  // protected static final String dbName = "gradea";
+  // protected static final String mysqlServerUrl = "jdbc:mysql://" + host + ":" +
+  // port;
+
+  // REMOTE MYSQL SERVER
+  protected static final String host = "sql8.freemysqlhosting.net";
   protected static final int port = 3306;
-  protected static final String user = "root";
-  protected static final String password = "$Root55";
-  protected static final String dbName = "gradea";
+  protected static final String user = "sql8638380";
+  protected static final String password = "mabJYZZyXd";
+  protected static final String dbName = "sql8638380";
   protected static final String mysqlServerUrl = "jdbc:mysql://" + host + ":" + port;
-  private static boolean connectWithPassword = false;
+
+  // Connect to MySQL server with OR without password
+  private static boolean connectWithPassword = true;
 
   private static Connection connection;
 
@@ -97,7 +109,7 @@ public class DB {
         "first_name VARCHAR(255) NOT NULL," +
         "last_name VARCHAR(255) NOT NULL," +
         "password VARCHAR(255) NOT NULL," +
-        "created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP," +
+        "created_at TIMESTAMP DEFAULT '0000-00-00 00:00:00'," +
         "modified_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP" +
         ")";
     execSQL(sql);
@@ -111,7 +123,7 @@ public class DB {
         "name VARCHAR(255) NOT NULL," +
         "created_by INT," +
         "support_email VARCHAR(255)," +
-        "created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP," +
+        "created_at TIMESTAMP DEFAULT '0000-00-00 00:00:00'," +
         "modified_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP," +
         "FOREIGN KEY (created_by) REFERENCES users(id)" +
         ")";
@@ -130,7 +142,7 @@ public class DB {
         "duration INT," +
         "passing_score INT," +
         "attempts_allowed INT," +
-        "created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP," +
+        "created_at TIMESTAMP DEFAULT '0000-00-00 00:00:00'," +
         "modified_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP," +
         "FOREIGN KEY (org_id) REFERENCES organizations(id)" +
         ")";
@@ -150,7 +162,7 @@ public class DB {
         "option3 TEXT," +
         "option4 TEXT," +
         "points DOUBLE," +
-        "created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP," +
+        "created_at TIMESTAMP DEFAULT '0000-00-00 00:00:00'," +
         "modified_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP," +
         "FOREIGN KEY (quiz_id) REFERENCES quizzes(id)" +
         ")";
@@ -162,7 +174,7 @@ public class DB {
     String sql = "CREATE TABLE IF NOT EXISTS organization_users (" +
         "user_id INT NOT NULL," +
         "org_id INT NOT NULL," +
-        "created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP," +
+        "created_at TIMESTAMP DEFAULT '0000-00-00 00:00:00'," +
         "modified_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP," +
         "FOREIGN KEY (user_id) REFERENCES users(id)," +
         "FOREIGN KEY (org_id) REFERENCES organizations(id)" +
@@ -178,7 +190,7 @@ public class DB {
         "user_id INT," +
         "quiz_id INT," +
         "answer TEXT," +
-        "created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP," +
+        "created_at TIMESTAMP DEFAULT '0000-00-00 00:00:00'," +
         "modified_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP," +
         "FOREIGN KEY (question_id) REFERENCES questions(id)," +
         "FOREIGN KEY (user_id) REFERENCES users(id)," +
@@ -194,7 +206,7 @@ public class DB {
         "user_id INT," +
         "quiz_id INT," +
         "score INT," +
-        "created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP," +
+        "created_at TIMESTAMP DEFAULT '0000-00-00 00:00:00'," +
         "modified_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP," +
         "FOREIGN KEY (user_id) REFERENCES users(id)," +
         "FOREIGN KEY (quiz_id) REFERENCES quizzes(id)" +

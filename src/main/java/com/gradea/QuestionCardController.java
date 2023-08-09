@@ -5,6 +5,7 @@ import com.gradea.models.Question.QuestionType;
 import com.gradea.utils.ErrorDialog;
 
 import javafx.fxml.FXML;
+import javafx.scene.Parent;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -31,6 +32,22 @@ public class QuestionCardController {
   private TextField option3Field;
   @FXML
   private TextField option4Field;
+
+  private Parent root;
+
+  public Parent getRootNode() {
+    return root;
+  }
+
+  public void setRootNode(Parent root) {
+    this.root = root;
+  }
+
+  private CreateQuizController createQuizController;
+
+  public void setCreateQuizController(CreateQuizController createQuizController) {
+    this.createQuizController = createQuizController;
+  }
 
   @FXML
   private void initialize() {
@@ -88,6 +105,11 @@ public class QuestionCardController {
 
   private double getPoints() {
     return Double.parseDouble(pointsField.getText());
+  }
+
+  @FXML
+  private void removeQuestion() {
+    createQuizController.removeQuestion(getQuestionNumber() - 1);
   }
 
   public boolean validateInputs() {

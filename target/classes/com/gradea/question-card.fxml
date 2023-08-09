@@ -1,44 +1,65 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox spacing="10.0" styleClass="card" stylesheets="@style.css"
-  xmlns="http://javafx.com/javafx/20.0.1"
-  xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gradea.QuestionCardController">
+<StackPane style="-fx-background-color: transparent;" stylesheets="@style.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gradea.QuestionCardController">
   <children>
-    <HBox alignment="CENTER_LEFT" spacing="10.0">
+    <StackPane styleClass="card">
       <children>
-        <Label fx:id="questionNumberField" text="Question Number">
-          <font>
-            <Font name="System Bold" size="13.0" />
-          </font>
-        </Label>
-        <TextField fx:id="questionField" minHeight="40.0" promptText="Enter Question" HBox.hgrow="ALWAYS" />
+        <VBox spacing="10.0">
+          <children>
+            <HBox alignment="CENTER_LEFT" spacing="10.0">
+              <children>
+                <Label fx:id="questionNumberField" text="Question Number">
+                  <font>
+                    <Font name="System Bold" size="13.0" />
+                  </font>
+                </Label>
+                <TextField fx:id="questionField" minHeight="40.0" promptText="Enter Question" HBox.hgrow="ALWAYS" />
+              </children>
+            </HBox>
+            <TextField fx:id="correctAnswerField" minHeight="40.0" promptText="Enter Correct Answer" />
+            <HBox spacing="10.0">
+              <children>
+                <ComboBox fx:id="questionTypeField" minHeight="40.0" onAction="#selectQuestionType" prefHeight="40.0" prefWidth="150.0" promptText="Question Type" />
+                <TextField fx:id="pointsField" promptText="Scoring Points" />
+              </children>
+            </HBox>
+            <HBox fx:id="optionsContainer" spacing="10.0">
+              <children>
+                <TextField fx:id="option1Field" minHeight="40.0" promptText="Option 1" />
+                <TextField fx:id="option2Field" minHeight="40.0" promptText="Option 2" />
+                <TextField fx:id="option3Field" minHeight="40.0" promptText="Option 3" />
+                <TextField fx:id="option4Field" minHeight="40.0" promptText="Option 4" />
+              </children>
+            </HBox>
+          </children>
+        </VBox>
       </children>
-    </HBox>
-    <TextField fx:id="correctAnswerField" minHeight="40.0" promptText="Enter Correct Answer" />
-    <HBox spacing="10.0">
-      <children>
-        <ComboBox fx:id="questionTypeField" minHeight="40.0" onAction="#selectQuestionType" prefHeight="40.0" prefWidth="150.0" promptText="Question Type" />
-        <TextField fx:id="pointsField" promptText="Scoring Points" />
-      </children>
-    </HBox>
-    <HBox fx:id="optionsContainer" spacing="10.0">
-      <children>
-        <TextField fx:id="option1Field" minHeight="40.0" promptText="Option 1" />
-        <TextField fx:id="option2Field" minHeight="40.0" promptText="Option 2" />
-        <TextField fx:id="option3Field" minHeight="40.0" promptText="Option 3" />
-        <TextField fx:id="option4Field" minHeight="40.0" promptText="Option 4" />
-      </children>
-    </HBox>
+      <padding>
+        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+      </padding>
+      <StackPane.margin>
+        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+      </StackPane.margin>
+    </StackPane>
+    <ImageView accessibleRole="BUTTON" fitHeight="25.0" fitWidth="25.0" onMouseClicked="#removeQuestion" pickOnBounds="true" preserveRatio="true" styleClass="card" StackPane.alignment="TOP_RIGHT">
+      <image>
+        <Image url="@cross.png" />
+      </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+    </ImageView>
   </children>
-  <padding>
-    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-  </padding>
-</VBox>
+</StackPane>
