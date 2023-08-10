@@ -12,6 +12,13 @@
     },
     {
       "type": "java",
+      "name": "Main",
+      "request": "launch",
+      "mainClass": "com.gradea/com.gradea.Main",
+      "projectName": "gradea"
+    },
+    {
+      "type": "java",
       "name": "App",
       "request": "launch",
       "mainClass": "com.gradea/com.gradea.App",
