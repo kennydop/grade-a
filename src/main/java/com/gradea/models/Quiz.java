@@ -111,13 +111,23 @@ public class Quiz {
   }
 
   public String getDueDate() {
-    long daysBetween = ChronoUnit.DAYS.between(startDate, endDate);
+    long daysBetween = ChronoUnit.DAYS.between(LocalDateTime.now(), endDate);
     if (daysBetween == 0)
       return "Due today";
     else if (daysBetween == 1)
       return "Due tomorrow";
     else
       return "Due in " + daysBetween + " days";
+  }
+
+  public String getStartsInDate() {
+    long daysBetween = ChronoUnit.DAYS.between(LocalDateTime.now(), startDate);
+    if (daysBetween == 0)
+      return "Starts today";
+    else if (daysBetween == 1)
+      return "Starts tomorrow";
+    else
+      return "Starts in " + daysBetween + " days";
   }
 
   public String getFormattedDuration() {

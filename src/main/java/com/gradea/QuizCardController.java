@@ -1,5 +1,8 @@
 package com.gradea;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 import com.gradea.models.Quiz;
 
 import javafx.fxml.FXML;
@@ -62,8 +65,14 @@ public class QuizCardController {
 
   public void setQuiz(Quiz quiz) {
     this.quiz = quiz;
+    LocalDateTime today = LocalDateTime.now();
     nameLabel.setText(quiz.getName());
-    dueDateLabel.setText(quiz.getDueDate());
+    if (today.isAfter(quiz.getStartDate()) && today.isBefore(quiz.getEndDate())) {
+      dueDateLabel.setText(quiz.getDueDate());
+    } else {
+      dueDateLabel.setText(quiz.getStartsInDate());
+
+    }
     if (quiz.getDescription().length() > 40)
       descriptionLabel.setText(quiz.getDescription().substring(0, 40) + "...");
     else

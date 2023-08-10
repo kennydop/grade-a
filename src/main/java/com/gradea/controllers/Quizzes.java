@@ -75,17 +75,19 @@ public class Quizzes {
     List<Quiz> _quizzes = new ArrayList<>();
     // Fetch the quiz details
     try {
-      String sql = "SELECT q.*, o.name AS organization_name FROM quizzes q " +
+      String sql = "SELECT DISTINCT q.*, o.name AS organization_name FROM quizzes q " +
           "LEFT JOIN organization_users ou ON q.org_id = ou.org_id " +
-          "LEFT JOIN organizations o ON q.org_id = o.id OR q.org_id = 1 " +
+          "LEFT JOIN organizations o ON q.org_id = o.id OR q.org_id = 0 " +
           "LEFT JOIN user_quiz_attempt uqa ON q.id = uqa.quiz_id AND uqa.user_id = ? " +
-          "WHERE (ou.user_id = ? OR q.org_id = 1) AND uqa.quiz_id IS NULL AND q.end_date > NOW() AND q.start_date <= NOW() "
-          +
+          "WHERE (ou.user_id = ? OR q.org_id = 0) AND uqa.quiz_id IS NULL AND q.end_date > NOW() " +
           "ORDER BY q.end_date ASC";
       PreparedStatement statement = dbConnection.prepareStatement(sql);
       statement.setInt(1, userId);
       statement.setInt(2, userId);
       ResultSet rs = statement.executeQuery();
+      System.out.println("+++++++++++++++++++++++++++++++++++++++++");
+      System.out.println(statement);
+      System.out.println("+++++++++++++++++++++++++++++++++++++++++");
       while (rs.next()) {
         // Create quiz object from result set
         int id = rs.getInt("id");
@@ -118,15 +120,18 @@ public class Quizzes {
     List<Quiz> _quizzes = new ArrayList<>();
     // Fetch the quiz details
     try {
-      String sql = "SELECT q.*, o.name AS organization_name FROM quizzes q " +
+      String sql = "SELECT DISTINCT q.*, o.name AS organization_name FROM quizzes q " +
           "INNER JOIN organization_users ou ON q.org_id = ou.org_id " +
-          "INNER JOIN organizations o ON q.org_id = o.id OR q.org_id = 1 " +
+          "INNER JOIN organizations o ON q.org_id = o.id OR q.org_id = 0 " +
           "INNER JOIN user_quiz_attempt uqa ON q.id = uqa.quiz_id " +
           "WHERE uqa.user_id = ? " +
           "ORDER BY uqa.created_at ASC";
       PreparedStatement statement = dbConnection.prepareStatement(sql);
       statement.setInt(1, userId);
       ResultSet rs = statement.executeQuery();
+      System.out.println("+++++++++++++++++++++++++++++++++++++++++");
+      System.out.println(statement);
+      System.out.println("+++++++++++++++++++++++++++++++++++++++++");
       while (rs.next()) {
         // Create quiz object from result set
         int id = rs.getInt("id");

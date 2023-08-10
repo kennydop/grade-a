@@ -1,4 +1,4 @@
-# Running the GradeA Quiz Project Locally
+# Running GradeA Locally
 
 This project is a simple Quiz application developed using JavaFX for the GUI, it provides an interface to take multiple types of quizzes.
 

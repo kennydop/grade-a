@@ -20,33 +20,62 @@
       <content>
         <VBox alignment="CENTER_LEFT">
           <children>
-            <Label fx:id="upcomingQuizesLabel" styleClass="text-color" text="Upcoming Quizzes">
-              <font>
-                <Font name="System Bold" size="18.0" />
-              </font>
+            <HBox>
               <VBox.margin>
                 <Insets left="30.0" />
               </VBox.margin>
-            </Label>
+              <children>
+                <Label fx:id="upcomingQuizesLabel" styleClass="text-color" text="Upcoming Quizzes">
+                  <font>
+                    <Font name="System Bold" size="18.0" />
+                  </font>
+                </Label>
+                <Region minWidth="90.0" prefHeight="27.0" prefWidth="90.0" />
+                <ImageView fitHeight="25.0" fitWidth="25.0" onMouseClicked="#refreshQuizzes" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                    <Image url="@refresh.png" />
+                  </image>
+                  <cursor>
+                    <Cursor fx:constant="HAND" />
+                  </cursor>
+                </ImageView>
+              </children>
+            </HBox>
             <HBox fx:id="upcomingQuizzesContainer" spacing="20.0" VBox.vgrow="ALWAYS">
               <padding>
                 <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
               </padding>
             </HBox>
-            <Label fx:id="recentlyTakenQuizzesLabel" layoutX="30.0" layoutY="10.0" styleClass="text-color" text="Recently Taken Quizzes">
-              <font>
-                <Font name="System Bold" size="18.0" />
-              </font>
+            <HBox>
               <VBox.margin>
                 <Insets left="30.0" top="20.0" />
               </VBox.margin>
-            </Label>
+              <children>
+                <Label fx:id="recentlyTakenQuizzesLabel" styleClass="text-color" text="Recently Taken Quizzes">
+                  <font>
+                    <Font name="System Bold" size="18.0" />
+                  </font>
+                </Label>
+                <Region minWidth="50.0" prefHeight="27.0" prefWidth="50.0" />
+                <ImageView fitHeight="25.0" fitWidth="25.0" onMouseClicked="#refreshQuizzes" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                    <Image url="@refresh.png" />
+                  </image>
+                  <cursor>
+                    <Cursor fx:constant="HAND" />
+                  </cursor>
+                </ImageView>
+              </children>
+            </HBox>
             <HBox fx:id="recentlyTakenQuizzesContainer" spacing="20.0">
               <padding>
                 <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
               </padding>
             </HBox>
           </children>
+          <padding>
+            <Insets top="20.0" />
+          </padding>
         </VBox>
       </content>
     </ScrollPane>

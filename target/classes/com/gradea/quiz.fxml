@@ -17,14 +17,12 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<StackPane fx:id="rootPane" prefHeight="600.0" prefWidth="800.0" stylesheets="@style.css"
-  xmlns="http://javafx.com/javafx/20.0.1"
-  xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gradea.QuizController">
+<StackPane fx:id="rootPane" prefHeight="600.0" prefWidth="800.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gradea.QuizController">
   <BorderPane prefHeight="200.0" prefWidth="200.0">
     <center>
       <BorderPane maxWidth="850.0">
         <center>
-          <Text fx:id="questionCard" text="Question" BorderPane.alignment="CENTER">
+          <Text fx:id="questionCard" text="Question" textAlignment="CENTER" wrappingWidth="700.0" BorderPane.alignment="CENTER">
             <font>
               <Font name="System Regular" size="20.0" />
             </font>

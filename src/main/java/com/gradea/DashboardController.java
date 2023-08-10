@@ -59,7 +59,6 @@ public class DashboardController {
     try {
       Quizzes.getInstance().fetchUserQuizzes();
       Quizzes.getInstance().fetchUserQuizzesToReview();
-      ;
       homeImage.setImage(homeImageSelectedAsset);
       homeButton.getStyleClass().add("clicked");
       showHome();

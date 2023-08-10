@@ -18,8 +18,14 @@ public class QuizzesController {
 
   @FXML
   public void initialize() {
-    upcomingQuizes = Quizzes.getInstance().getQuizzes();
-    populateGridPane(upcomingQuizes);
+    refreshQuizzes();
+  }
+
+  @FXML
+  private void refresh() {
+    Quizzes.getInstance().fetchUserQuizzes();
+    Quizzes.getInstance().fetchUserQuizzesToReview();
+    refreshQuizzes();
   }
 
   public void refreshQuizzes() {

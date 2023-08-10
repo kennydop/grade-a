@@ -10,25 +10,26 @@ import com.gradea.utils.ErrorDialog;
 
 public class DB {
   private static final DB instance = new DB();
-  // // LOCAL MYSQL SERVER
-  // protected static final String host = "localhost";
+  // LOCAL MYSQL SERVER
+  protected static final String host = "localhost";
+  protected static final int port = 3306;
+  protected static final String user = "root";
+  protected static final String password = "root";
+  protected static final String dbName = "gradea";
+  protected static final String mysqlServerUrl = "jdbc:mysql://" + host + ":" +
+      port;
+
+  // // REMOTE MYSQL SERVER
+  // protected static final String host = "sql8.freemysqlhosting.net";
   // protected static final int port = 3306;
-  // protected static final String user = "root";
-  // protected static final String password = "root";
-  // protected static final String dbName = "gradea";
+  // protected static final String user = "sql8638380";
+  // protected static final String password = "mabJYZZyXd";
+  // protected static final String dbName = "sql8638380";
   // protected static final String mysqlServerUrl = "jdbc:mysql://" + host + ":" +
   // port;
 
-  // REMOTE MYSQL SERVER
-  protected static final String host = "sql8.freemysqlhosting.net";
-  protected static final int port = 3306;
-  protected static final String user = "sql8638380";
-  protected static final String password = "mabJYZZyXd";
-  protected static final String dbName = "sql8638380";
-  protected static final String mysqlServerUrl = "jdbc:mysql://" + host + ":" + port;
-
   // Connect to MySQL server with OR without password
-  private static boolean connectWithPassword = true;
+  private static boolean connectWithPassword = false;
 
   private static Connection connection;
 

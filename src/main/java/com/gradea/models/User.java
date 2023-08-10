@@ -17,7 +17,7 @@ public class User {
     return userID;
   }
 
-  public void seID(int userID) {
+  public void setID(int userID) {
     this.userID = userID;
   }
 

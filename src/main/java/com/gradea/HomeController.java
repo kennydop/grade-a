@@ -44,7 +44,6 @@ public class HomeController {
   }
 
   public void refreshQuizzes() {
-    System.out.println("++++++++++++++++++++++++++ Refreshing quizzes ++++++++++++++++++++++++++");
     upcomingQuizzesContainer.getChildren().clear();
     recentlyTakenQuizzesContainer.getChildren().clear();
     upcomingQuizes = Quizzes.getInstance().getQuizzes();
@@ -148,6 +147,13 @@ public class HomeController {
     } catch (Exception e) {
       // TODO: handle exception
     }
+  }
+
+  @FXML
+  private void refresh() {
+    Quizzes.getInstance().fetchUserQuizzes();
+    Quizzes.getInstance().fetchUserQuizzesToReview();
+    refreshQuizzes();
   }
 
   public void addQuizCard(Quiz quiz) {
