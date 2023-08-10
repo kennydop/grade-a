@@ -50,6 +50,7 @@ public class Auth {
       registerStmt.executeUpdate();
       User user = getUserByEmail(email);
       Session.getInstance().setCurrentUser(user);
+      Organizations.getInstance().joinOrganization("a770b");
       return new Response(true, "User registered successfully");
     } catch (SQLException e) {
       System.err.println("Error registering user: " + e.getMessage());
