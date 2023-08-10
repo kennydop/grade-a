@@ -14,7 +14,7 @@ public class DB {
   // protected static final String host = "localhost";
   // protected static final int port = 3306;
   // protected static final String user = "root";
-  // protected static final String password = "$Root55";
+  // protected static final String password = "root";
   // protected static final String dbName = "gradea";
   // protected static final String mysqlServerUrl = "jdbc:mysql://" + host + ":" +
   // port;
